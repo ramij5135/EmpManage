@@ -7,7 +7,7 @@ const LoginScreen = ({navigation}) => {
         <>
             <View style={styles.container}>
                 <View style={{margin:15}}>
-                    <Image style={styles.img} source={require('../../assets/imgs/SwadeshSoftware.png')} />
+                    <Image style={styles.img} source={require('../../../assets/imgs/SwadeshSoftware.png')} />
                     <Text style={[styles.headersText,]}>Admin Login</Text>
                     <View style={styles.loginContainer}>
                         <Text style={styles.text}>Enter Your Email</Text>

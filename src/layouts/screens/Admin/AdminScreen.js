@@ -6,22 +6,22 @@ const AdminScreen = ({navigation}) => {
         <>
             <View style={styles.container}>
                 <View style={styles.heading} >
-                <Image style={styles.Logoimg} source={require('../../assets/imgs/SwadeshSoftware.png')} />
+                <Image style={styles.Logoimg} source={require('../../../assets/imgs/SwadeshSoftware.png')} />
 
                     <Ionicons name="notifications-outline" size={34} />
                 </View>
-                <Image style={styles.Image} source={require('../../assets/imgs/Rectangle.png')} />
+                <Image style={styles.Image} source={require('../../../assets/imgs/Rectangle.png')} />
                 <View style={styles.employeeSection}>
                     <TouchableOpacity onPress={()=>navigation.navigate('EmployeeEntryScreen')}>
-                        <Image style={styles.employeeImg} source={require('../../assets/imgs/employeeImg.png')} />
+                    <Image style={styles.employeeImg} source={require('../../../assets/imgs/employeeImg.png')} />
                         <Text style={styles.employeeText}>Employee Entry </Text>
                     </TouchableOpacity>
                     <TouchableOpacity>
-                        <Image style={styles.employeeImg} source={require('../../assets/imgs/employeeImg.png')} />
+                        <Image style={styles.employeeImg} source={require('../../../assets/imgs/employeeImg.png')} />
                         <Text style={styles.employeeText}>Asign Work </Text>
                     </TouchableOpacity>
                     <TouchableOpacity>
-                        <Image style={styles.employeeImg} source={require('../../assets/imgs/employeeImg.png')} />
+                    <Image style={styles.employeeImg} source={require('../../../assets/imgs/employeeImg.png')} />
                         <Text numberOfLines={1} style={[styles.employeeText]}>Vichel Information </Text>
                     </TouchableOpacity>
                 </View>
