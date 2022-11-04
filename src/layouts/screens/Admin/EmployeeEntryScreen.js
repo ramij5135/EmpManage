@@ -60,9 +60,36 @@ const EmployeeEntryScreen = () => {
                     />
                     {/* </View> */}
                     <Text style={styles.text}>State</Text>
-                    <TextInput style={styles.TextInput} />
+                    <SelectList setSelected={setSelected} data={data}
+
+                        arrowicon={<Ionicons name="chevron-down-outline" size={20} color={'black'} />}
+                        searchicon={<Ionicons name="search-outline" size={20} color={'black'} />}
+                        boxStyles={{
+                            borderRadius: 10,
+                            backgroundColor: '#fff',
+                            height: 50,
+                            borderColor: '#8d8f8e',
+                        }}
+                        inputStyles={{ fontSize: 18 }}
+                        dropdownStyles={{ backgroundColor: '#fff', }}
+                        dropdownTextStyles={{ fontSize: 20 }}
+                        defaultOption={{ key: '14', value: 'Select Options' }}
+                    />
                     <Text style={styles.text}>City</Text>
-                    <TextInput style={styles.TextInput} />
+                    <SelectList setSelected={setSelected} data={data}
+                        arrowicon={<Ionicons name="chevron-down-outline" size={20} color={'black'} />}
+                        searchicon={<Ionicons name="search-outline" size={20} color={'black'} />}
+                        boxStyles={{
+                            borderRadius: 10,
+                            backgroundColor: '#fff',
+                            height: 50,
+                            borderColor: '#8d8f8e',
+                        }}
+                        inputStyles={{ fontSize: 18 }}
+                        dropdownStyles={{ backgroundColor: '#fff', }}
+                        dropdownTextStyles={{ fontSize: 20 }}
+                        defaultOption={{ key: '14', value: 'Select Options' }}
+                    />
                     <Text style={styles.text}>Pin Code</Text>
                     <TextInput style={styles.TextInput} />
                     <Text style={[styles.text]}>Is Active</Text>
@@ -80,9 +107,6 @@ const EmployeeEntryScreen = () => {
                         }}
 
                     />
-                    <TouchableOpacity style={styles.LoginButton} >
-                        <Text style={styles.LoginText}>Register</Text>
-                    </TouchableOpacity>
                     <TouchableOpacity style={styles.LoginButton} >
                         <Text style={styles.LoginText}>Register</Text>
                     </TouchableOpacity>
