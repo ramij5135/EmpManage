@@ -11,8 +11,8 @@ const LoginScreen = () => {
         <View style={styles.container}>
             <Logo/>
             <View style={styles.loginSection}>
-                <FullButton btnTitle={'Employee Login'} onPressName={()=>navigation.navigate('')} />
-                <FullButton btnTitle={'Admin Login'} onPressName={() => navigation.navigate('AdminLoginScreen')} />
+                <FullButton btnTitle={'Employee Login'} onPressName={()=>navigation.navigate('Emp_Login')} />
+                <FullButton btnTitle={'Admin Login'} onPressName={() => navigation.navigate('AdminScreen')} />
             </View>
         </View>
     )
