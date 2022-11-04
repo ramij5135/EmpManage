@@ -16,7 +16,7 @@ const AdminScreen = ({navigation}) => {
                     <Image style={styles.employeeImg} source={require('../../../assets/imgs/employeeImg.png')} />
                         <Text style={styles.employeeText}>Employee Entry </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>navigation.navigate('AsignWorkScreen')}>
                         <Image style={styles.employeeImg} source={require('../../../assets/imgs/employeeImg.png')} />
                         <Text style={styles.employeeText}>Asign Work </Text>
                     </TouchableOpacity>

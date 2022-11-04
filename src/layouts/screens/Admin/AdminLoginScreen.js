@@ -2,7 +2,7 @@ import React from "react";
 
 import { Text, View, StyleSheet, Image, TextInput,TouchableOpacity } from "react-native";
 
-const LoginScreen = ({navigation}) => {
+const AdminLoginScreen = ({navigation}) => {
     return (
         <>
             <View style={styles.container}>
@@ -74,4 +74,4 @@ const styles = StyleSheet.create({
         color:'#fff'
     }
 })
-export default LoginScreen;  
+export default AdminLoginScreen;  
