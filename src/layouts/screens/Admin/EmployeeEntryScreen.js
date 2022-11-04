@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, ScrollView, TextInput,TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity } from "react-native";
 import SelectList from 'react-native-dropdown-select-list'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import SelectDropdown from 'react-native-select-dropdown'
@@ -29,7 +29,7 @@ const EmployeeEntryScreen = () => {
     return (
         <>
             <ScrollView style={styles.container}>
-                <View style={{ paddingBottom:30 }}>
+                <View style={{ paddingBottom: 30 }}>
                     <Text style={styles.headersText}>Enter employee details</Text>
                     <Text style={styles.text}>Employee Id</Text>
                     <TextInput style={styles.TextInput} />
@@ -68,7 +68,7 @@ const EmployeeEntryScreen = () => {
                     <Text style={[styles.text]}>Is Active</Text>
                     <SelectDropdown
                         data={Active}
-                        buttonStyle={{width:'100%',}}
+                        buttonStyle={{ width: '100%', }}
                         onSelect={(selectedItem, index) => {
                             console.log(selectedItem, index)
                         }}
@@ -81,8 +81,11 @@ const EmployeeEntryScreen = () => {
 
                     />
                     <TouchableOpacity style={styles.LoginButton} >
-                            <Text style={styles.LoginText}>Register</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.LoginText}>Register</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.LoginButton} >
+                        <Text style={styles.LoginText}>Register</Text>
+                    </TouchableOpacity>
                 </View>
 
             </ScrollView>
@@ -117,17 +120,17 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 10
     },
-    LoginButton:{
-        height:50,
-        backgroundColor:'#2d52e3',
-        marginTop:15,
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius:15
+    LoginButton: {
+        height: 50,
+        backgroundColor: '#2d52e3',
+        marginTop: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 15
     },
-    LoginText:{
+    LoginText: {
         fontFamily: 'Poppins-SemiBold',
-        color:'#fff'
+        color: '#fff'
     }
 })
 export default EmployeeEntryScreen;     
