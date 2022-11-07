@@ -12,7 +12,7 @@ const LoginScreen = () => {
             <Logo/>
             <View style={styles.loginSection}>
                 <FullButton btnTitle={'Employee Login'} onPressName={()=>navigation.navigate('Emp_Login')} />
-                <FullButton btnTitle={'Admin Login'} onPressName={() => navigation.navigate('AdminScreen')} />
+                <FullButton btnTitle={'Admin Login'} onPressName={() => navigation.navigate('AdminLoginScreen')} />
             </View>
         </View>
     )
