@@ -1,41 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { View, Text, StyleSheet } from 'react-native';
 
 
 
 const HomeScreen = () => {
   return(
     <View style={styles.container}>
-      <View style={styles.heading}>
-        <Image style={styles.image} source={require('../../../assets/imgs/profile.jpg')} />
-        <View style={styles.welcome}>
-          <Text style={styles.welcomeText}>Welcome</Text>
-          <Text style={styles.welcomeName}>Ramij Dafadar</Text>
-        </View>
-        <View style={styles.notification}>
-          <Ionicons name='notifications' size={30} color={'rgba(100,100,100,0.5)'} />
-        </View>
-      </View>
-      <View style={styles.assignwork}>
-        <Text style={styles.todayWork}>Today's Work</Text>
-        <Text style={styles.seeWork}>See All</Text>
-        <View style={styles.hrLine} />
-        <View>
-            <View style={styles.work}>
-            <Text style={styles.workTitle}>Work Title</Text>
-            <Text style={styles.workName}>File Collect</Text>
-            </View>
-            <View style={styles.work}>
-            <Text style={styles.workTitle}>Work Area</Text>
-            <Text style={styles.workName}>Asansol</Text>
-            </View>
-            <View style={styles.work}>
-            <Text style={styles.workTitle}>Work Status</Text>
-            <Text style={[styles.workName, {color:'green'}]}>Active</Text>
-            </View>
-        </View>
-
+      <View style={styles.header}>
+        <Text style={styles.welcome}>Welcome</Text>
+        <Text style={styles.welcomeName}>Ramij Dafadar</Text>
       </View>
     </View>
   )
@@ -43,82 +16,24 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   container:{
-    padding:20,
+    // padding:20,
     flex:1,
     backgroundColor:'rgba(130,209,209,0.4)',
   },
-  heading:{
-    // backgroundColor:'red',
-    flexDirection:'row',
-    alignItems:'center'
-  },
-  image:{
-    height:70,
-    width:70,
-    resizeMode:'contain',
-    borderRadius:50,
-    borderWidth:0.5,
-    borderColor:'#fff'
+  header:{
+    backgroundColor:'rgba(255,255,255,0.4)',
+    height:60,
+    alignItems:'center',
+    justifyContent:'center'
   },
   welcome:{
-    marginHorizontal:20
-  },
-  welcomeText:{
     fontFamily:'Poppins-Regular',
     fontSize:16
-  },
+  }, 
   welcomeName:{
     fontFamily:'Poppins-SemiBold',
-    fontSize:18,
-    fontStyle:'italic'
-  },
-  notification:{
-    position:'absolute',
-    right:10,
-    padding:5,
-    borderWidth:1,
-    borderRadius:50,
-    borderColor:'grey'
-  },
-  assignwork:{
-    backgroundColor:'rgba(100,100,100,0.2)',
-    padding:5,
-    marginTop:20,
-    borderRadius:10,
-    // height:150
-  },
-  todayWork:{
-    fontFamily:'Poppins-SemiBold',
-    fontSize:18,
-  },
-  seeWork:{
-    position:'absolute',
-    right:10,
-    top:10,
-    color:'green',
-    fontFamily:'Poppins-SemiBold',
-    fontSize:16
-  },
-  hrLine:{
-    height:1,
-    backgroundColor:'rgba(100,100,100,0.4)',
-    marginVertical:10
-  },
-  work:{
-    flexDirection:'row',
-    paddingHorizontal:10,
-    // backgroundColor:'red',
-    marginTop:5,
-    justifyContent:'space-between'
-  },
-  workTitle:{
-    fontFamily:'Poppins-Regular',
     fontSize:16,
-    color:'#2a2a2a'
-  },
-  workName:{
-    fontFamily:'Poppins-SemiBold',
-    fontSize:16
+    color:'green'
   }
 });
 
