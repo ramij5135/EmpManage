@@ -2,9 +2,9 @@ import React from "react";
 import { Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 
 const {width, height} = Dimensions.get('window');
-const FullButton = (props) => {
+const FullButton = ({btnTitle,onPressName}) => {
     // console.log('Button props ==============>', props);
-    const {btnTitle, onPressName} = props;
+    // const {btnTitle, onPressName} = props;
     return(
         <>
             <TouchableOpacity style={styles.btn} onPress={onPressName}>
