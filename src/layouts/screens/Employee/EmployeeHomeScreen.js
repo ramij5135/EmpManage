@@ -19,10 +19,23 @@ const HomeScreen = () => {
       </View>
       <View style={styles.assignwork}>
         <Text style={styles.todayWork}>Today's Work</Text>
-        <View style={styles.work}>
-          <Text style={styles.workTitle}>Work Title</Text>
-          <Text>File Collect</Text>
+        <Text style={styles.seeWork}>See All</Text>
+        <View style={styles.hrLine} />
+        <View>
+            <View style={styles.work}>
+            <Text style={styles.workTitle}>Work Title</Text>
+            <Text style={styles.workName}>File Collect</Text>
+            </View>
+            <View style={styles.work}>
+            <Text style={styles.workTitle}>Work Area</Text>
+            <Text style={styles.workName}>Asansol</Text>
+            </View>
+            <View style={styles.work}>
+            <Text style={styles.workTitle}>Work Status</Text>
+            <Text style={[styles.workName, {color:'green'}]}>Active</Text>
+            </View>
         </View>
+
       </View>
     </View>
   )
@@ -72,19 +85,40 @@ const styles = StyleSheet.create({
     padding:5,
     marginTop:20,
     borderRadius:10,
-    height:150
+    // height:150
   },
   todayWork:{
-    fontFamily:'Poppins-Regular',
+    fontFamily:'Poppins-SemiBold',
     fontSize:18,
-    fontStyle:'italic'
+  },
+  seeWork:{
+    position:'absolute',
+    right:10,
+    top:10,
+    color:'green',
+    fontFamily:'Poppins-SemiBold',
+    fontSize:16
+  },
+  hrLine:{
+    height:1,
+    backgroundColor:'rgba(100,100,100,0.4)',
+    marginVertical:10
   },
   work:{
     flexDirection:'row',
     paddingHorizontal:10,
-    backgroundColor:'red',
-    marginVertical:10,
+    // backgroundColor:'red',
+    marginTop:5,
     justifyContent:'space-between'
+  },
+  workTitle:{
+    fontFamily:'Poppins-Regular',
+    fontSize:16,
+    color:'#2a2a2a'
+  },
+  workName:{
+    fontFamily:'Poppins-SemiBold',
+    fontSize:16
   }
 });
 
