@@ -15,7 +15,7 @@ const EmployeeLogin = () => {
                 <View style={styles.form}>
                     <FullTextInput title={'Enter your Employee Id'} />
                     <FullTextInput title={'Enter your Password'} />
-                    <FullButton btnTitle={'Login'} />
+                    <FullButton btnTitle={'Login'} onPressName={()=> navigation.navigate('Emp_Home')} />
                 </View>
             </View>
         </View>
