@@ -97,7 +97,7 @@ const EmployeeEntryScreen = () => {
                         data={Active}
                         buttonStyle={{ width: '100%', }}
                         onSelect={(selectedItem, index) => {
-                            console.log(selectedItem, index)
+                            // console.log(selectedItem, index)
                         }}
                         buttonTextAfterSelection={(selectedItem, index) => {
                             return selectedItem

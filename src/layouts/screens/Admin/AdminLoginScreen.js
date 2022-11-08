@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Text, View, StyleSheet, Image, TextInput,TouchableOpacity } from "react-native";
-
+import FullButton from "../../components/fullButton";
 const AdminLoginScreen = ({navigation}) => {
     return (
         <>
@@ -14,9 +14,10 @@ const AdminLoginScreen = ({navigation}) => {
                         <TextInput style={styles.TextInput} />
                         <Text style={styles.text}>Enter Your Password</Text>
                         <TextInput style={styles.TextInput} />
-                        <TouchableOpacity onPress={()=>navigation.navigate('AdminScreen')} style={styles.LoginButton} >
+                        {/* <TouchableOpacity onPress={()=>navigation.navigate('AdminScreen')} style={styles.LoginButton} >
                             <Text style={styles.LoginText}>LOGIN</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+                        <FullButton btnTitle={'LogIn'} onPressName={()=>navigation.navigate('AdminScreen')} />
                     </View>
                 </View>
             </View>
@@ -26,7 +27,7 @@ const AdminLoginScreen = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#57befa'
+        backgroundColor:'rgba(130,209,209,0.4)'
     },
     img: {
         height: 100,
