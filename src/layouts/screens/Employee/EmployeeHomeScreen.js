@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
@@ -68,6 +69,7 @@ const optionButton =[
 
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
   const [time, setTime] = useState('');
   const [outTime, setOutTime] = useState('');
   
@@ -97,6 +99,7 @@ const HomeScreen = () => {
         <View style={styles.option}>
           {
             optionButton.map((op) =>{
+              console.log('op==========>', op);
               return(
                 <View key={op.id.toString()} style={styles.optionButton}>
                   {
@@ -119,7 +122,9 @@ const HomeScreen = () => {
                     </> :
                     <>
                       <Ionicons name={op.icon} size={30} />
-                      <Text style={{fontFamily:'Poppins-Regular', fontSize:16}}>{op.optionName}</Text>
+                      <Text onPress={
+                        op.optionName === 'Attendence' ? ()=> navigation.navigate('Attendence') : null
+                      } style={{fontFamily:'Poppins-Regular', fontSize:16}}>{op.optionName}</Text>
                     </>
                   }
                 </View>
