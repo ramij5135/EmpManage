@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
@@ -93,7 +93,7 @@ const HomeScreen = () => {
         <Text style={styles.workTitle}>Sales Executive</Text>
         <Text style={styles.workTime}>Office In-Out Time</Text>
       </View>
-      <View style={{paddingHorizontal:20}}>
+      <ScrollView style={{paddingHorizontal:20}}>
         <View style={styles.option}>
           {
             optionButton.map((op) =>{
@@ -127,7 +127,7 @@ const HomeScreen = () => {
             })
           }
         </View>
-      </View>
+      </ScrollView>
     </View>
   )
 };
