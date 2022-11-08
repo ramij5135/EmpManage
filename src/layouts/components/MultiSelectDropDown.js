@@ -1,102 +1,54 @@
 import React, { useState } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import SelectBox from 'react-native-multi-selectbox'
 import { xorBy } from 'lodash'
 
-// Options data must contain 'item' & 'id' keys
-
-const K_OPTIONS = [
-  {
-    item: 'Juventus',
-    id: 'JUVE',
-  },
-  {
-    item: 'Real Madrid',
-    id: 'RM',
-  },
-  {
-    item: 'Barcelona',
-    id: 'BR',
-  },
-  {
-    item: 'PSG',
-    id: 'PSG',
-  },
-  {
-    item: 'FC Bayern Munich',
-    id: 'FBM',
-  },
-  {
-    item: 'Manchester United FC',
-    id: 'MUN',
-  },
-  {
-    item: 'Manchester City FC',
-    id: 'MCI',
-  },
-  {
-    item: 'Everton FC',
-    id: 'EVE',
-  },
-  {
-    item: 'Tottenham Hotspur FC',
-    id: 'TOT',
-  },
-  {
-    item: 'Chelsea FC',
-    id: 'CHE',
-  },
-  {
-    item: 'Liverpool FC',
-    id: 'LIV',
-  },
-  {
-    item: 'Arsenal FC',
-    id: 'ARS',
-  },
-
-  {
-    item: 'Leicester City FC',
-    id: 'LEI',
-  },
-]
-
-function App() {
+function MultiSelectDropDown({ title, item }) {
   const [selectedTeam, setSelectedTeam] = useState({})
   const [selectedTeams, setSelectedTeams] = useState([])
   return (
-    <View style={{ margin: 30 }}>
-      <View style={{ width: '100%', alignItems: 'center' }}>
-        <Text style={{ fontSize: 30, paddingBottom: 20 }}>Demos</Text>
-      </View>
-      <Text style={{ fontSize: 20, paddingBottom: 10 }}>Select Demo</Text>
+    <View >
       <SelectBox
-        label="Select single"
-        options={K_OPTIONS}
+        label={title}
+        labelStyle={styles.label}
+        options={item}
         value={selectedTeam}
         onChange={onChange()}
         hideInputFilter={false}
       />
-      <View style={{ height: 40 }} />
-      <Text style={{ fontSize: 20, paddingBottom: 10 }}>MultiSelect Demo</Text>
       <SelectBox
-        label="Select multiple"
-        options={K_OPTIONS}
+        label="Job Name"
+        labelStyle={styles.label}
+        optionContainerStyle={{ padding: 15 }}
+        multiOptionsLabelStyle={styles.text}
+        options={item}
         selectedValues={selectedTeams}
         onMultiSelect={onMultiChange()}
         onTapClose={onMultiChange()}
+        selectedItemStyle={{ backgroundColor: 'gray', color: 'red', fontSize: 18 }}
         isMulti
       />
     </View>
   )
-
   function onMultiChange() {
     return (item) => setSelectedTeams(xorBy(selectedTeams, [item], 'id'))
   }
-
   function onChange() {
-    return (val) => setSelectedTeam(val)
+    return (val, id) => setSelectedTeam(val, id)
   }
-}
+} const styles = StyleSheet.create({
+  container: {
 
-export default App
+  },
+  label: {
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 18,
+    color: '#505152',
+  },
+  text:{
+    fontSize:18,
+    fontFamily:'Poppins-Regular'
+ },
+})
+
+export default MultiSelectDropDown;

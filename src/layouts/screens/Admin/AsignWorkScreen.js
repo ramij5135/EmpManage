@@ -1,99 +1,60 @@
 
-import React, { useState } from 'react'
-import { Text, View, StyleSheet,TextInput } from 'react-native'
-import SelectBox from 'react-native-multi-selectbox'
-import { xorBy } from 'lodash'
+import React, { useState,useEffect } from 'react'
+import { Text, View, StyleSheet, TextInput,ScrollView } from 'react-native'
 import FullButton from '../../components/fullButton'
-const K_OPTIONS = [
-    {
-        item: 'Juventus',
-        id: 'JUVE',
+import MultiSelectDropDown from '../../components/MultiSelectDropDown'
+const DATA = [
+    { id: '0',
+        item: 'Ramij Dafadar (0)',
+       
     },
     {
-        item: 'Real Madrid',
-        id: 'RM',
+        item: 'Raja Chowdhury (1)',
+        id: '1',
     },
     {
-        item: 'Barcelona',
-        id: 'BR',
+        item: 'Arijit Danda (2)',
+        id: '2',
     },
     {
-        item: 'PSG',
-        id: 'PSG',
+        item: 'Rahul Mete (3)',
+        id: '3',
     },
     {
-        item: 'FC Bayern Munich',
-        id: 'FBM',
+        item: 'Purba Gupta (4) #2141625',
+        id: '4',
     },
     {
-        item: 'Manchester United FC',
-        id: 'MUN',
-    },
-    {
-        item: 'Manchester City FC',
-        id: 'MCI',
-    },
-    {
-        item: 'Everton FC',
-        id: 'EVE',
-    },
-    {
-        item: 'Tottenham Hotspur FC',
-        id: 'TOT',
-    },
-    {
-        item: 'Chelsea FC',
-        id: 'CHE',
-    },
-    {
-        item: 'Liverpool FC',
-        id: 'LIV',
-    },
-    {
-        item: 'Arsenal FC',
-        id: 'ARS',
-    },
-
-    {
-        item: 'Leicester City FC',
-        id: 'LEI',
+        item: 'Umaes kumar (5)',
+        id: '5',
     },
 ]
+
 const AsignWorkScreen = () => {
-    const [selectedTeams, setSelectedTeams] = useState([])
+    const [data, setData] = useState([]);
+        const[ loader,  setLoader] = useState(false)
+
     return (
         <>
             <View style={styles.container}>
                 <Text style={styles.headersText}>Assign Task</Text>
                 <View style={styles.multiselectcontainer}>
-                    <View style={styles.empNameSection}>
-                        <Text style={styles.empNameTag}>Employee Name :-</Text>
-                        <Text style={styles.empName}>Raja Chowdhury (12345)</Text>
-                    </View>
-                
-               
-                <SelectBox
-                    label="Job Name"
-                    labelStyle={styles.labeel}
-                    optionContainerStyle={{padding:15}}
-                    multiOptionsLabelStyle={styles.text}
-                    options={K_OPTIONS}
-                    selectedValues={selectedTeams}
-                    onMultiSelect={onMultiChange()}
-                    onTapClose={onMultiChange()}
-                    selectedItemStyle={{ backgroundColor: 'gray', color: 'red', fontSize: 18 }}
-                    isMulti
-                />
-                <Text style={[styles.labeel,{marginTop:10}]}>Note</Text>
-                <TextInput style={styles.TextInput}  />
-                <FullButton btnTitle={'Assign'} />
-            </View>
+                   
+                         {
+                            loader ? <Text>Loading</Text>:
+                            <View>
+                            <MultiSelectDropDown title={'Employee Name'} item={DATA} />
+                        </View>
+                         }
+                    
+                    <Text style={[styles.labeel, { marginTop: 10 }]}>Note</Text>
+                    <TextInput style={styles.TextInput} />
+                    <FullButton btnTitle={'Assign'} />
+                </View>
             </View>
         </>
     )
-    function onMultiChange() {
-        return (item) => setSelectedTeams(xorBy(selectedTeams, [item], 'id'))
-    }
+
 }
 const styles = StyleSheet.create({
     container: {
@@ -106,7 +67,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-SemiBold',
         fontSize: 24,
         color: '#fff',
-        marginTop: 20
+        marginTop: 20,
     },
     empName: {
         fontFamily: 'Poppins-SemiBold',
@@ -124,28 +85,28 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 20,
     },
-    multiselectcontainer:{ 
+    multiselectcontainer: {
         backgroundColor: '#fff',
-        borderRadius:16,
-        padding:15
- },
- labeel:{
-    fontFamily:'Poppins-SemiBold',
-    fontSize:18,
-    color:'#505152',
- },
- text:{
-    fontSize:18,
-    fontFamily:'Poppins-Regular'
- },
- TextInput:{
-    height:90,
-    width:'100%',
-    backgroundColor:'#e1e2e3',
-    borderRadius:10,
-    textAlignVertical:'top',
-    marginBottom:10
- }
+        borderRadius: 16,
+        padding: 15,
+    },
+    labeel: {
+        fontFamily: 'Poppins-SemiBold',
+        fontSize: 18,
+        color: '#505152',
+    },
+    text: {
+        fontSize: 18,
+        fontFamily: 'Poppins-Regular'
+    },
+    TextInput: {
+        height: 90,
+        width: '100%',
+        backgroundColor: '#e1e2e3',
+        borderRadius: 10,
+        textAlignVertical: 'top',
+        marginBottom: 10
+    }
 
 })
 export default AsignWorkScreen;
