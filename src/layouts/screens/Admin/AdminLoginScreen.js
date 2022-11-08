@@ -1,8 +1,48 @@
-import React from "react";
+import React,{useState} from "react";
 
-import { Text, View, StyleSheet, Image, TextInput,TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, Image, TextInput,Keyboard } from "react-native";
 import FullButton from "../../components/fullButton";
 const AdminLoginScreen = ({navigation}) => {
+    const [input, setInput] = useState(
+        {
+          email: '',
+          password: '',
+        }
+      )
+    const [error, setError] = useState({})
+    const Validate = () => {
+        Keyboard.dismiss();
+        let valid = true;
+        if (!input.email) {
+          handleError('email', 'Please Input Email');
+          valid = false;
+        }
+        else if (!input.email.match(/\S+@\S+\.\S+/)) {
+          handleError('email', 'Pleae input valid email');
+          valid = false;
+        }
+        if (!input.password) {
+          handleError('password', 'Please input Password')
+          valid = false;
+        }
+        else if (input.password.length < 5) {
+          handleError('password', 'Minimum leagth of Password 5');
+          valid = false;
+        }
+        if (valid) {
+          Register()
+          navigation.navigate('AdminScreen')
+        }
+      }
+      const Register = () => {
+        console.log('Registered');
+      }
+      const handleOnChange = (text, input) => {
+        setInput(prevState => ({ ...prevState, [input]: text }))
+      }
+      const handleError = (inputError, errorMessage) => {
+        setError((prevState) => ({ ...prevState, [inputError]: errorMessage }))
+      }
     return (
         <>
             <View style={styles.container}>
@@ -11,13 +51,19 @@ const AdminLoginScreen = ({navigation}) => {
                     <Text style={[styles.headersText,]}>Admin Login</Text>
                     <View style={styles.loginContainer}>
                         <Text style={styles.text}>Enter Your Email</Text>
-                        <TextInput style={styles.TextInput} />
+                        <TextInput onFocus={() => { handleError('email', null) }} onChangeText={(text) => handleOnChange(text, 'email')} style={ error.email=='Please Input Email' ? styles.TextInput:
+                        error.password=='Pleae input valid email' ?
+                        styles.TextInput:
+                        styles.dTextInput}
+                         />
+                        <Text style={styles.inputError}>{error.email}</Text>
                         <Text style={styles.text}>Enter Your Password</Text>
-                        <TextInput style={styles.TextInput} />
-                        {/* <TouchableOpacity onPress={()=>navigation.navigate('AdminScreen')} style={styles.LoginButton} >
-                            <Text style={styles.LoginText}>LOGIN</Text>
-                        </TouchableOpacity> */}
-                        <FullButton btnTitle={'LogIn'} onPressName={()=>navigation.navigate('AdminScreen')} />
+                        <TextInput  onFocus={() => { handleError('password', null) }} onChangeText={(text) => handleOnChange(text, 'password')} style={ error.password=='Please input Password' ? styles.TextInput:
+                        error.password=='Minimum leagth of Password 5' ?
+                        styles.TextInput:
+                        styles.dTextInput} />
+                            <Text style={styles.inputError}>{error.password}</Text>
+                        <FullButton btnTitle={'LogIn'} onPressName={()=>Validate()} />
                     </View>
                 </View>
             </View>
@@ -58,6 +104,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: 60,
         borderRadius: 10,
+        borderColor: 'red',
+        borderWidth: 1,
+        marginBottom: 10,
+        
+    },
+    dTextInput: {
+        backgroundColor: '#fff',
+        height: 60,
+        borderRadius: 10,
         borderColor: '#8d8f8e',
         borderWidth: 1,
         marginBottom: 10
@@ -73,6 +128,10 @@ const styles = StyleSheet.create({
     LoginText:{
         fontFamily: 'Poppins-SemiBold',
         color:'#fff'
+    },
+    inputError:{
+        color:'red',
+        fontSize:15
     }
 })
 export default AdminLoginScreen;  
