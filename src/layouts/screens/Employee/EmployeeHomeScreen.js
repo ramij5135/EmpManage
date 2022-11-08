@@ -93,7 +93,7 @@ const HomeScreen = () => {
         <Text style={styles.workTitle}>Sales Executive</Text>
         <Text style={styles.workTime}>Office In-Out Time</Text>
       </View>
-      <ScrollView style={{paddingHorizontal:20}}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{paddingHorizontal:20}}>
         <View style={styles.option}>
           {
             optionButton.map((op) =>{

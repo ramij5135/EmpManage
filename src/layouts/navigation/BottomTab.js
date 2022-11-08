@@ -9,6 +9,7 @@ const Tab = createBottomTabNavigator();
 
 
 const BottomTab = () => {
+    // console.log('props=========>', props.route);
     return(
         <Tab.Navigator>
             <Tab.Screen name="Dashboard" component={HomeScreen} options={{ tabBarIcon: ({ focused }) => (
