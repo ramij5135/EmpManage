@@ -11,6 +11,7 @@ import HomeScreen from '../screens/Employee/EmployeeHomeScreen';
 import BottomTab from './BottomTab';
 import VicheleScreen from '../screens/Admin/VichelScreen';
 import Attendence from '../screens/Employee/AttendenceScreen';
+import VisitScreen from '../screens/Employee/VisitScreen';
 const Stack = createNativeStackNavigator();
 
 const AppNavigation = () => {
@@ -25,6 +26,7 @@ const AppNavigation = () => {
             <Stack.Screen name='VicheleScreen' component={VicheleScreen} />
             <Stack.Screen name='BottomTab' component={BottomTab} />
             <Stack.Screen name='Attendence' component={Attendence} />
+            <Stack.Screen name='VisitList' component={VisitScreen} />
         </Stack.Navigator>
     );
 };

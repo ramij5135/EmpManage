@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 
 const FullTextInput = (props) => {
     // console.log('props==========>', props);
+    const {title, changeState} = props;
+
     return(
         <View style={styles.inputBox}>
-            <Text style={styles.inputTitle}>{props.title}</Text>
-            <TextInput style={styles.inputField} />
+            <Text style={styles.inputTitle}>{title}</Text>
+            <TextInput onChangeText={(text)=>changeState(text)} style={styles.inputField} />
         </View>
     )
 }

@@ -72,6 +72,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const [time, setTime] = useState('');
   const [outTime, setOutTime] = useState('');
+  // const [count, setCount] = useState(0);
   
   const getInTime = () => {
     const today = new Date();
@@ -83,6 +84,7 @@ const HomeScreen = () => {
     const time = today.getHours() + ":" + today.getMinutes();
     setOutTime(time);
   }
+
   return(
     <View style={styles.container}>
       <View style={styles.header}>
@@ -99,7 +101,7 @@ const HomeScreen = () => {
         <View style={styles.option}>
           {
             optionButton.map((op) =>{
-              console.log('op==========>', op);
+              // console.log('op==========>', op);
               return(
                 <View key={op.id.toString()} style={styles.optionButton}>
                   {
@@ -123,7 +125,7 @@ const HomeScreen = () => {
                     <>
                       <Ionicons name={op.icon} size={30} />
                       <Text onPress={
-                        op.optionName === 'Attendence' ? ()=> navigation.navigate('Attendence') : null
+                        op.optionName === 'Attendence' ? ()=> navigation.navigate('Attendence') : op.optionName === 'My visit list' ? ()=> navigation.navigate('VisitList') : null
                       } style={{fontFamily:'Poppins-Regular', fontSize:16}}>{op.optionName}</Text>
                     </>
                   }

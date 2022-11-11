@@ -1,14 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from "@react-navigation/native";
 
 const Header = (props) => {
     // console.log('props=========>', props);
+    const navigation = useNavigation();
     const {title} = props;
     return(
         <>
             <View style={styles.header}>
-                <Ionicons name="arrow-back" size={30} />
+                <Ionicons name="arrow-back" onPress={() => navigation.goBack()} size={30} />
                 <Text style={styles.headerBack}>{title}</Text>
             </View>
         </>
