@@ -21,30 +21,26 @@ export const getStorageData = async () => {
 };
 
 export const postMethod = async (url, body) => {
-    try {
-        let internet = await NetInfo.fetch();
-        let StoredData = await getStorageData();
-        const setHeader = () => {
-            if (StoredData !== null) {
-                return {Authorization: `Bearer ${StoredData.JWToken}`};
-            }
-        };
-
-        if (internet.isInternetReachable) {
-            return await axios.post(baseURL + url, body, {
-                headers: {
-                    Authorization: setHeader(),
-                },
-            });
-        } else {
-            console.log('postMethod error reason is internet =>', internet);
-            return internet.isInternetReachable;
-        }
-    } catch (e) {
-        console.log('postMethod error reason is =>', e);
-        return e;
-    }
+    var data = JSON.stringify({
+        "EmailId": "bishnudev.swadesh@gmail.com",
+        "Password": "123456"
+      });
+      
+      var config = {
+        method: 'post',
+        url: 'https://demo38.gowebbi.in/api/LoginApi/Login',
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        data : data
+      };
+      
+      axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
 };
+
 
 export const getMethod = async url => {
     try {

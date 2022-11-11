@@ -1,7 +1,11 @@
-import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect } from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 const AdminScreen = ({navigation}) => {
+    useEffect(()=>{
+        AsyncStorage.getItem('token').then((res)=>console.log('token=============>>>>', res))
+    })
     return (
         <>
             <View style={styles.container}>
@@ -13,15 +17,15 @@ const AdminScreen = ({navigation}) => {
                 <Image style={styles.Image} source={require('../../../assets/imgs/Rectangle.png')} />
                 <View style={styles.employeeSection}>
                     <TouchableOpacity onPress={()=>navigation.navigate('EmployeeEntryScreen')}>
-                    <Image style={styles.employeeImg} source={require('../../../assets/imgs/employeeImg.png')} />
+                    <Image style={styles.employeeImg} source={require('../../../assets/imgs/employee2.png')} />
                         <Text style={styles.employeeText}>Employee Entry </Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>navigation.navigate('AsignWorkScreen')}>
-                        <Image style={styles.employeeImg} source={require('../../../assets/imgs/employeeImg.png')} />
+                        <Image style={styles.employeeImg} source={require('../../../assets/imgs/employee2.png')} />
                         <Text style={styles.employeeText}>Asign Work </Text>
                     </TouchableOpacity>
                     <TouchableOpacity>
-                    <Image style={styles.employeeImg} source={require('../../../assets/imgs/employeeImg.png')} />
+                    <Image style={styles.employeeImg} source={require('../../../assets/imgs/employee2.png')} />
                         <Text numberOfLines={1} style={[styles.employeeText]}>Vichel Information </Text>
                     </TouchableOpacity>
                 </View>

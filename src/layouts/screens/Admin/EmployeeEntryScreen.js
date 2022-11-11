@@ -1,11 +1,11 @@
-import React from "react";
+import React,{useState} from "react";
 import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity } from "react-native";
 import SelectList from 'react-native-dropdown-select-list'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import SelectDropdown from 'react-native-select-dropdown'
 const Active = ["TRUE", "FALSE"]
 const EmployeeEntryScreen = () => {
-    const [selected, setSelected] = React.useState("");
+    const [selected, setSelected] =useState("");
     const data = [
         { key: '14', value: 'Select Options' },
         { key: '0', value: 'Sales Associate' },
@@ -44,7 +44,6 @@ const EmployeeEntryScreen = () => {
                     <Text style={styles.text}>Designation</Text>
                     {/* <View style={{marginBottom:40}}>            */}
                     <SelectList setSelected={setSelected} data={data}
-
                         arrowicon={<Ionicons name="chevron-down-outline" size={20} color={'black'} />}
                         searchicon={<Ionicons name="search-outline" size={20} color={'black'} />}
                         boxStyles={{
@@ -92,6 +91,10 @@ const EmployeeEntryScreen = () => {
                     />
                     <Text style={styles.text}>Pin Code</Text>
                     <TextInput style={styles.TextInput} />
+                    <Text style={[styles.text,]}>Current Location</Text>
+                    <View style={[styles.TextInput,{backgroundColor:'#E0E1E2',justifyContent:'center'}]} >
+                        <Text style={[styles.text,{marginLeft:15}]}>Durgapur</Text>
+                    </View>
                     <Text style={[styles.text]}>Is Active</Text>
                     <SelectDropdown
                         data={Active}

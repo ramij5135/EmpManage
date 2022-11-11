@@ -1,2 +1,1 @@
-export let baseURL = 'http://url.com:8080';
-
+export let baseURL = 'https://demo38.gowebbi.in/api/LoginApi/';
