@@ -39,10 +39,6 @@ const styles = StyleSheet.create({
         fontSize:16,
         color:'#2a2a22'
     },
-    input:{
-        // backgroundColor:'grey',
-        width:340
-    }
 });
 
 export default VisitScreen;

@@ -14,13 +14,14 @@ const EmployeeLogin = () => {
         setText(e);
     }
 
-    const submitForm = async() => {
-        try {
-            await AsyncStorage.setItem('email', value)
-        } catch (e) {
-            // saving error
-          }
-    }
+    // const submitForm = async() => {
+    //     try {
+    //         await AsyncStorage.setItem('email', text)
+    //         AsyncStorage.getItem('email')
+    //     } catch (e) {
+    //         // saving error
+    //       }
+    // }
     return(
         <View style={styles.container}>
             <Logo />
