@@ -14,11 +14,15 @@ const styles = StyleSheet.create({
         alignItems:'center',
         flex:0.4,
         justifyContent:'center',
+        // backgroundColor:'red'
+        // marginTop:-50
     },
     logo:{
         height:100,
         resizeMode:'contain',
-        borderRadius:10
+        borderRadius:10,
+        position:'absolute',
+        top:50
     },
 });
 

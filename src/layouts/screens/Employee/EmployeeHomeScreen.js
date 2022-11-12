@@ -208,18 +208,18 @@ const styles = StyleSheet.create({
   option:{
     flexDirection:'row',
     flexWrap:'wrap',
+    justifyContent:'space-between'
   },
   optionButton:{
     backgroundColor:'rgba(255,255,255,0.4)',
     marginHorizontal:5,
-    // height:70,
     paddingVertical:10,
-    width:Dimensions.get('window').width*0.42,
     alignItems:'center',
     justifyContent:'center',
     borderRadius:15,
     overflow:'hidden',
-    marginVertical:5
+    marginVertical:5,
+    width:'45%'
   },
   buttonTitle:{
     fontFamily:'Poppins-Regular',

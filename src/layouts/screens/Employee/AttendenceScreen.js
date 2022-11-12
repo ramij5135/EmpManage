@@ -36,6 +36,7 @@ const Attendence = () => {
                     <Text style={styles.tableHeading}></Text>
                 </View>
             </View>
+            
         </View>
     )
 }

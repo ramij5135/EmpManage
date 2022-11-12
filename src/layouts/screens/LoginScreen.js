@@ -17,7 +17,9 @@ const LoginScreen = () => {
     }
     return(
         <View style={styles.container}>
-            <Logo/>
+            {/* <View> */}
+                <Logo/>
+            {/* </View> */}
             <View style={styles.loginSection}>
                 <FullButton btnTitle={'Employee Login'} onPressName={()=>navigation.navigate('Emp_Login')} />
                 <FullButton btnTitle={'Admin Login'} onPressName={() => checkUser()} />
@@ -30,7 +32,8 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:'rgba(130,209,209,0.4)',
-        padding:20
+        padding:20,
+        // justifyContent:'center'
     },
     loginSection:{
         alignItems:'center',

@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
     container:{
         padding:20,
         backgroundColor:'rgba(130,209,209,0.4)',
-        flex:1
+        flex:1,
+        justifyContent:'center'
     },
     loginSection:{
-        // backgroundColor:'#fff',
-        // alignItems:'center',
-        flex:0.5
+        flex:0.6,
+        marginTop:-70
     },
     heading:{
         fontSize:28,

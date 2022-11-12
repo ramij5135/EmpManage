@@ -15,7 +15,7 @@ const FullTextInput = (props) => {
 
 const styles = StyleSheet.create({
     inputBox:{
-        marginVertical:10, 
+        marginVertical:5, 
     },
     inputTitle:{
         fontSize:16,
