@@ -1,14 +1,38 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
+import { COLORS } from "../../utils/globalStyles";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const FullTextInput = (props) => {
+const FullTextInput = ({title, iconName, error, password, onFocus = () =>{}, ...props}) => {
     // console.log('props==========>', props);
-    const {title, changeState} = props;
+    // const {title, changeState, error, onFocus = () =>{}, } = props;
+    const [isFocused, setIsFocused] = useState(false);
+    const [hidePassword, setHidePassword] = useState(password)
 
     return(
         <View style={styles.inputBox}>
             <Text style={styles.inputTitle}>{title}</Text>
-            <TextInput onChangeText={(text)=>changeState(text)} style={styles.inputField} />
+            <View style={{flexDirection:'row'}}>
+                <TextInput 
+                    style={[styles.inputField, { borderColor:error ? COLORS.red : isFocused ? COLORS.light : null }]}
+                    secureTextEntry={hidePassword}
+                    onFocus={() =>{
+                        onFocus();
+                        setIsFocused(true);
+                    }}
+                    onBlur={()=>{
+                        setIsFocused(false);
+                    }}
+                    autoCorrect={false} 
+                    {...props}  
+                />
+                {
+                    password && <MaterialCommunityIcons style={styles.icon} size={25} onPress={()=> setHidePassword(!hidePassword)} name={ hidePassword ? 'eye-outline' : 'eye-off-outline'} />
+                }
+            </View>
+            {
+                error && <Text style={{color:'red', fontSize:12, marginTop:7}}>{error}</Text>
+            }
         </View>
     )
 }
@@ -26,8 +50,15 @@ const styles = StyleSheet.create({
     },
     inputField:{
         paddingHorizontal:10,
-        borderWidth:1,
-        borderRadius:10
+        borderWidth:0.5,
+        borderRadius:10,
+        flex:1,
+        backgroundColor:COLORS.white
+    },
+    icon:{
+        position:'absolute',
+        right:10,
+        alignSelf:'center'
     }
 });
 

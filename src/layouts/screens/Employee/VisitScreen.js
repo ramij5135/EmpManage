@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TextInput } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Header from "../../components/header";
+import { COLORS } from "../../../utils/globalStyles";
 
 const VisitScreen = () => {
     return (
@@ -21,10 +22,10 @@ const VisitScreen = () => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'rgba(130,209,209,0.4)',
+        backgroundColor:COLORS.primary,
     },
     header:{
-        backgroundColor:'rgba(255,255,255,0.4)',
+        backgroundColor:COLORS.white,
         flexDirection:'row',
         justifyContent:'space-between',
         paddingHorizontal:20,
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     attendence:{
         fontFamily:'Poppins-SemiBold',
         fontSize:16,
-        color:'#2a2a22'
+        color:COLORS.black
     },
 });
 

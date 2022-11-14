@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 import Header from "../../components/header";
 import FullButton from '../../components/fullButton';
+import { COLORS } from "../../../utils/globalStyles";
 
 const {width, height} = Dimensions.get('window');
 const Attendence = () => {
@@ -29,7 +30,6 @@ const Attendence = () => {
                     <Text style={styles.tableHeading}>Status</Text>
                 </View>
                 <View style={{flexDirection:'row'}}>
-
                     <Text style={styles.tableHeading}></Text>
                     <Text style={[styles.tableHeading, {backgroundColor:null}]}></Text>
                     <Text style={[styles.tableHeading, {backgroundColor:null}]}></Text>
@@ -44,10 +44,10 @@ const Attendence = () => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'rgba(130,209,209,0.4)',
+        backgroundColor:COLORS.primary,
     },
     header:{
-        backgroundColor:'rgba(255,255,255,0.4)',
+        backgroundColor:COLORS.white,
         flexDirection:'row',
         justifyContent:'space-between',
         paddingHorizontal:20,
@@ -60,15 +60,15 @@ const styles = StyleSheet.create({
     attendence:{
         fontFamily:'Poppins-SemiBold',
         fontSize:16,
-        color:'#2a2a22'
+        color:COLORS.black
     },
     tableName:{
         flexDirection:'row', 
-        backgroundColor:'rgba(100,100,100,0.2)',
+        backgroundColor:COLORS.light,
         padding:10
     },
     tableField:{
-        borderColor:'rgba(100,100,100,0.4)',
+        borderColor:COLORS.grey,
         borderRightWidth:1,
         fontFamily:'Poppins-Regular',
         fontSize:16,

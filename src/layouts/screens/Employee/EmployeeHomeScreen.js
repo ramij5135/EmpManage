@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { COLORS } from '../../../utils/globalStyles';
 
 
 const optionButton =[
@@ -101,7 +102,6 @@ const HomeScreen = () => {
         <View style={styles.option}>
           {
             optionButton.map((op) =>{
-              // console.log('op==========>', op);
               return(
                 <View key={op.id.toString()} style={styles.optionButton}>
                   {
@@ -142,10 +142,10 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    backgroundColor:'rgba(130,209,209,0.4)',
+    backgroundColor:COLORS.primary,
   },
   header:{
-    backgroundColor:'rgba(255,255,255,0.4)',
+    backgroundColor:COLORS.white,
     height:60,
     alignItems:'center',
     justifyContent:'center'
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     color:'green'
   },
   wrapper:{
-    backgroundColor:'rgba(255,255,255,0.4)',
+    backgroundColor:COLORS.white,
     borderBottomLeftRadius:100,
     borderBottomRightRadius:100,
     overflow:'hidden',
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     justifyContent:'space-between'
   },
   optionButton:{
-    backgroundColor:'rgba(255,255,255,0.4)',
+    backgroundColor:COLORS.white,
     marginHorizontal:5,
     paddingVertical:10,
     alignItems:'center',
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   button:{
     flexDirection:'row', 
     alignItems:'center', 
-    backgroundColor:'blue', 
+    backgroundColor:COLORS.blue, 
     width:120,
     paddingVertical:5, 
     justifyContent:'center',
