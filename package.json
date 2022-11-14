@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "a": "react-native run-android --active-arch-only",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
@@ -21,6 +21,8 @@
     "npm": "^8.19.3",
     "react": "18.2.0",
     "react-native": "0.70.5",
+    "react-native-date-picker": "^4.2.6",
+    "react-native-device-info": "^10.3.0",
     "react-native-dropdown-select-list": "^1.0.23",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-multi-selectbox": "^1.5.0",
