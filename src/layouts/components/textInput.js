@@ -11,10 +11,14 @@ const FullTextInput = ({title, iconName, error, password, onFocus = () =>{}, ...
 
     return(
         <View style={styles.inputBox}>
-            <Text style={styles.inputTitle}>{title}</Text>
-            <View style={{flexDirection:'row'}}>
+            {
+                title ? <Text style={styles.inputTitle}>{title}</Text> : null
+            }
+            {/* <Text style={styles.inputTitle}>{title}</Text> */}
+            <View style={{flexDirection:'row', alignItems:'center'}}>
+                <MaterialCommunityIcons name={iconName} size={20} style={styles.leftIcon}  />
                 <TextInput 
-                    style={[styles.inputField, { borderColor:error ? COLORS.red : isFocused ? COLORS.light : null }]}
+                    style={[styles.inputField, { borderColor:error ? COLORS.red : isFocused ? COLORS.light : null, paddingLeft: iconName ? 40 : null }]}
                     secureTextEntry={hidePassword}
                     onFocus={() =>{
                         onFocus();
@@ -53,12 +57,17 @@ const styles = StyleSheet.create({
         borderWidth:0.5,
         borderRadius:10,
         flex:1,
-        backgroundColor:COLORS.white
+        backgroundColor:COLORS.White
     },
     icon:{
         position:'absolute',
         right:10,
         alignSelf:'center'
+    },
+    leftIcon:{
+        position:'absolute',
+        zIndex:2,
+        left:10
     }
 });
 
