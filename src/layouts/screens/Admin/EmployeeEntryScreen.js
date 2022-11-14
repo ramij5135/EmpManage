@@ -1,11 +1,14 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity } from "react-native";
 import SelectList from 'react-native-dropdown-select-list'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import SelectDropdown from 'react-native-select-dropdown'
+import DatePicker from 'react-native-date-picker'
+import FullTextInput from "../../components/textInput";
+import PickDate from "../../components/DatePicker";
 const Active = ["TRUE", "FALSE"]
 const EmployeeEntryScreen = () => {
-    const [selected, setSelected] =useState("");
+    const [selected, setSelected] = useState("");
     const data = [
         { key: '14', value: 'Select Options' },
         { key: '0', value: 'Sales Associate' },
@@ -25,22 +28,47 @@ const EmployeeEntryScreen = () => {
 
 
     ];
-
+    const Current = new Date()
+    const [date, setDate] = useState(new Date())
+    // const [date, setDate] = useState(
+    //     Current.getDate / Current.getDay / Current.getFullYear()
+    // )
+    const [open, setOpen] = useState(false)
     return (
         <>
             <ScrollView style={styles.container}>
+
                 <View style={{ paddingBottom: 30 }}>
+
                     <Text style={styles.headersText}>Enter employee details</Text>
-                    <Text style={styles.text}>Employee Id</Text>
-                    <TextInput style={styles.TextInput} />
-                    <Text style={styles.text}>Employee name</Text>
-                    <TextInput style={styles.TextInput} />
-                    <Text style={styles.text}>Contact number</Text>
-                    <TextInput style={styles.TextInput} />
+                    <Text style={[styles.text,]}>Employee Id</Text>
+                    <View style={[styles.TextInput, { backgroundColor: '#E0E1E2', justifyContent: 'center' }]} >
+                        <Text style={[styles.text, { marginLeft: 15 }]}>SW_0001</Text>
+                    </View>
+                    <FullTextInput title={'Employee name'} />
+                    <FullTextInput title={'Contact number'} />
                     <Text style={styles.text}>Date of birth</Text>
-                    <TextInput style={styles.TextInput} />
-                    <Text style={styles.text}>Date of joining</Text>
-                    <TextInput style={styles.TextInput} />
+                    {/* <DatePicker
+                        modal
+                        textColor='black'
+                        mode={'date'}
+                        open={open}
+                        date={date}
+                        onConfirm={(date) => {
+                            setOpen(false)
+                            setDate(date)
+                        }}
+                        onCancel={() => {
+                            setOpen(false)
+                        }}
+                    />
+                    <View style={styles.dateview}>
+                        <TextInput value={date.toDateString()} style={{ width: '92%', fontSize: 20 }} />
+                        <Ionicons name="calendar-outline" size={30} style={{ alignSelf: 'center' }} onPress={() => setOpen(true)} />
+                    </View> */}
+                    <PickDate />
+                    <Text  style={styles.text}>Date of joining</Text>
+                    <PickDate />
                     <Text style={styles.text}>Designation</Text>
                     {/* <View style={{marginBottom:40}}>            */}
                     <SelectList setSelected={setSelected} data={data}
@@ -89,11 +117,10 @@ const EmployeeEntryScreen = () => {
                         dropdownTextStyles={{ fontSize: 20 }}
                         defaultOption={{ key: '14', value: 'Select Options' }}
                     />
-                    <Text style={styles.text}>Pin Code</Text>
-                    <TextInput style={styles.TextInput} />
+                    <FullTextInput title={'Pin Code'} />
                     <Text style={[styles.text,]}>Current Location</Text>
-                    <View style={[styles.TextInput,{backgroundColor:'#E0E1E2',justifyContent:'center'}]} >
-                        <Text style={[styles.text,{marginLeft:15}]}>Durgapur</Text>
+                    <View style={[styles.TextInput, { backgroundColor: '#E0E1E2', justifyContent: 'center' }]} >
+                        <Text style={[styles.text, { marginLeft: 15 }]}>Durgapur</Text>
                     </View>
                     <Text style={[styles.text]}>Is Active</Text>
                     <SelectDropdown
@@ -137,7 +164,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-SemiBold',
         fontSize: 18,
         marginBottom: 4,
-        color: '#414242'
+        color: '#414242',
+        marginTop:5
     },
     TextInput: {
         backgroundColor: '#fff',
@@ -145,7 +173,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: '#8d8f8e',
         borderWidth: 1,
-        marginBottom: 10
+        marginBottom: 10,
+        fontSize: 20
     },
     LoginButton: {
         height: 50,
@@ -158,6 +187,15 @@ const styles = StyleSheet.create({
     LoginText: {
         fontFamily: 'Poppins-SemiBold',
         color: '#fff'
+    },
+    dateview: {
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        height: 50,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#8d8f8e',
+        paddingHorizontal: 10
     }
 })
 export default EmployeeEntryScreen;     

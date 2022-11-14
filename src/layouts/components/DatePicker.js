@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 const PickDate = () => {
     const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
-    console.log('date========>',date);
+    // console.log('date========>',date);
 
     return (
         <>

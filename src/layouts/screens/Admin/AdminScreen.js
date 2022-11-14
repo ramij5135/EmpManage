@@ -24,7 +24,7 @@ const AdminScreen = ({navigation}) => {
                         <Image style={styles.employeeImg} source={require('../../../assets/imgs/employee2.png')} />
                         <Text style={styles.employeeText}>Asign Work </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>navigation.navigate('VicheleScreen')}>
                     <Image style={styles.employeeImg} source={require('../../../assets/imgs/employee2.png')} />
                         <Text numberOfLines={1} style={[styles.employeeText]}>Vichel Information </Text>
                     </TouchableOpacity>
