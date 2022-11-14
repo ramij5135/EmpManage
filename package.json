@@ -21,16 +21,23 @@
     "npm": "^8.19.3",
     "react": "18.2.0",
     "react-native": "0.70.5",
+<<<<<<< HEAD
     "react-native-date-picker": "^4.2.6",
     "react-native-device-info": "^10.3.0",
+=======
+    "react-native-collapsible-tab-view": "^5.0.0-rc.13",
+>>>>>>> d83b5693e341c465c2257d99cb7cb953429cd670
     "react-native-dropdown-select-list": "^1.0.23",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-multi-selectbox": "^1.5.0",
+    "react-native-pager-view": "^6.1.0",
     "react-native-paper": "^4.12.5",
+    "react-native-reanimated": "^2.12.0",
     "react-native-safe-area-context": "^4.4.1",
     "react-native-screens": "^3.18.2",
     "react-native-select-dropdown": "^3.0.1",
     "react-native-svg": "^13.5.0",
+    "react-native-tab-view": "^3.3.0",
     "react-native-vector-icons": "^9.2.0"
   },
   "devDependencies": {

@@ -10,16 +10,14 @@ const LoginScreen = () => {
     const navigation = useNavigation();
    const checkUser = () =>{
     AsyncStorage.getItem('token').then((res)=>{
-        console.log('token=============>>>>', res)
+        // console.log('token=============>>>>', res)
         res ? navigation.navigate('AdminScreen') : navigation.navigate('AdminLoginScreen')
     }
     )
     }
     return(
         <View style={styles.container}>
-            {/* <View> */}
                 <Logo/>
-            {/* </View> */}
             <View style={styles.loginSection}>
                 <FullButton btnTitle={'Employee Login'} onPressName={()=>navigation.navigate('Emp_Login')} />
                 <FullButton btnTitle={'Admin Login'} onPressName={() => checkUser()} />
