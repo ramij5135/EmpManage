@@ -1,30 +1,35 @@
 import React from "react";
-import { View, StyleSheet, Image, Text, TextInput } from "react-native";
+import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
 import { COLORS } from "../../../utils/globalStyles";
 import Header from "../../components/header";
 import FullTextInput from "../../components/textInput";
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Inputs from "../../components/inputs";
+import FullButton from "../../components/fullButton";
+
 
 const ReportScreen = () => {
     return(
         <View style={styles.container}>
             <Header title='Report' />
+            <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.header}>
                 <Image style={styles.imgIcon} source={require('../../../assets/imgs/build.png')} />
-                <Text style={styles.attendence}>Attendence Details</Text>
+                <Text style={styles.attendence}>Visit Report</Text>
             </View>
             <View style={{marginVertical:10, paddingHorizontal:20}}>
                 <FullTextInput iconName="file-search" placeHolder='Shop Name & Contact Number' />
             </View>
-            <View style={{backgroundColor:COLORS.white, flex:1, paddingHorizontal:20}}>
-                <View style={{ height:50}}>
-                    <View style={{flexDirection:'row', alignItems:'center'}}>
-                        <Text>Images</Text>
-                        <Ionicons name="add" size={30} style={styles.icon} />
-                    </View>
-                    <TextInput style={{backgroundColor:null, borderBottomWidth:1, borderBottomColor:COLORS.blue, textAlignVertical:'bottom', marginTop:-20}} />
-                </View>
+            <View style={styles.inputSection}>
+                <Inputs title={'Images'} iconName={'add'} />
+                <Inputs title={'Shop Name'} />
+                <Inputs title={'Amount'} />
+                <Inputs title={'Requirements'} />
+                <Inputs title={'Description'} />
             </View>
+            <View style={{paddingHorizontal:10, paddingVertical:20}}>
+                <FullButton btnTitle={'Send Report'} />
+            </View>
+            </ScrollView>
         </View>
     )
 }
@@ -53,6 +58,11 @@ const styles = StyleSheet.create({
     icon:{
         position:'absolute',
         right:10
+    },
+    inputSection:{
+        backgroundColor:COLORS.white, 
+        flex:1, 
+        paddingHorizontal:20
     }
 });
 
