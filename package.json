@@ -21,12 +21,9 @@
     "npm": "^8.19.3",
     "react": "18.2.0",
     "react-native": "0.70.5",
-<<<<<<< HEAD
+    "react-native-collapsible-tab-view": "^4.5.2",
     "react-native-date-picker": "^4.2.6",
     "react-native-device-info": "^10.3.0",
-=======
-    "react-native-collapsible-tab-view": "^5.0.0-rc.13",
->>>>>>> d83b5693e341c465c2257d99cb7cb953429cd670
     "react-native-dropdown-select-list": "^1.0.23",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-multi-selectbox": "^1.5.0",
