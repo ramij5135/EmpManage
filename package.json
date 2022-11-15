@@ -20,6 +20,7 @@
     "npm": "^8.19.3",
     "react": "18.2.0",
     "react-native": "0.70.5",
+    "react-native-collapsible-tab-view": "^4.5.2",
     "react-native-collapsible-tab-view": "^5.0.0-rc.13",
     "react-native-date-picker": "^4.2.6",
     "react-native-device-info": "^10.3.0",
