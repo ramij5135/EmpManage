@@ -3,9 +3,7 @@ import { View, Text, StyleSheet, TextInput } from "react-native";
 import { COLORS } from "../../utils/globalStyles";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const FullTextInput = ({title, iconName, error, password, onFocus = () =>{}, ...props}) => {
-    // console.log('props==========>', props);
-    // const {title, changeState, error, onFocus = () =>{}, } = props;
+const FullTextInput = ({title, iconName, error, password, placeHolder, onFocus = () =>{}, ...props}) => {
     const [isFocused, setIsFocused] = useState(false);
     const [hidePassword, setHidePassword] = useState(password)
 
@@ -28,6 +26,7 @@ const FullTextInput = ({title, iconName, error, password, onFocus = () =>{}, ...
                         setIsFocused(false);
                     }}
                     autoCorrect={false} 
+                    placeholder={placeHolder}
                     {...props}  
                 />
                 {
