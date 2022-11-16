@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
-import { COLORS } from "../../../utils/globalStyles";
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import { COLORS, width } from "../../../utils/globalStyles";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ProfileScreen = () => {
@@ -10,20 +10,44 @@ const ProfileScreen = () => {
                 <Text style={styles.welcome}>Welcome</Text>
                 <Text style={styles.welcomeName}>Ramij Dafadar</Text>
             </View>
-            <View style={styles.wrapper}>
-                <View style={styles.square} />
-                <Image style={styles.profileImg} source={require('../../../assets/imgs/profile.jpg')} />
-                <Text style={styles.workTitle}>Sales Executive</Text>
-            </View>
-            <View style={{paddingHorizontal:20, alignItems:'center'}}>
-                <View style={{flexDirection:'row', alignItems:'center'}}>
-                    <Ionicons name="person" size={25} />
-                    <View>
-                        <Text>Employee Id</Text>
-                        <Text>3</Text>
-                    </View>
+            <ScrollView>
+                <View style={styles.wrapper}>
+                    <View style={styles.square} />
+                    <Image style={styles.profileImg} source={require('../../../assets/imgs/profile.jpg')} />
+                    <Text style={styles.workTitle}>Sales Executive</Text>
                 </View>
-            </View>
+                <View style={styles.fieldSection}>
+                    <View style={styles.field1}>
+                        <Ionicons name="person" size={25} />
+                        <View style={styles.fieldName}>
+                            <Text style={styles.fieldTitle}>Employee Id</Text>
+                            <Text style={[styles.fieldTitle,{ color:COLORS.blue}]}>3</Text>
+                        </View>
+                    </View>
+                    <View style={styles.field1}>
+                        <Ionicons name="calendar-outline" size={25} />
+                        <View style={styles.fieldName}>
+                            <Text style={styles.fieldTitle}>Date of Joining</Text>
+                            <Text style={[styles.fieldTitle,{ color:COLORS.blue}]}>21/01/2022</Text>
+                        </View>
+                    </View>
+                    <View style={styles.field1}>
+                        <Ionicons name="mail-outline" size={25} />
+                        <View style={styles.fieldName}>
+                            <Text style={styles.fieldTitle}>Email</Text>
+                            <Text style={[styles.fieldTitle,{ color:COLORS.blue}]}>abcd@example.com</Text>
+                        </View>
+                    </View>
+                    <View style={styles.field1}>
+                        <Ionicons name="call-outline" size={25} />
+                        <View style={styles.fieldName}>
+                            <Text style={styles.fieldTitle}>Contact</Text>
+                            <Text style={[styles.fieldTitle,{ color:COLORS.blue}]}>7699259492</Text>
+                        </View>
+                    </View>
+                    
+                </View>
+            </ScrollView>
         </View>
     )
 }
@@ -88,6 +112,27 @@ const styles = StyleSheet.create({
         color:'#2a2a2a',
         letterSpacing:1
     },
+    fieldSection:{
+        paddingHorizontal:20, 
+        paddingVertical:10, 
+        marginVertical:10
+    },
+    field1:{
+        flexDirection:'row', 
+        alignItems:'center',
+        marginVertical:5,
+    },
+    fieldName:{
+        marginHorizontal:10, 
+        borderBottomColor:COLORS.light, 
+        borderBottomWidth:0.5, 
+        flex:1, 
+        paddingBottom:10
+    },
+    fieldTitle:{
+        fontSize:18, 
+        fontWeight:'400'
+    }
 });
 
 export default ProfileScreen;
