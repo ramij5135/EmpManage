@@ -5825,6 +5825,11 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
+moment@^2.22.0:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -6719,17 +6724,10 @@ react-native-codegen@^0.70.6:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
-<<<<<<< HEAD
-react-native-collapsible-tab-view@^4.5.2:
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/react-native-collapsible-tab-view/-/react-native-collapsible-tab-view-4.5.2.tgz#e5fd7b81d76f3ee98cc0a0ea54439674591e9055"
-  integrity sha512-QXj4bMqfD+erREZNS51mqyPxJ8Xid4Kef/vqu1PqExNCAo30WjSKOpeNVHmXt4vcs/6ln+qFzLby4cbJ5AkoBw==
-=======
 react-native-collapsible-tab-view@^5.0.0-rc.13:
   version "5.0.0-rc.13"
   resolved "https://registry.yarnpkg.com/react-native-collapsible-tab-view/-/react-native-collapsible-tab-view-5.0.0-rc.13.tgz#d0ad05e20a872a52fc259b5fc8914a79fb56a3eb"
   integrity sha512-8cRh1VmwWdNIdoqfOIvMX5GxZu6ln0tXB45uACQdRW8bEXSrzT4wSw76et1WWkVHJyfTqPw8S6NGyZ7JND+x6Q==
->>>>>>> f844039fc9a3a5df0bc4ff9615283347dcb20976
   dependencies:
     use-deep-compare "^1.1.0"
 
@@ -6739,6 +6737,13 @@ react-native-date-picker@^4.2.6:
   integrity sha512-qnSLefvCInFp1etQ27AsDzpCJgvi0Q0eIYRtIzjBp5WC5hzINIY7WWeQESAA/QUPbwFJU7Vk06ouQc51dC1Qaw==
   dependencies:
     prop-types "^15.8.1"
+
+react-native-datepicker@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.7.2.tgz#58d0822591a0ac9b32aba082650222a0ee29669d"
+  integrity sha512-ses0N1y44fYBmlejYwR2i+dGnQQ8v5/gacX2CrbFJiWxbcQaRuxexsZPB9YQuQkAy+uKz5Gti3Lrp3dh9BfkzA==
+  dependencies:
+    moment "^2.22.0"
 
 react-native-device-info@^10.3.0:
   version "10.3.0"
