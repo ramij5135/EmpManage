@@ -1,12 +1,13 @@
 
-import React, { useState,useEffect } from 'react'
-import { Text, View, StyleSheet, TextInput,ScrollView } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Text, View, StyleSheet, TextInput, ScrollView } from 'react-native'
 import FullButton from '../../components/fullButton'
 import MultiSelectDropDown from '../../components/MultiSelectDropDown'
 const DATA = [
-    { id: '0',
+    {
+        id: '0',
         item: 'Ramij Dafadar (0)',
-       
+
     },
     {
         item: 'Raja Chowdhury (1)',
@@ -32,21 +33,21 @@ const DATA = [
 
 const AsignWorkScreen = () => {
     const [data, setData] = useState([]);
-        const[ loader,  setLoader] = useState(false)
+    const [loader, setLoader] = useState(false)
 
     return (
         <>
             <View style={styles.container}>
                 <Text style={styles.headersText}>Assign Task</Text>
                 <View style={styles.multiselectcontainer}>
-                   
-                         {
-                            loader ? <Text>Loading</Text>:
+
+                    {
+                        loader ? <Text>Loading</Text> :
                             <View>
-                            <MultiSelectDropDown title={'Employee Name'} item={DATA} />
-                        </View>
-                         }
-                    
+                                <MultiSelectDropDown title={'Employee Name'} item={DATA} />
+                            </View>
+                    }
+
                     <Text style={[styles.labeel, { marginTop: 10 }]}>Note</Text>
                     <TextInput style={styles.TextInput} />
                     <FullButton btnTitle={'Assign'} />

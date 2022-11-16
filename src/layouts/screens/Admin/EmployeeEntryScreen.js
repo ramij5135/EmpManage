@@ -22,11 +22,9 @@ const EmployeeEntryScreen = () => {
         { key: '8', value: 'Sales Rep' },
         { key: '9', value: 'Business Development Representative' },
         { key: '10', value: 'Sales Executive' },
-        { key: '11', value: ' Chief Revenue Officer' },
+        { key: '11', value: 'Chief Revenue Officer' },
         { key: '12', value: 'Director of Business Development' },
         { key: '13', value: 'Account Representative' },
-
-
     ];
     const Current = new Date()
     const [date, setDate] = useState(new Date())
