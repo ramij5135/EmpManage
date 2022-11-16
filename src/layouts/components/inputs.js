@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TextInput } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS } from "../../utils/globalStyles";
 
-const Inputs = ({title, iconName}) => {
+const Inputs = ({title, iconName, multiline}) => {
     return(
         <>
             <View style={styles.inputWrap}>
@@ -11,7 +11,7 @@ const Inputs = ({title, iconName}) => {
                     <Text style={styles.label}>{title}</Text>
                     <Ionicons name={iconName} size={25} color={COLORS.blue} />
                 </View>
-                <TextInput style={[styles.inputField, {borderBottomColor:title === 'Description' ? 'green' : COLORS.blue}]} />
+                <TextInput multiline={multiline} style={[styles.inputField, {borderBottomColor:title === 'Description' ? 'green' : COLORS.blue}]} />
             </View>
         </>
     )
