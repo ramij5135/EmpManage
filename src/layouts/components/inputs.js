@@ -9,7 +9,7 @@ const Inputs = ({title, iconName, multiline}) => {
             <View style={styles.inputWrap}>
                 <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
                     <Text style={styles.label}>{title}</Text>
-                    <Ionicons style={styles.inputIcon} name={iconName} size={15} color={COLORS.blue} />
+                    <Ionicons style={styles.inputIcon} name={iconName} size={ iconName === 'add' ? 25 : 15} color={COLORS.blue} />
                 </View>
                 <TextInput multiline={multiline} style={[styles.inputField, {borderBottomColor:title === 'Description' ? 'green' : COLORS.blue}]} />
             </View>
