@@ -125,7 +125,7 @@ const HomeScreen = () => {
                     <>
                       <Ionicons name={op.icon} size={30} />
                       <Text onPress={
-                        op.optionName === 'Attendence' ? ()=> navigation.navigate('Attendence') : op.optionName === 'My visit list' ? ()=> navigation.navigate('VisitList') : op.optionName === 'Your Task' ? () => navigation.navigate('YourTask') : op.optionName === 'Visiting Report' ? () => navigation.navigate('Report') : op.optionName === 'Add New Shop' ? () => navigation.navigate('NewShop') : op.optionName === 'My Location' ? () => navigation.navigate('Location') : null
+                        op.optionName === 'Attendence' ? ()=> navigation.navigate('Attendence') : op.optionName === 'My visit list' ? ()=> navigation.navigate('VisitList') : op.optionName === 'Your Task' ? () => navigation.navigate('YourTask') : op.optionName === 'Visiting Report' ? () => navigation.navigate('Report') : op.optionName === 'Add New Shop' ? () => navigation.navigate('NewShop') : op.optionName === 'My Location' ? () => navigation.navigate('Location') : op.optionName === 'My Store' ? ()=> navigation.navigate('Store') : op.optionName === 'Complaint' ? ()=> navigation.navigate('Complaint') : null
                       } style={{fontFamily:'Poppins-Regular', fontSize:16}}>{op.optionName}</Text>
                     </>
                   }
