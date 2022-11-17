@@ -7,9 +7,9 @@ const Inputs = ({title, iconName, multiline}) => {
     return(
         <>
             <View style={styles.inputWrap}>
-                <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between', paddingHorizontal:10}}>
+                <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
                     <Text style={styles.label}>{title}</Text>
-                    <Ionicons name={iconName} size={25} color={COLORS.blue} />
+                    <Ionicons style={styles.inputIcon} name={iconName} size={15} color={COLORS.blue} />
                 </View>
                 <TextInput multiline={multiline} style={[styles.inputField, {borderBottomColor:title === 'Description' ? 'green' : COLORS.blue}]} />
             </View>
@@ -20,7 +20,7 @@ const Inputs = ({title, iconName, multiline}) => {
 const styles = StyleSheet.create({
     inputWrap:{
         marginVertical:10, 
-        // backgroundColor:COLORS.white
+        backgroundColor:COLORS.white
     },
     inputField:{
         // backgroundColor:'red',
@@ -32,6 +32,10 @@ const styles = StyleSheet.create({
         color:COLORS.black,
         fontSize:16,
         paddingVertical:3
+    },
+    inputIcon:{
+        position:'absolute',
+        right:10
     }
 });
 
