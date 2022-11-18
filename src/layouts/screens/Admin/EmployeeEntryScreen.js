@@ -1,52 +1,123 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity } from "react-native";
-import SelectList from 'react-native-dropdown-select-list'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import SelectDropdown from 'react-native-select-dropdown'
 import DatePicker from 'react-native-date-picker'
 import FullTextInput from "../../components/textInput";
-import PickDate from "../../components/DatePicker";
+import { Dropdown } from 'react-native-element-dropdown';
+import Geolocation from '@react-native-community/geolocation';
+import Geocoder from 'react-native-geocoding';
+import axios from "axios"
 const Active = ["TRUE", "FALSE"]
 const EmployeeEntryScreen = () => {
-    const [selected, setSelected] = useState("");
-    const data = [
-        { key: '14', value: 'Select Options' },
-        { key: '0', value: 'Sales Associate' },
-        { key: '1', value: 'Sales Representative' },
-        { key: '2', value: 'Account Executive' },
-        { key: '3', value: 'Sales Manager' },
-        { key: '4', value: 'Salesperson' },
-        { key: '5', value: 'Business Development Manager' },
-        { key: '6', value: 'Sales Consultant' },
-        { key: '7', value: 'Sales Development Representative' },
-        { key: '8', value: 'Sales Rep' },
-        { key: '9', value: 'Business Development Representative' },
-        { key: '10', value: 'Sales Executive' },
-        { key: '11', value: 'Chief Revenue Officer' },
-        { key: '12', value: 'Director of Business Development' },
-        { key: '13', value: 'Account Representative' },
-    ];
-    const Current = new Date()
     const [date, setDate] = useState(new Date())
-    // const [date, setDate] = useState(
-    //     Current.getDate / Current.getDay / Current.getFullYear()
-    // )
     const [open, setOpen] = useState(false)
+    const [doj, setDoj] = useState(new Date())
+    const [dojopen, setdojopen] = useState(false)
+    const [value, setValue] = useState(null);
+    const [isFocus, setIsFocus] = useState(false);
+    const [statedata, setStatedata] = useState([]);
+    const [citydata, setCitydata] = useState([]);
+    const [address, setaddress] = useState()
+    const [input, setInput] = useState({
+        emailId: '',
+        userName: '',
+        contactNumber: '',
+        designation: '',
+        pinCode: '',
+        setPassword: '',
+        lat: '',
+        long: '',
+    })
+    const handleOnChange = (text, input) => {
+        setInput(prevState => ({ ...prevState, [input]: text }))
+    }
+    useEffect(() => {
+        var axios = require('axios');
+
+        var config = {
+            method: 'get',
+            url: 'https://demo38.gowebbi.in/api/RegisterApi/FetchState',
+        };
+        axios(config)
+            .then(function (response) {
+                var count = Object.keys(response.data.data).length;
+                let countArray = [];
+                for (var i = 0; i < count; i++) {
+                    countArray.push({
+                        value: response.data.data[i]?.id,
+                        label: response.data.data[i]?.state
+                    })
+                }
+                setStatedata(countArray)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, [])
+    const handlArray = (stateCode) => {
+        var axios = require('axios');
+        var config = {
+            method: 'get',
+            url: `https://demo38.gowebbi.in/api/RegisterApi/FetchCity?SID=${stateCode}`,
+            headers: {
+            }
+        };
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                var count = Object.keys(response.data.data).length;
+                let cityArray = [];
+                for (var i = 0; i < count; i++) {
+                    cityArray.push({
+                        value: response.data.data[i]?.id,
+                        label: response.data.data[i]?.city
+                    })
+                }
+                setCitydata(cityArray)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    Geocoder.init("AIzaSyD6WfSwXXdRhyMtTgLU9KY1XGnMdiOcbek");
+
+    const map=()=>{
+        Geolocation.getCurrentPosition(info => {
+            console.log('data===',info.coords.latitude);
+            setInput({lat : info.coords.latitude})
+            Geocoder.from(info.coords.latitude,info.coords.longitude)
+           
+                .then(json => {
+                    var location = json.results[0].address_components[3].long_name;
+                    // var abc = JSON.parse(...location)
+                    // console.log('location======',location);
+                    
+                    // setInput(info.coords.longitude,'long')
+                    
+              setaddress(location)
+            //   setInput(info.coords.latitude,'lat')
+            //         setInput(info.coords.longitude,'long')
+                })
+                .catch(error => console.log('error============>',error));
+        
+          })
+    }
+useEffect(()=>{
+    map()
+},[])
+  
+  console.log('input====>',input);
     return (
         <>
             <ScrollView style={styles.container}>
-
                 <View style={{ paddingBottom: 30 }}>
-
                     <Text style={styles.headersText}>Enter employee details</Text>
-                    <Text style={[styles.text,]}>Employee Id</Text>
-                    <View style={[styles.TextInput, { backgroundColor: '#E0E1E2', justifyContent: 'center' }]} >
-                        <Text style={[styles.text, { marginLeft: 15 }]}>SW_0001</Text>
-                    </View>
-                    <FullTextInput title={'Employee name'} />
-                    <FullTextInput title={'Contact number'} />
+                    <FullTextInput onChangeText={(text) => handleOnChange(text,)} title={'Email Id'} />
+
+                    <FullTextInput onChangeText={(text) => handleOnChange(text, 'userName')} title={'Employee name'} />
+                    <FullTextInput onChangeText={(text) => handleOnChange(text, 'contactNumber')} title={'Contact number'} />
                     <Text style={styles.text}>Date of birth</Text>
-                    {/* <DatePicker
+                    <DatePicker
                         modal
                         textColor='black'
                         mode={'date'}
@@ -63,83 +134,86 @@ const EmployeeEntryScreen = () => {
                     <View style={styles.dateview}>
                         <TextInput value={date.toDateString()} style={{ width: '92%', fontSize: 20 }} />
                         <Ionicons name="calendar-outline" size={30} style={{ alignSelf: 'center' }} onPress={() => setOpen(true)} />
-                    </View> */}
-                    <PickDate />
-                    <Text  style={styles.text}>Date of joining</Text>
-                    <PickDate />
-                    <Text style={styles.text}>Designation</Text>
-                    {/* <View style={{marginBottom:40}}>            */}
-                    <SelectList setSelected={setSelected} data={data}
-                        arrowicon={<Ionicons name="chevron-down-outline" size={20} color={'black'} />}
-                        searchicon={<Ionicons name="search-outline" size={20} color={'black'} />}
-                        boxStyles={{
-                            borderRadius: 10,
-                            backgroundColor: '#fff',
-                            height: 50,
-                            borderColor: '#8d8f8e',
+                    </View>
+                    <Text style={styles.text}>Date of joining</Text>
+                    <DatePicker
+                        modal
+                        textColor='black'
+                        mode={'date'}
+                        open={dojopen}
+                        date={doj}
+                        onConfirm={(date) => {
+                            setdojopen(false)
+                            setDoj(date)
                         }}
-                        inputStyles={{ fontSize: 18 }}
-                        dropdownStyles={{ backgroundColor: '#fff', }}
-                        dropdownTextStyles={{ fontSize: 20 }}
-                        defaultOption={{ key: '14', value: 'Select Options' }}
+                        onCancel={() => {
+                            setOpen(false)
+                        }}
                     />
-                    {/* </View> */}
+                    <View style={styles.dateview}>
+                        <TextInput value={doj.toDateString()} style={{ width: '92%', fontSize: 20 }} />
+                        <Ionicons name="calendar-outline" size={30} style={{ alignSelf: 'center' }} onPress={() => setdojopen(true)} />
+                    </View>
+                    <FullTextInput title={'Designation'} />
                     <Text style={styles.text}>State</Text>
-                    <SelectList setSelected={setSelected} data={data}
-
-                        arrowicon={<Ionicons name="chevron-down-outline" size={20} color={'black'} />}
-                        searchicon={<Ionicons name="search-outline" size={20} color={'black'} />}
-                        boxStyles={{
-                            borderRadius: 10,
-                            backgroundColor: '#fff',
-                            height: 50,
-                            borderColor: '#8d8f8e',
+                    <Dropdown
+                        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        itemTextStyle={styles.itemTextStyle}
+                        data={statedata}
+                        search
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={!isFocus ? 'Select State' : '...'}
+                        searchPlaceholder="Search..."
+                        value={statedata}
+                        onFocus={() => setIsFocus(true)}
+                        onBlur={() => setIsFocus(false)}
+                        onChange={item => {
+                            setValue(item.value);
+                            handlArray(item.value)
+                            console.log('item label===========', item.label);
+                            setIsFocus(false);
                         }}
-                        inputStyles={{ fontSize: 18 }}
-                        dropdownStyles={{ backgroundColor: '#fff', }}
-                        dropdownTextStyles={{ fontSize: 20 }}
-                        defaultOption={{ key: '14', value: 'Select Options' }}
                     />
                     <Text style={styles.text}>City</Text>
-                    <SelectList setSelected={setSelected} data={data}
-                        arrowicon={<Ionicons name="chevron-down-outline" size={20} color={'black'} />}
-                        searchicon={<Ionicons name="search-outline" size={20} color={'black'} />}
-                        boxStyles={{
-                            borderRadius: 10,
-                            backgroundColor: '#fff',
-                            height: 50,
-                            borderColor: '#8d8f8e',
+                    <Dropdown
+                        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        itemTextStyle={styles.itemTextStyle}
+                        data={citydata}
+                        search
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={!isFocus ? 'Select City' : '...'}
+                        searchPlaceholder="Search..."
+                        value={citydata}
+                        onFocus={() => setIsFocus(true)}
+                        onBlur={() => setIsFocus(false)}
+                        onChange={item => {
+                            setValue(item.value);
+                            console.log('itemlabel1===========', item.label);
+                            setIsFocus(false);
                         }}
-                        inputStyles={{ fontSize: 18 }}
-                        dropdownStyles={{ backgroundColor: '#fff', }}
-                        dropdownTextStyles={{ fontSize: 20 }}
-                        defaultOption={{ key: '14', value: 'Select Options' }}
                     />
-                    <FullTextInput title={'Pin Code'} />
+                    <FullTextInput onChangeText={(text) => handleOnChange(text, 'pinCode')} title={'Pin Code'} />
                     <Text style={[styles.text,]}>Current Location</Text>
                     <View style={[styles.TextInput, { backgroundColor: '#E0E1E2', justifyContent: 'center' }]} >
-                        <Text style={[styles.text, { marginLeft: 15 }]}>Durgapur</Text>
+                        <Text style={[styles.text, { marginLeft: 15 }]}>{address}</Text>
                     </View>
-                    <Text style={[styles.text]}>Is Active</Text>
-                    <SelectDropdown
-                        data={Active}
-                        buttonStyle={{ width: '100%', }}
-                        onSelect={(selectedItem, index) => {
-                            // console.log(selectedItem, index)
-                        }}
-                        buttonTextAfterSelection={(selectedItem, index) => {
-                            return selectedItem
-                        }}
-                        rowTextForSelection={(item, index) => {
-                            return item
-                        }}
-
-                    />
+                    <FullTextInput onChangeText={(text) => handleOnChange(text, 'setPassword')} title={'Set Password'} />
                     <TouchableOpacity style={styles.LoginButton} >
                         <Text style={styles.LoginText}>Register</Text>
                     </TouchableOpacity>
                 </View>
-
             </ScrollView>
         </>
     )
@@ -163,7 +237,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginBottom: 4,
         color: '#414242',
-        marginTop:5
+        marginTop: 5
     },
     TextInput: {
         backgroundColor: '#fff',
@@ -194,6 +268,47 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#8d8f8e',
         paddingHorizontal: 10
+    },
+    dropdown: {
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+        marginBottom: 20,
+        backgroundColor: '#fff'
+    },
+    icon: {
+        marginRight: 5,
+    },
+    label: {
+        position: 'absolute',
+        backgroundColor: 'white',
+        left: 22,
+        top: 8,
+        zIndex: 999,
+        paddingHorizontal: 8,
+        fontSize: 18,
+        color: 'black'
+    },
+    placeholderStyle: {
+        fontSize: 18,
+        color: 'black'
+    },
+    selectedTextStyle: {
+        fontSize: 18,
+        color: 'black'
+    },
+    inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
+    },
+    itemTextStyle: {
+        fontSize: 18,
+        color: 'black'
+    },
+    iconStyle: {
+        fontSize: 18
     }
 })
 export default EmployeeEntryScreen;     
