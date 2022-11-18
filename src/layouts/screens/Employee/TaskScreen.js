@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
+import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
 import { COLORS } from "../../../utils/globalStyles";
 import Header from "../../components/header";
 
@@ -7,10 +7,27 @@ const TaskScreen = () => {
     return(
         <View style={styles.container}>
             <Header title='Task' />
-            <View style={styles.header}>
-                <Image style={styles.imgIcon} source={require('../../../assets/imgs/build.png')} />
-                <Text style={styles.attendence}>Attendence Details</Text>
-            </View>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={styles.header}>
+                    <Image style={styles.imgIcon} source={require('../../../assets/imgs/build.png')} />
+                    <Text style={styles.attendence}>Attendence Details</Text>
+                </View>
+                <View style={{paddingHorizontal:20, paddingVertical:10}}>
+                    <Text style={[styles.date,{paddingVertical:10}]}>22-05-2022</Text>
+                    <View style={styles.detail}>
+                        <Text style={styles.date}>Shop Name</Text>
+                        <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magni </Text>
+                    </View>
+                    <View style={styles.detail}>
+                        <Text style={styles.date}>Shop Name</Text>
+                        <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magni </Text>
+                    </View>
+                    <View style={styles.detail}>
+                        <Text style={styles.date}>Shop Name</Text>
+                        <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magni </Text>
+                    </View>
+                </View>
+            </ScrollView>
         </View>
     )
 }
@@ -36,6 +53,22 @@ const styles = StyleSheet.create({
         fontSize:16,
         color:COLORS.black
     },
+    date:{
+        fontSize:18,
+        fontWeight:'bold',
+        color:COLORS.black
+    },
+    description:{
+        fontSize:14,
+        lineHeight:20,
+        paddingTop:5,
+        paddingBottom:10,
+        borderBottomWidth:0.5,
+        borderBottomColor:COLORS.grey
+    },
+    detail:{
+        paddingVertical:5
+    }
 });
 
 export default TaskScreen;

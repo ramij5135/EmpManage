@@ -21,7 +21,7 @@ const NewShopScreen = () => {
                 <Inputs title={'Email'} />
                 <Inputs title={'Contact Number'} />
                 <Inputs title={'Address'} />
-                <Inputs title={'Description'} />
+                <Inputs title={'Description'} multiline={true} />
             </View>
             <View style={{paddingHorizontal:10, paddingVertical:20}}>
                 <FullButton btnTitle={'Add New Shop'} />
