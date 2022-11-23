@@ -14,7 +14,7 @@ const BottomTab = () => {
             <Tab.Screen name="Dashboard" component={HomeScreen} options={{ tabBarIcon: ({ focused }) => (
                     <MaterialIcons color={focused ? "#199e1e" : "#C6C4C0"} name="dashboard" size={25} />
                 ),
-                headerShown:false
+                headerShown:false    
             }}/>
             <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarIcon: ({ focused }) => (
                     <Ionicons color={focused ? "#199e1e" : "#C6C4C0"} name="person" size={25} />
