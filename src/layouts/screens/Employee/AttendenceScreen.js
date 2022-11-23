@@ -5,7 +5,8 @@ import FullButton from '../../components/fullButton';
 import { COLORS } from "../../../utils/globalStyles";
 
 const {width, height} = Dimensions.get('window');
-const Attendence = () => {
+const Attendence = ({route}) => {
+    const {time, outTime} = route.params;
     return(
         <View style={styles.container}>
             <Header title={'Attendence'} />
@@ -30,10 +31,12 @@ const Attendence = () => {
                     <Text style={styles.tableHeading}>Status</Text>
                 </View>
                 <View style={{flexDirection:'row'}}>
-                    <Text style={styles.tableHeading}></Text>
-                    <Text style={[styles.tableHeading, {backgroundColor:null}]}></Text>
-                    <Text style={[styles.tableHeading, {backgroundColor:null}]}></Text>
-                    <Text style={styles.tableHeading}></Text>
+                    <Text style={styles.tableHeading}>21</Text>
+                    <Text style={[styles.tableHeading, {backgroundColor:null}]}>{time}</Text>
+                    <Text style={[styles.tableHeading, {backgroundColor:null}]}>{outTime}</Text>
+                    {
+                        time ? <Text style={[styles.tableHeading, {color:'green'}]}>Present</Text> : <Text style={[styles.tableHeading, {color:COLORS.red}]}>Absent</Text> 
+                    }
                 </View>
             </View>
             
@@ -79,7 +82,9 @@ const styles = StyleSheet.create({
         width:width*0.25,
         borderWidth:0.5,
         paddingHorizontal:10,
-        backgroundColor:'rgba(100,100,100,0.1)'
+        backgroundColor:'rgba(100,100,100,0.1)',
+        textAlign:'center',
+        paddingVertical:2
     }
 })
 
