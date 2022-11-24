@@ -10,14 +10,13 @@ const LoginScreen = () => {
     const navigation = useNavigation();
    const checkUser = () =>{
     AsyncStorage.getItem('token').then((res)=>{
-        // console.log('token=============>>>>', res)
         res ? navigation.navigate('AdminScreen') : navigation.navigate('AdminLoginScreen')
     }
     )
     }
     return(
         <View style={styles.container}>
-                <Logo/>
+            <Logo/>
             <View style={styles.loginSection}>
                 <FullButton btnTitle={'Employee Login'} onPressName={()=>navigation.navigate('Emp_Login')} />
                 <FullButton btnTitle={'Admin Login'} onPressName={() => checkUser()} />
@@ -31,11 +30,11 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor:'rgba(130,209,209,0.4)',
         padding:20,
-        // justifyContent:'center'
     },
+    
     loginSection:{
-        alignItems:'center',
         flex:0.5,
+        alignItems:'center',
         marginVertical:20,
         justifyContent:'center',
     }
