@@ -49,12 +49,10 @@ const EmployeeLogin = () => {
                 EmailId:inputs.email,
                 Password:inputs.password
             });
-            // console.log(raw);
             postMethod('LoginApi/Login',raw).then((res)=>{
-                // console.log('api response',res);
                 const resData = res.data.data[0];
                 setLoading(false);
-                resData.type === "EMP" ? navigation.navigate('BottomTab') : null
+                resData.type === "EMP" ?  navigation.navigate('BottomTab') : null
             }).catch((error) =>{
                     setLoading(false);
             })
@@ -76,13 +74,12 @@ const EmployeeLogin = () => {
         <View style={styles.container}>
             <Loader visible={loading} />
             <Logo />
-            {/* {text} */}
+           
             <View style={styles.loginSection}>
             
                 <Text style={styles.heading}>Employee Login</Text>
                 <View style={styles.form}>
                     <FullTextInput 
-                        // changeState={changeState} 
                         title={'Enter your Employee Id'}
                         error={errors.email}
                         onFocus={()=>{
@@ -109,7 +106,7 @@ const EmployeeLogin = () => {
 const styles = StyleSheet.create({
     container:{
         padding:20,
-        backgroundColor: COLORS,
+        backgroundColor: COLORS.primary,
         flex:1,
         justifyContent:'center'
     },
