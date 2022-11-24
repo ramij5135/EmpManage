@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Alert } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import DatePicker from 'react-native-date-picker'
 import FullTextInput from "../../components/textInput";
@@ -17,7 +17,10 @@ const EmployeeEntryScreen = () => {
     const [isFocus, setIsFocus] = useState(false);
     const [statedata, setStatedata] = useState([]);
     const [citydata, setCitydata] = useState([]);
+    const [state, setState] = useState([]);
+    const [city, setCity] = useState([]);
     const [address, setaddress] = useState()
+
     const [input, setInput] = useState({
         emailId: '',
         userName: '',
@@ -27,6 +30,8 @@ const EmployeeEntryScreen = () => {
         setPassword: '',
         lat: '',
         long: '',
+        // states:'',
+        // citys:''
     })
     const handleOnChange = (text, input) => {
         setInput(prevState => ({ ...prevState, [input]: text }))
@@ -64,7 +69,7 @@ const EmployeeEntryScreen = () => {
         };
         axios(config)
             .then(function (response) {
-                console.log(JSON.stringify(response.data));
+                // console.log(JSON.stringify(response.data));
                 var count = Object.keys(response.data.data).length;
                 let cityArray = [];
                 for (var i = 0; i < count; i++) {
@@ -83,8 +88,13 @@ const EmployeeEntryScreen = () => {
 
     const map=()=>{
         Geolocation.getCurrentPosition(info => {
-            console.log('data===',info.coords.latitude);
-            setInput({lat : info.coords.latitude})
+            console.log('info.coords.latitude===',info.coords.latitude);
+            setInput((prev) => ({...prev,lat : info.coords.latitude}))
+            if(info.coords.longitude){
+                console.log('info.coords.longitude===',info.coords.longitude);
+            // setInput({long : info.coords.longitude})
+            setInput((prev) => ({...prev,long : info.coords.longitude}))
+            }
             Geocoder.from(info.coords.latitude,info.coords.longitude)
            
                 .then(json => {
@@ -105,14 +115,70 @@ const EmployeeEntryScreen = () => {
 useEffect(()=>{
     map()
 },[])
-  
+const Register = async () => {
+    // var myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+
+    var data = {
+        EmailId: input.emailId,
+        UserName:input.userName,
+        Password: input.setPassword,
+        ContactNumber:input.contactNumber,
+        Dob:date,
+        Doj:doj,
+        Designation:input.designation,
+        State:state,
+        City:city,
+        Pin:input.pinCode,
+        CurrentLocation:address,
+        Latitude:input.lat,
+        Longitude:input.long
+
+    };
+    console.log({data});
+    // // console.log(raw);
+    //  axios.post('https://demo38.gowebbi.in/api/RegisterApi/Register',data,{headers: {'Content-Type': 'application/json'}}).then(async (response) => {
+    //   const responseData = response.data;
+    //   console.log(responseData);
+    // //   if(responseData.status ===  "success"){
+    // //     console.log('success',responseData.token);
+    // // //    const data = await AsyncStorage.setItem('token',responseData.token.toString());
+    // //     navigation.navigate('AdminScreen')
+    // //   }else{
+    // //     // console.log(response);
+    // //   }
+    // })
+    // .catch( (error) =>{
+    //   console.log(error);
+    // });
+    const response = await axios.post("https://demo38.gowebbi.in/api/RegisterApi/Register",data,{
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    })
+    const responseData = await response.data;
+    console.log({responseData});
+    console.log('responseData',responseData.status);
+    if(responseData.status=="Success"){
+        Alert.alert("Registration Sucessfull")
+    } else{
+        Alert.alert("Wrong Details")
+
+    }
+  }
+
+//   console.log('input====>',input);
   console.log('input====>',input);
+//   console.log('input====>',input.long);
+
+  
+ 
     return (
         <>
             <ScrollView style={styles.container}>
                 <View style={{ paddingBottom: 30 }}>
                     <Text style={styles.headersText}>Enter employee details</Text>
-                    <FullTextInput onChangeText={(text) => handleOnChange(text,)} title={'Email Id'} />
+                    <FullTextInput onChangeText={(text) => handleOnChange(text,'emailId')} title={'Email Id'} />
 
                     <FullTextInput onChangeText={(text) => handleOnChange(text, 'userName')} title={'Employee name'} />
                     <FullTextInput onChangeText={(text) => handleOnChange(text, 'contactNumber')} title={'Contact number'} />
@@ -154,7 +220,7 @@ useEffect(()=>{
                         <TextInput value={doj.toDateString()} style={{ width: '92%', fontSize: 20 }} />
                         <Ionicons name="calendar-outline" size={30} style={{ alignSelf: 'center' }} onPress={() => setdojopen(true)} />
                     </View>
-                    <FullTextInput title={'Designation'} />
+                    <FullTextInput  onChangeText={(text) => handleOnChange(text,'designation')} title={'Designation'} />
                     <Text style={styles.text}>State</Text>
                     <Dropdown
                         style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
@@ -177,6 +243,7 @@ useEffect(()=>{
                             setValue(item.value);
                             handlArray(item.value)
                             console.log('item label===========', item.label);
+                            setState(item.label)
                             setIsFocus(false);
                         }}
                     />
@@ -201,6 +268,8 @@ useEffect(()=>{
                         onChange={item => {
                             setValue(item.value);
                             console.log('itemlabel1===========', item.label);
+                            setCity(item.label)
+                            // setInput({citys:item.label})
                             setIsFocus(false);
                         }}
                     />
@@ -210,7 +279,7 @@ useEffect(()=>{
                         <Text style={[styles.text, { marginLeft: 15 }]}>{address}</Text>
                     </View>
                     <FullTextInput onChangeText={(text) => handleOnChange(text, 'setPassword')} title={'Set Password'} />
-                    <TouchableOpacity style={styles.LoginButton} >
+                    <TouchableOpacity onPress={Register} style={styles.LoginButton} >
                         <Text style={styles.LoginText}>Register</Text>
                     </TouchableOpacity>
                 </View>

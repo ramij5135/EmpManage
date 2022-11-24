@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
         borderWidth:0.5,
         borderRadius:10,
         flex:1,
+        color:COLORS.black,
         backgroundColor:COLORS.White
     },
     icon:{
