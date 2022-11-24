@@ -13,8 +13,6 @@ const AdminLoginScreen = ({ navigation }) => {
       password: '',
     }
   )
-
-
   const [error, setError] = useState({})
   const Validate = () => {
     Keyboard.dismiss();
@@ -37,12 +35,7 @@ const AdminLoginScreen = ({ navigation }) => {
     }
     if (valid) {
       Login();
-
-
     }
-  }
-  const Register = () => {
-    console.log('Registered');
   }
   const handleOnChange = (text, input) => {
     setInput(prevState => ({ ...prevState, [input]: text }))
@@ -50,63 +43,55 @@ const AdminLoginScreen = ({ navigation }) => {
   const handleError = (inputError, errorMessage) => {
     setError((prevState) => ({ ...prevState, [inputError]: errorMessage }))
   }
-
-
   const Login = async () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-
     var raw = JSON.stringify({
       EmailId: input.email,
       Password: input.password
     });
     // console.log(raw);
-     axios.post('https://demo38.gowebbi.in/api/LoginApi/Login',raw,{headers: {'Content-Type': 'application/json'}}).then(async (response) => {
+    axios.post('https://demo38.gowebbi.in/api/LoginApi/Login', raw, { headers: { 'Content-Type': 'application/json' } }).then(async (response) => {
       const responseData = response.data;
       // console.log(responseData);
-      if(responseData.status ===  "success"){
-        console.log('success',responseData.token);
-       const data = await AsyncStorage.setItem('token',responseData.token.toString());
+      if (responseData.status === "success") {
+        console.log('success', responseData.token);
+        const data = await AsyncStorage.setItem('token', responseData.token.toString());
         navigation.navigate('AdminScreen')
-      }else{
+      }
+      else {
         // console.log(response);
       }
     })
-    .catch( (error) =>{
-      console.log(error);
-    });
+      .catch((error) => {
+        console.log(error);
+      });
   }
-
-
-
-
-
   return (
     <>
       <View style={styles.container}>
-          <View style={styles.header1}>
-            <Image style={styles.img} source={require('../../../assets/imgs/SwadeshSoftware.png')} />
-            <Text style={[styles.headersText,]}>Admin Login</Text>
+        <View style={styles.header1}>
+          <Image style={styles.img} source={require('../../../assets/imgs/SwadeshSoftware.png')} />
+          <Text style={[styles.headersText,]}>Admin Login</Text>
+        </View>
+        <View style={styles.header2}>
+          <View style={styles.loginContainer}>
+            <Text style={styles.text}>Enter Your Email</Text>
+            <TextInput value={input.email} onFocus={() => { handleError('email', null) }} onChangeText={(text) => handleOnChange(text, 'email')} style={error.email == 'Please Input Email' ? styles.TextInput :
+              error.password == 'Pleae input valid email' ?
+                styles.TextInput :
+                styles.dTextInput}
+            />
+            <Text style={styles.inputError}>{error.email}</Text>
+            <Text style={styles.text}>Enter Your Password</Text>
+            <TextInput onFocus={() => { handleError('password', null) }} value={input.password} onChangeText={(text) => handleOnChange(text, 'password')} style={error.password == 'Please input Password' ? styles.TextInput :
+              error.password == 'Minimum leagth of Password 5' ?
+                styles.TextInput :
+                styles.dTextInput} />
+            <Text style={styles.inputError}>{error.password}</Text>
+            <FullButton btnTitle={'LogIn'} onPressName={() => Validate()} />
           </View>
-          <View style={styles.header2}>
-            <View style={styles.loginContainer}>
-              <Text style={styles.text}>Enter Your Email</Text>
-              <TextInput value={input.email} onFocus={() => { handleError('email', null) }} onChangeText={(text) => handleOnChange(text, 'email')} style={error.email == 'Please Input Email' ? styles.TextInput :
-                error.password == 'Pleae input valid email' ?
-                  styles.TextInput :
-                  styles.dTextInput}
-              />
-              <Text style={styles.inputError}>{error.email}</Text>
-              <Text style={styles.text}>Enter Your Password</Text>
-              <TextInput onFocus={() => { handleError('password', null) }} value={input.password} onChangeText={(text) => handleOnChange(text, 'password')} style={error.password == 'Please input Password' ? styles.TextInput :
-                error.password == 'Minimum leagth of Password 5' ?
-                  styles.TextInput :
-                  styles.dTextInput} />
-              
-              <Text style={styles.inputError}>{error.password}</Text>
-              <FullButton btnTitle={'LogIn'} onPressName={() => Validate()} />
-            </View>
-          </View>
+        </View>
       </View>
     </>
   )
@@ -116,15 +101,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(130,209,209,0.4)'
   },
-  header1:{
-    flex:4,
-    justifyContent:'center',
-    alignItems:'center'
+  header1: {
+    flex: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  header2:{
-    flex:6,
-    padding:16,
-    justifyContent:'center',
+  header2: {
+    flex: 6,
+    padding: 16,
+    justifyContent: 'center',
   },
   img: {
     height: 100,
@@ -134,7 +119,7 @@ const styles = StyleSheet.create({
   headersText: {
     fontSize: 30,
     fontFamily: 'Poppins-SemiBold',
-    marginVertical:10,
+    marginVertical: 10,
     color: '#fff',
   },
   loginContainer: {
