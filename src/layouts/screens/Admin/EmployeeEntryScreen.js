@@ -8,7 +8,7 @@ import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
 import axios from "axios"
 const Active = ["TRUE", "FALSE"]
-const EmployeeEntryScreen = () => {
+const EmployeeEntryScreen = ({navigation}) => {
     const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
     const [doj, setDoj] = useState(new Date())
@@ -30,8 +30,6 @@ const EmployeeEntryScreen = () => {
         setPassword: '',
         lat: '',
         long: '',
-        // states:'',
-        // citys:''
     })
     const handleOnChange = (text, input) => {
         setInput(prevState => ({ ...prevState, [input]: text }))
@@ -69,7 +67,6 @@ const EmployeeEntryScreen = () => {
         };
         axios(config)
             .then(function (response) {
-                // console.log(JSON.stringify(response.data));
                 var count = Object.keys(response.data.data).length;
                 let cityArray = [];
                 for (var i = 0; i < count; i++) {
@@ -85,40 +82,27 @@ const EmployeeEntryScreen = () => {
             });
     }
     Geocoder.init("AIzaSyD6WfSwXXdRhyMtTgLU9KY1XGnMdiOcbek");
-
     const map=()=>{
         Geolocation.getCurrentPosition(info => {
             console.log('info.coords.latitude===',info.coords.latitude);
             setInput((prev) => ({...prev,lat : info.coords.latitude}))
             if(info.coords.longitude){
                 console.log('info.coords.longitude===',info.coords.longitude);
-            // setInput({long : info.coords.longitude})
             setInput((prev) => ({...prev,long : info.coords.longitude}))
             }
             Geocoder.from(info.coords.latitude,info.coords.longitude)
            
                 .then(json => {
                     var location = json.results[0].address_components[3].long_name;
-                    // var abc = JSON.parse(...location)
-                    // console.log('location======',location);
-                    
-                    // setInput(info.coords.longitude,'long')
-                    
               setaddress(location)
-            //   setInput(info.coords.latitude,'lat')
-            //         setInput(info.coords.longitude,'long')
                 })
                 .catch(error => console.log('error============>',error));
-        
           })
     }
 useEffect(()=>{
     map()
 },[])
 const Register = async () => {
-    // var myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-
     var data = {
         EmailId: input.emailId,
         UserName:input.userName,
@@ -133,24 +117,8 @@ const Register = async () => {
         CurrentLocation:address,
         Latitude:input.lat,
         Longitude:input.long
-
     };
     console.log({data});
-    // // console.log(raw);
-    //  axios.post('https://demo38.gowebbi.in/api/RegisterApi/Register',data,{headers: {'Content-Type': 'application/json'}}).then(async (response) => {
-    //   const responseData = response.data;
-    //   console.log(responseData);
-    // //   if(responseData.status ===  "success"){
-    // //     console.log('success',responseData.token);
-    // // //    const data = await AsyncStorage.setItem('token',responseData.token.toString());
-    // //     navigation.navigate('AdminScreen')
-    // //   }else{
-    // //     // console.log(response);
-    // //   }
-    // })
-    // .catch( (error) =>{
-    //   console.log(error);
-    // });
     const response = await axios.post("https://demo38.gowebbi.in/api/RegisterApi/Register",data,{
         headers:{
             'Content-Type': 'application/json'
@@ -161,18 +129,13 @@ const Register = async () => {
     console.log('responseData',responseData.status);
     if(responseData.status=="Success"){
         Alert.alert("Registration Sucessfull")
+        navigation.navigate('AdminScreen')
     } else{
         Alert.alert("Wrong Details")
 
     }
   }
-
-//   console.log('input====>',input);
   console.log('input====>',input);
-//   console.log('input====>',input.long);
-
-  
- 
     return (
         <>
             <ScrollView style={styles.container}>
