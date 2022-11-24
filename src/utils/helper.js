@@ -20,25 +20,33 @@ export const getStorageData = async () => {
     }
 };
 
-export const postMethod = async (url, body) => {
-    var data = JSON.stringify({
-        "EmailId": "bishnudev.swadesh@gmail.com",
-        "Password": "123456"
-      });
-      
-      var config = {
-        method: 'post',
-        url: 'https://demo38.gowebbi.in/api/LoginApi/Login',
-        headers: { 
-          'Content-Type': 'application/json'
-        },
-        data : data
-      };
-      
-      axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
+export const postMethod = async (url, body) => {   
+    try {
+        let internet = await NetInfo.fetch();
+        let StoredData = await getStorageData();
+        const setHeader = () => {
+            if (StoredData !== null) {
+                return {
+                'Authorization': `Bearer ${StoredData.JWToken}`,
+                'Content-Type': 'application/json'
+            };
+            }else{
+               return {'Content-Type':'application/json'}
+            }
+        };
+
+        if (internet.isInternetReachable) {
+            return await axios.post(`${baseURL}${url}`, body, {
+                headers: setHeader()
+            })
+        } else {
+            console.log('postMethod error reason is internet =>', internet);
+            return internet.isInternetReachable;
+        }
+    } catch (e) {
+        console.log('postMethod error reason is =>', e);
+        return e;
+    }   
 };
 
 
@@ -48,15 +56,18 @@ export const getMethod = async url => {
         let StoredData = await getStorageData();
         const setHeader = () => {
             if (StoredData !== null) {
-                return {Authorization: `Bearer ${StoredData.JWToken}`};
+                return {
+                'Authorization': `Bearer ${StoredData.JWToken}`,
+                'Content-Type': 'application/json'
+            };
+            }else{
+               return {'Content-Type':'application/json'}
             }
         };
 
         if (internet.isInternetReachable) {
             return await axios.get(baseURL + url, {
-                headers: {
-                    Authorization: setHeader(),
-                },
+                headers: setHeader()
             });
         } else {
             console.log('getMethod error reason is internet =>', internet);

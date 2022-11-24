@@ -5,7 +5,9 @@ import Logo from "../../components/logo";
 import FullButton from "../../components/fullButton";
 import FullTextInput from "../../components/textInput";
 import Loader from "../../components/loader";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { postMethod } from "../../../utils/helper";
+import { COLORS } from "../../../utils/globalStyles";
+
 
 const EmployeeLogin = () => {
     const navigation = useNavigation();
@@ -31,8 +33,8 @@ const EmployeeLogin = () => {
         if(!inputs.password){
             handleError("Please input password", 'password');
             valid=false;
-        } else if (inputs.password.length<8){
-            handleError("Password required minimum 8 characters", 'password')
+        } else if (inputs.password.length<6){
+            handleError("Password required minimum 6 characters", 'password')
             valid=false;
         }
 
@@ -42,15 +44,23 @@ const EmployeeLogin = () => {
     }
     const login = () => {
         setLoading(true);
-        setTimeout(()=>{
-            setLoading(false);
-            try {
-                AsyncStorage.setItem('user', JSON.stringify(inputs));
-                navigation.navigate('BottomTab');
-            } catch (error) {
-                Alert.alert("Error", 'Something went wrong');
-            }
-        },2000);
+        try {
+            var raw = JSON.stringify({
+                EmailId:inputs.email,
+                Password:inputs.password
+            });
+            // console.log(raw);
+            postMethod('LoginApi/Login',raw).then((res)=>{
+                // console.log('api response',res);
+                const resData = res.data.data[0];
+                setLoading(false);
+                resData.type === "EMP" ? navigation.navigate('BottomTab') : null
+            }).catch((error) =>{
+                    setLoading(false);
+            })
+        } catch (error) {
+            Alert.alert("Error", 'Something went wrong');
+        }
     }
     const handleOnChange = (text, input) => {
         setInputs((prevState) => ({...prevState, [input]: text}))
@@ -99,7 +109,7 @@ const EmployeeLogin = () => {
 const styles = StyleSheet.create({
     container:{
         padding:20,
-        backgroundColor:'rgba(130,209,209,0.4)',
+        backgroundColor: COLORS,
         flex:1,
         justifyContent:'center'
     },
