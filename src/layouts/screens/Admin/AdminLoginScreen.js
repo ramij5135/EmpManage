@@ -101,10 +101,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(130,209,209,0.4)'
   },
-  header1: {
-    flex: 4,
-    justifyContent: 'center',
-    alignItems: 'center'
+  header1:{
+    flex:4,
+    justifyContent:'center',
+    alignItems:'center'
   },
   header2: {
     flex: 6,

@@ -37,10 +37,10 @@ const EmployeeLogin = () => {
         }
 
         if(valid){
-            register();
+            login();
         }
     }
-    const register = () => {
+    const login = () => {
         setLoading(true);
         setTimeout(()=>{
             setLoading(false);
