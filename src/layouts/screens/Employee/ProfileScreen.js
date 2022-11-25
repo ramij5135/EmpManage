@@ -10,7 +10,7 @@ const ProfileScreen = () => {
                 <Text style={styles.welcome}>Welcome</Text>
                 <Text style={styles.welcomeName}>Ramij Dafadar</Text>
             </View>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.wrapper}>
                     <View style={styles.square} />
                     <Image style={styles.profileImg} source={require('../../../assets/imgs/profile.jpg')} />

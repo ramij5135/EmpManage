@@ -7,9 +7,12 @@ import FullTextInput from "../../components/textInput";
 import Loader from "../../components/loader";
 import { postMethod } from "../../../utils/helper";
 import { COLORS } from "../../../utils/globalStyles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AuthContext from "../../../context/auth/authContext";
 
 
 const EmployeeLogin = () => {
+    // const auth = useContext(AuthContext);
     const navigation = useNavigation();
     const [text, setText] = useState("");
 
@@ -52,7 +55,7 @@ const EmployeeLogin = () => {
             postMethod('LoginApi/Login',raw).then((res)=>{
                 const resData = res.data.data[0];
                 setLoading(false);
-                resData.type === "EMP" ?  navigation.navigate('BottomTab') : null
+                resData.type === "EMP" ? navigation.navigate('BottomTab') : null                
             }).catch((error) =>{
                     setLoading(false);
             })

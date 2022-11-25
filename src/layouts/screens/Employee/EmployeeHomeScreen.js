@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../../../utils/globalStyles';
+import AuthContext from '../../../context/auth/authContext';
 
 
 const optionButton =[
@@ -70,6 +71,7 @@ const optionButton =[
 
 
 const HomeScreen = () => {
+  const auth = useContext(AuthContext);
   const navigation = useNavigation();
   const [time, setTime] = useState('');
   const [outTime, setOutTime] = useState('');
@@ -90,12 +92,12 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.welcome}>Welcome</Text>
-        <Text style={styles.welcomeName}>Ramij Dafadar</Text>
+        <Text style={styles.welcomeName}>{auth.name}</Text>
       </View>
       <View style={styles.wrapper}>
         <View style={styles.square} />
         <Image style={styles.profileImg} source={require('../../../assets/imgs/profile.jpg')} />
-        <Text style={styles.workTitle}>Sales Executive</Text>
+        <Text style={styles.workTitle}>{auth.designation}</Text>
         <Text style={styles.workTime}>Office In-Out Time</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false} style={{paddingHorizontal:20}}>
