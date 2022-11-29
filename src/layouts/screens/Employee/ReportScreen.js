@@ -24,7 +24,7 @@ const ReportScreen = () => {
                 <Inputs title={'Shop Name'} />
                 <Inputs title={'Amount'} />
                 <Inputs title={'Requirements'} />
-                <Inputs title={'Description'} multiline={true} />
+                <Inputs title={'Description'} multiline={true} height={90} />
             </View>
             <View style={{paddingHorizontal:10, paddingVertical:20}}>
                 <FullButton btnTitle={'Send Report'} />

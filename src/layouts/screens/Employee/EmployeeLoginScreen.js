@@ -7,7 +7,6 @@ import FullTextInput from "../../components/textInput";
 import Loader from "../../components/loader";
 import { postMethod, storeData, getStorageData } from "../../../utils/helper";
 import { COLORS } from "../../../utils/globalStyles";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const EmployeeLogin = () => {
@@ -54,7 +53,8 @@ const EmployeeLogin = () => {
                 const resData = res.data.data[0];
                 const dataFilter = res.data;
                 storeData(dataFilter);
-                const getStore = getStorageData()
+                const getStore = getStorageData();
+                console.log('getdata===========>', getStore);
                 setLoading(false);
                 resData.type === "EMP" ?  navigation.navigate('BottomTab') : null
             }).catch((error) =>{
@@ -78,9 +78,7 @@ const EmployeeLogin = () => {
         <View style={styles.container}>
             <Loader visible={loading} />
             <Logo />
-           
             <View style={styles.loginSection}>
-            
                 <Text style={styles.heading}>Employee Login</Text>
                 <View style={styles.form}>
                     <FullTextInput 

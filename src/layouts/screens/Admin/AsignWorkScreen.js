@@ -44,10 +44,9 @@ const AsignWorkScreen = () => {
                     {
                         loader ? <Text>Loading</Text> :
                             <View>
-                                <MultiSelectDropDown title={'Employee Name'} item={DATA} />
+                                <MultiSelectDropDown title='Employee Name' item={DATA} />
                             </View>
                     }
-
                     <Text style={[styles.labeel, { marginTop: 10 }]}>Note</Text>
                     <TextInput style={styles.TextInput} />
                     <FullButton btnTitle={'Assign'} />

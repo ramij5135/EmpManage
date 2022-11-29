@@ -125,8 +125,6 @@ const Register = async () => {
         }
     })
     const responseData = await response.data;
-    console.log({responseData});
-    console.log('responseData',responseData.status);
     if(responseData.status=="Success"){
         Alert.alert("Registration Sucessfull")
         navigation.navigate('AdminScreen')

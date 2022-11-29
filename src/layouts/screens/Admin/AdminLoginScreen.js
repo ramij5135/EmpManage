@@ -29,8 +29,8 @@ const AdminLoginScreen = ({ navigation }) => {
       handleError('password', 'Please input Password')
       valid = false;
     }
-    else if (input.password.length < 5) {
-      handleError('password', 'Minimum leagth of Password 5');
+    else if (input.password.length < 4) {
+      handleError('password', 'Minimum leagth of Password 4');
       valid = false;
     }
     if (valid) {

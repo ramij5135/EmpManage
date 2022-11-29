@@ -15,7 +15,7 @@ const Complaint = () => {
             </View>
             <View style={{padding:10}}>
                 <Inputs title={'Topic'} />
-                <Inputs title={'Complaint'} multiline={true} />
+                <Inputs title={'Complaint'} multiline={true} height={90} />
                 <FullButton btnTitle={'Send Report'} />
             </View>
         </View>
