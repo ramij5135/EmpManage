@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import SelectBox from 'react-native-multi-selectbox'
 import { xorBy } from 'lodash'
 
 function MultiSelectDropDown({ title, item }) {
   const [selectedTeam, setSelectedTeam] = useState({})
   const [selectedTeams, setSelectedTeams] = useState([])
+
   return (
     <View >
       <SelectBox

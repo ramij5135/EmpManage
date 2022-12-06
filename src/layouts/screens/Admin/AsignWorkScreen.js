@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, TextInput, ScrollView } from 'react-native'
 import FullButton from '../../components/fullButton'
 import MultiSelectDropDown from '../../components/MultiSelectDropDown'
+
 const DATA = [
     {
         id: '0',
@@ -32,8 +33,29 @@ const DATA = [
 ]
 
 const AsignWorkScreen = () => {
-    const [data, setData] = useState([]);
-    const [loader, setLoader] = useState(false)
+    const [user, setUser] = useState([]);
+    const [loader, setLoader] = useState(false);
+    const [job, setJob] = useState([]);
+
+    const fetchUser = async () => {
+        const resp = await fetch('https://demo38.gowebbi.in/api/JobMasterApi/FetchEmployee');
+        const data = await resp.json();
+        setUser(data);
+    }
+
+    const fetchJob = async () => {
+        const resp = await fetch('https://demo38.gowebbi.in/api/JobMasterApi/GetJobMaster');
+        const data = await resp.json();
+        setJob(data);
+    }
+
+    useEffect(()=>{
+        fetchUser();
+        fetchJob();
+    }, []);
+
+    // console.log('user', data);
+    // console.log('job', job);
 
     return (
         <>
@@ -44,7 +66,7 @@ const AsignWorkScreen = () => {
                     {
                         loader ? <Text>Loading</Text> :
                             <View>
-                                <MultiSelectDropDown title='Employee Name' item={DATA} />
+                                <MultiSelectDropDown title='Employee Name' item={user} />
                             </View>
                     }
                     <Text style={[styles.labeel, { marginTop: 10 }]}>Note</Text>
@@ -107,7 +129,6 @@ const styles = StyleSheet.create({
         textAlignVertical: 'top',
         marginBottom: 10
     }
-
 })
 export default AsignWorkScreen;
 

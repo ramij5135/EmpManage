@@ -5,18 +5,14 @@ import {CombinedDefaultTheme} from './src/utils/theme';
 import AppNavigation from "./src/layouts/navigation/AppNavigation";
 import { StatusBar } from 'react-native';
 import { COLORS } from './src/utils/globalStyles';
-import AuthState from './src/context/auth/authState';
-
 
 export default function App() {
     return (
-        <AuthState>
             <PaperProvider theme={CombinedDefaultTheme}>
                 <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.primary} />
                 <NavigationContainer theme={CombinedDefaultTheme}>
                     <AppNavigation/>
                 </NavigationContainer>
             </PaperProvider>
-        </AuthState>
     );
 }
