@@ -53,10 +53,10 @@ const AdminLoginScreen = ({ navigation }) => {
     // console.log(raw);
     axios.post('https://demo38.gowebbi.in/api/LoginApi/Login', raw, { headers: { 'Content-Type': 'application/json' } }).then(async (response) => {
       const responseData = response.data;
-      // console.log(responseData);
+      console.log("responseData===============>",responseData);
       if (responseData.status === "success") {
-        console.log('success', responseData.token);
-        const data = await AsyncStorage.setItem('token', responseData.token.toString());
+        // console.log('successggggg', responseData.Token);
+        const data = await AsyncStorage.setItem('token', responseData?.Token?.toString());
         navigation.navigate('AdminScreen')
       }
       else {

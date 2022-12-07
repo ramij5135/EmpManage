@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 const AdminScreen = ({navigation}) => {
-    // useEffect(()=>{
-    //     AsyncStorage.getItem('token').then((res)=>console.log('token=============>>>>', res))
-    // })
+    useEffect(()=>{
+        AsyncStorage.getItem('token').then((res)=>console.log('token=============>>>>', res))
+    })
     return (
         <>
             <View style={styles.container}>

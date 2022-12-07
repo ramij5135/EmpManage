@@ -43,15 +43,17 @@ const EmployeeEntryScreen = ({navigation}) => {
         };
         axios(config)
             .then(function (response) {
+                console.log('response================>',response);
                 var count = Object.keys(response.data.data).length;
                 let countArray = [];
                 for (var i = 0; i < count; i++) {
                     countArray.push({
                         value: response.data.data[i]?.id,
-                        label: response.data.data[i]?.state
+                        label: response.data.data[i]?.State
                     })
                 }
                 setStatedata(countArray)
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -72,7 +74,7 @@ const EmployeeEntryScreen = ({navigation}) => {
                 for (var i = 0; i < count; i++) {
                     cityArray.push({
                         value: response.data.data[i]?.id,
-                        label: response.data.data[i]?.city
+                        label: response.data.data[i]?.City
                     })
                 }
                 setCitydata(cityArray)
@@ -84,10 +86,10 @@ const EmployeeEntryScreen = ({navigation}) => {
     Geocoder.init("AIzaSyD6WfSwXXdRhyMtTgLU9KY1XGnMdiOcbek");
     const map=()=>{
         Geolocation.getCurrentPosition(info => {
-            console.log('info.coords.latitude===',info.coords.latitude);
+            // console.log('info.coords.latitude===',info.coords.latitude);
             setInput((prev) => ({...prev,lat : info.coords.latitude}))
             if(info.coords.longitude){
-                console.log('info.coords.longitude===',info.coords.longitude);
+                // console.log('info.coords.longitude===',info.coords.longitude);
             setInput((prev) => ({...prev,long : info.coords.longitude}))
             }
             Geocoder.from(info.coords.latitude,info.coords.longitude)
@@ -118,13 +120,14 @@ const Register = async () => {
         Latitude:input.lat,
         Longitude:input.long
     };
-    console.log({data});
+    // console.log({data});
     const response = await axios.post("https://demo38.gowebbi.in/api/RegisterApi/Register",data,{
         headers:{
             'Content-Type': 'application/json'
         }
     })
     const responseData = await response.data;
+    console.log('responseData=================>',responseData);
     if(responseData.status=="Success"){
         Alert.alert("Registration Sucessfull")
         navigation.navigate('AdminScreen')
