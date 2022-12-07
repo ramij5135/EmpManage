@@ -1,134 +1,302 @@
 
-import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, TextInput, ScrollView } from 'react-native'
-import FullButton from '../../components/fullButton'
-import MultiSelectDropDown from '../../components/MultiSelectDropDown'
-
-const DATA = [
-    {
-        id: '0',
-        item: 'Ramij Dafadar (0)',
-
-    },
-    {
-        item: 'Raja Chowdhury (1)',
-        id: '1',
-    },
-    {
-        item: 'Arijit Danda (2)',
-        id: '2',
-    },
-    {
-        item: 'Rahul Mete (3)',
-        id: '3',
-    },
-    {
-        item: 'Purba Gupta (4) #2141625',
-        id: '4',
-    },
-    {
-        item: 'Umaes kumar (5)',
-        id: '5',
-    },
-]
-
-const AsignWorkScreen = () => {
-    const [user, setUser] = useState([]);
-    const [loader, setLoader] = useState(false);
-    const [job, setJob] = useState([]);
-
-    const fetchUser = async () => {
-        const resp = await fetch('https://demo38.gowebbi.in/api/JobMasterApi/FetchEmployee');
-        const data = await resp.json();
-        setUser(data);
-    }
-
-    const fetchJob = async () => {
-        const resp = await fetch('https://demo38.gowebbi.in/api/JobMasterApi/GetJobMaster');
-        const data = await resp.json();
-        setJob(data);
-    }
-
-    useEffect(()=>{
-        fetchUser();
-        fetchJob();
-    }, []);
-
-    // console.log('user', data);
-    // console.log('job', job);
-
-    return (
-        <>
-            <View style={styles.container}>
-                <Text style={styles.headersText}>Assign Task</Text>
-                <View style={styles.multiselectcontainer}>
-
-                    {
-                        loader ? <Text>Loading</Text> :
-                            <View>
-                                <MultiSelectDropDown title='Employee Name' item={user} />
-                            </View>
+import React, { useState ,useEffect} from 'react'
+import { Text, View,StyleSheet } from 'react-native'
+import SelectBox from 'react-native-multi-selectbox'
+import { xorBy } from 'lodash'
+import { COLORS } from '../../../utils/globalStyles'
+const  AsignWorkScreen =()=> {
+  const [selectedTeam, setSelectedTeam] = useState({})
+  const [selectedTeams, setSelectedTeams] = useState([])
+  const [statedata, setStatedata] = useState([]);
+  const [Work, setWork] = useState([]);
+  useEffect(() => {
+            var axios = require('axios');
+    
+            var config = {
+                method: 'get',
+                url: 'https://demo38.gowebbi.in/api/JobMasterApi/FetchEmployee',
+            };
+            axios(config)
+                .then(function (response) {
+                    var count = Object.keys(response.data.data).length;
+                    let countArray = [];
+                    for (var i = 0; i < count; i++) {
+                        countArray.push({
+                            id: response.data.data[i]?.id,
+                            item: response.data.data[i]?.item
+                        })
                     }
-                    <Text style={[styles.labeel, { marginTop: 10 }]}>Note</Text>
-                    <TextInput style={styles.TextInput} />
-                    <FullButton btnTitle={'Assign'} />
-                </View>
-            </View>
-        </>
-    )
-
+                    setStatedata(countArray)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+                axios.get("https://demo38.gowebbi.in/api/JobMasterApi/GetJobMaster").then((response)=>{
+                    var count = Object.keys(response.data.data).length;
+                    let Work = [];
+                    for (var i = 0; i < count; i++) {
+                        Work.push({
+                            id: response.data.data[i]?.id,
+                            item: response.data.data[i]?.item
+                        })
+                    }
+                    setWork(Work)
+                }
+                )
+              
+        }, [])
+        function onMultiChange() {
+            return (item) => setSelectedTeams(xorBy(selectedTeams, [item], 'id'))
+          }
+        
+          function onChange() {
+            return (val) => setSelectedTeam(val)
+          }
+  return (
+    <View style={styles.container}>
+    <View style={{backgroundColor:COLORS.White,borderRadius:14,padding:15}}>
+      <SelectBox
+        label="Select employee name"
+        labelStyle={styles.label}
+        options={statedata}
+        value={selectedTeam}
+        onChange={onChange()}
+        hideInputFilter={false}
+        selectedItemStyle={styles.selectedItemStyle}
+        searchInputProps={{fontSize:20}}
+        inputPlaceholder='Search'
+      />
+      <View />
+      <SelectBox
+        label="Select Job"
+        labelStyle={styles.label}
+        options={Work}
+        selectedValues={selectedTeams}
+        onMultiSelect={onMultiChange()}
+        onTapClose={onMultiChange()}
+        isMulti
+        inputPlaceholder='Search'
+        searchInputProps={{fontSize:20}}
+        multiOptionsLabelStyle={styles.multiOptionsLabelStyle}
+        multiOptionContainerStyle={{backgroundColor:'#709a9e'}}
+       
+      />
+    </View>
+    </View>
+  )
 }
-const styles = StyleSheet.create({
-    container: {
-        padding: 12,
-        backgroundColor: '#87c6e8',
-        flex: 1
+const styles=StyleSheet.create({
+    container:{
+        padding:15,
+        backgroundColor:COLORS.primary,
+        flex:1
     },
-    headersText: {
-        textAlign: 'center',
-        fontFamily: 'Poppins-SemiBold',
-        fontSize: 24,
-        color: '#fff',
-        marginTop: 20,
+    selectedItemStyle:{
+        fontSize:18,
+        fontFamily:'Poppins-SemiBold'
     },
-    empName: {
-        fontFamily: 'Poppins-SemiBold',
-        fontSize: 16,
-        color: '#505152',
-        marginLeft: 7
-
+    label:{
+        fontSize:20,
+        fontFamily:'Poppins-SemiBold'
     },
-    empNameTag: {
-        fontFamily: 'Poppins-SemiBold',
-        fontSize: 16,
-        color: '#505152',
-    },
-    empNameSection: {
-        flexDirection: 'row',
-        marginTop: 20,
-    },
-    multiselectcontainer: {
-        backgroundColor: '#fff',
-        borderRadius: 16,
-        padding: 15,
-    },
-    labeel: {
-        fontFamily: 'Poppins-SemiBold',
-        fontSize: 18,
-        color: '#505152',
-    },
-    text: {
-        fontSize: 18,
-        fontFamily: 'Poppins-Regular'
-    },
-    TextInput: {
-        height: 90,
-        width: '100%',
-        backgroundColor: '#e1e2e3',
-        borderRadius: 10,
-        textAlignVertical: 'top',
-        marginBottom: 10
+    multiOptionsLabelStyle:{
+       fontSize:18,
+       fontFamily:'Poppins-SemiBold'
     }
 })
 export default AsignWorkScreen;
 
+
+//       <Dropdown
+//         style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+//         placeholderStyle={styles.placeholderStyle}
+//         selectedTextStyle={styles.selectedTextStyle}
+//         inputSearchStyle={styles.inputSearchStyle}
+//         iconStyle={styles.iconStyle}
+//         data={data}
+//         search
+//         maxHeight={300}
+//         labelField="label"
+//         valueField="value"
+//         placeholder={!isFocus ? 'Select item' : '...'}
+//         searchPlaceholder="Search..."
+//         value={value}
+//         onFocus={() => setIsFocus(true)}
+//         onBlur={() => setIsFocus(false)}
+//         onChange={item => {
+//           setValue(item.value);
+//           setIsFocus(false);
+//         }}
+//         renderLeftIcon={() => (
+//           <AntDesign
+//             style={styles.icon}
+//             color={isFocus ? 'blue' : 'black'}
+//             name="Safety"
+//             size={20}
+//           />
+//         )}
+//       />
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { StyleSheet, View, Text } from 'react-native';
+// import { MultiSelect, Dropdown } from 'react-native-element-dropdown';
+// import AntDesign from 'react-native-vector-icons/AntDesign';
+// import axios from "axios"
+
+// const data = [
+//     { label: 'Item 1', value: '1' },
+//     { label: 'Item 2', value: '2' },
+//     { label: 'Item 3', value: '3' },
+//     { label: 'Item 4', value: '4' },
+//     { label: 'Item 5', value: '5' },
+//     { label: 'Item 6', value: '6' },
+//     { label: 'Item 7', value: '7' },
+//     { label: 'Item 8', value: '8' },
+// ];
+
+// const MultiSelectComponent = () => {
+//     const [selected, setSelected] = useState([]);
+//     const [value, setValue] = useState(null);
+//     const [isFocus, setIsFocus] = useState(false);
+//     const [statedata, setStatedata] = useState([]);
+//     const [Work, setWork] = useState([]);
+   
+
+//     useEffect(() => {
+//         var axios = require('axios');
+
+//         var config = {
+//             method: 'get',
+//             url: 'https://demo38.gowebbi.in/api/JobMasterApi/FetchEmployee',
+//         };
+//         axios(config)
+//             .then(function (response) {
+//                 var count = Object.keys(response.data.data).length;
+//                 let countArray = [];
+//                 for (var i = 0; i < count; i++) {
+//                     countArray.push({
+//                         value: response.data.data[i]?.id,
+//                         label: response.data.data[i]?.item
+//                     })
+//                 }
+//                 setStatedata(countArray)
+//             })
+//             .catch(function (error) {
+//                 console.log(error);
+//             });
+//             axios.get("https://demo38.gowebbi.in/api/JobMasterApi/GetJobMaster").then((response)=>{
+//                 var count = Object.keys(response.data.data).length;
+//                 let Work = [];
+//                 for (var i = 0; i < count; i++) {
+//                     Work.push({
+//                         value: response.data.data[i]?.id,
+//                         label: response.data.data[i]?.item
+//                     })
+//                 }
+//                 setWork(Work)
+//             }
+//             )
+          
+//     }, [])
+//     console.log('Work ======================>', Work);
+// return (
+//     <View style={styles.container}>
+//         <Text style={styles.employeeName}>Select Employee Name</Text>
+
+       
+//         <Dropdown
+//             style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+//             placeholderStyle={styles.placeholderStyle}
+//             selectedTextStyle={styles.selectedTextStyle}
+//             inputSearchStyle={styles.inputSearchStyle}
+//             iconStyle={styles.iconStyle}
+//             itemTextStyle={styles.itemText}
+//             data={statedata}
+//             search
+//             maxHeight={300}
+//             labelField="label"
+//             valueField="value"
+//             placeholder={!isFocus ? 'Select item' : '...'}
+//             searchPlaceholder="Search..."
+//             value={value}
+//             onFocus={() => setIsFocus(true)}
+//             onBlur={() => setIsFocus(false)}
+//             onChange={item => {
+//                 setValue(item.value);
+//                 setIsFocus(false);
+//             }}
+//             // renderLeftIcon={() => (
+//             //     <AntDesign
+//             //         style={styles.icon}
+//             //         color={isFocus ? 'blue' : 'black'}
+//             //         name="Safety"
+//             //         size={20}
+//             //     />
+//             // )}
+//         />
+//         <Text>Job Name</Text>
+//         <MultiSelect
+//             style={styles.dropdown}
+//             placeholderStyle={styles.placeholderStyle}
+//             selectedTextStyle={styles.selectedTextStyle}
+//             inputSearchStyle={styles.inputSearchStyle}
+//             iconStyle={styles.iconStyle}
+//             itemTextStyle={styles.itemText}
+//             itemContainerStyle={styles.itemContainer}
+//             search
+//             activeColor='#fff'
+//             data={Work}
+//             labelField="label"
+//             valueField="value"
+//             placeholder="Select Job"
+//             searchPlaceholder="Search..."
+//             value={selected}
+//             onChange={item => {
+//                 setSelected(item);
+//             }}
+//         />
+//     </View>
+// );
+// };
+
+// export default MultiSelectComponent;
+
+// const styles = StyleSheet.create({
+//     container: { padding: 16 },
+//     dropdown: {
+//         height: 50,
+//         backgroundColor: 'transparent',
+//         borderBottomColor: 'gray',
+//         borderBottomWidth: 1,
+//     },
+//     placeholderStyle: {
+//         fontSize: 18,
+
+//     },
+//     selectedTextStyle: {
+//         fontSize: 18,
+//         fontFamily:'Poppins-SemiBold'
+//     },
+//     inputSearchStyle: {
+//         height: 40,
+//         fontSize: 16,
+//     },
+//     selectedStyle: {
+//         borderRadius: 24,
+//         backgroundColor:'red'
+
+//     },
+//     employeeName:{
+//         fontFamily:'Poppins-SemiBold',
+//         fontSize:24
+//     },
+//     itemText:{
+//         fontFamily:'Poppins-SemiBold',
+//         fontSize:18
+//     },
+//     itemContainer:{
+//         backgroundColor:'#639196'
+//     }
+// });
