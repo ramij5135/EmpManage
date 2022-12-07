@@ -8,11 +8,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
     const navigation = useNavigation();
-   const checkUser = () =>{
-    AsyncStorage.getItem('token').then((res)=>{
-        res ? navigation.navigate('AdminScreen') : navigation.navigate('AdminLoginScreen')
-    }
-    )
+    const checkUser = () =>{
+        AsyncStorage.getItem('token').then((res)=>{
+            res ? navigation.navigate('AdminScreen') : navigation.navigate('AdminLoginScreen')
+        })
     }
     return(
         <View style={styles.container}>

@@ -55,9 +55,9 @@ const EmployeeLogin = () => {
                 const dataFilter = res.data;
                 storeData(dataFilter);
                 const getStore = getStorageData();
-                console.log('getdata===========>', getStore);
+                // console.log('getdata===========>', getStore);
                 setLoading(false);
-                resData.type === "EMP" ?  navigation.navigate('BottomTab') : null
+                resData.Type === "EMP" ?  navigation.navigate('BottomTab') : null
             }).catch((error) =>{
                     setLoading(false);
             })

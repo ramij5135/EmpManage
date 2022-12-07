@@ -1,10 +1,8 @@
 import React from "react";
 import { Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 
-const {width, height} = Dimensions.get('window');
+
 const FullButton = ({btnTitle,onPressName}) => {
-    // console.log('Button props ==============>', props);
-    // const {btnTitle, onPressName} = props;
     return(
         <>
             <TouchableOpacity style={styles.btn} onPress={onPressName}>
@@ -26,7 +24,8 @@ const styles = StyleSheet.create({
     },
     btnText:{
         fontSize:17,
-        color:'#fff'
+        color:'#fff',
+        fontWeight:'bold'
     }
 });
 
