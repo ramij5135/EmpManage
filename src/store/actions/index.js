@@ -1,1 +1,1 @@
-export {default} from './loginaction';
+export {dafault} from './loginaction';

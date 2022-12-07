@@ -42,6 +42,7 @@ const EmployeeLogin = () => {
             login();
         }
     }
+
     const login = () => {
         setLoading(true);
         try {
@@ -104,6 +105,7 @@ const EmployeeLogin = () => {
         </View>
     )
 }
+
 
 const styles = StyleSheet.create({
     container:{
