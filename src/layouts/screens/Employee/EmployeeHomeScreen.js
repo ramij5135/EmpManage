@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../../../utils/globalStyles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const optionButton =[
@@ -73,18 +74,21 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const [time, setTime] = useState('');
   const [outTime, setOutTime] = useState('');
+  const [date, setDate] = useState('');
   
   const getInTime = () => {
     const today = new Date();
-    // const date = today.getDay() + "-" + today.getMonth() + "-" + today.getFullYear();
+    const date = today.getDay() + "-" + today.getMonth() + "-" + today.getFullYear();
     const time = today.getHours() + ":" + today.getMinutes();
     setTime(time)
+    setDate(date)
   }
   const getOutTime = () => {
     const today = new Date();
     const time = today.getHours() + ":" + today.getMinutes();
     setOutTime(time);
   }
+
 
   return(
     <View style={styles.container}>
@@ -125,7 +129,7 @@ const HomeScreen = () => {
                     <>
                       <Ionicons name={op.icon} size={30} />
                       <Text onPress={
-                        op.optionName === 'Attendence' ? ()=> navigation.navigate('Attendence',{time, outTime}) : op.optionName === 'My visit list' ? ()=> navigation.navigate('VisitList') : op.optionName === 'Your Task' ? () => navigation.navigate('YourTask') : op.optionName === 'Visiting Report' ? () => navigation.navigate('Report') : op.optionName === 'Add New Shop' ? () => navigation.navigate('NewShop') : op.optionName === 'My Location' ? () => navigation.navigate('Location') : op.optionName === 'My Store' ? ()=> navigation.navigate('Store') : op.optionName === 'Complaint' ? ()=> navigation.navigate('Complaint') : null
+                        op.optionName === 'Attendence' ? ()=> navigation.navigate('Attendence',{time, outTime, date}) : op.optionName === 'My visit list' ? ()=> navigation.navigate('VisitList') : op.optionName === 'Your Task' ? () => navigation.navigate('YourTask') : op.optionName === 'Visiting Report' ? () => navigation.navigate('Report') : op.optionName === 'Add New Shop' ? () => navigation.navigate('NewShop') : op.optionName === 'My Location' ? () => navigation.navigate('Location') : op.optionName === 'My Store' ? ()=> navigation.navigate('Store') : op.optionName === 'Complaint' ? ()=> navigation.navigate('Complaint') : null
                       } style={{fontFamily:'Poppins-Regular', fontSize:16}}>{op.optionName}</Text>
                     </>
                   }

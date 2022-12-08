@@ -6,7 +6,7 @@ import { COLORS } from "../../../utils/globalStyles";
 
 const {width, height} = Dimensions.get('window');
 const Attendence = ({route}) => {
-    const {time, outTime} = route.params;
+    const {time, outTime, date} = route.params;
     return(
         <View style={styles.container}>
             <Header title={'Attendence'} />
@@ -25,13 +25,13 @@ const Attendence = ({route}) => {
             </View>
             <View style={{flexDirection:'row',marginTop:10, flexWrap:'wrap'}}>
                 <View style={{flexDirection:'row'}}>
-                    <Text style={styles.tableHeading}>Date</Text>
+                    <Text style={[styles.tableHeading, {width: date ? width*0.28 : width*0.25}]}>Date</Text>
                     <Text style={[styles.tableHeading, {backgroundColor:null}]}>In Time</Text>
                     <Text style={[styles.tableHeading, {backgroundColor:null}]}>Out Time</Text>
                     <Text style={styles.tableHeading}>Status</Text>
                 </View>
                 <View style={{flexDirection:'row'}}>
-                    <Text style={styles.tableHeading}>21</Text>
+                    <Text style={[styles.tableHeading, { width: date ? width*0.28 : width*0.25}]}>{date}</Text>
                     <Text style={[styles.tableHeading, {backgroundColor:null}]}>{time}</Text>
                     <Text style={[styles.tableHeading, {backgroundColor:null}]}>{outTime}</Text>
                     {
