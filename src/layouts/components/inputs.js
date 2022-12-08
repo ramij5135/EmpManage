@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
     label:{
         color:COLORS.black,
         fontSize:16,
-        paddingVertical:3
+        paddingVertical:3,
+        paddingHorizontal:5
     },
     inputIcon:{
         position:'absolute',
