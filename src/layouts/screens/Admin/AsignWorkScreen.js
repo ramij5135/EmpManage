@@ -20,12 +20,15 @@ const AsignWorkScreen = () => {
     };
     axios(config)
       .then(function (response) {
+        console.log('response-==============>',response);
         var count = Object.keys(response.data.data).length;
         let countArray = [];
         for (var i = 0; i < count; i++) {
+          // console.log('response.data.data[i]======>',response.data.data[i].ID);
           countArray.push({
-            id: response.data.data[i]?.Id,
-            item: response.data.data[i]?.Item
+            id: response.data.data[i]?.ID,
+            item: `${response.data.data[i]?.Item} (${response.data.data[i]?.ID})`
+            
           })
         }
         setStatedata(countArray)
@@ -48,7 +51,9 @@ const AsignWorkScreen = () => {
 
   }, [])
   function onMultiChange() {
-    return (item) => setSelectedTeams(xorBy(selectedTeams, [item], 'id'))
+    return (item) =>
+    // console.log('itemkjifijfh======>',item);
+     setSelectedTeams(xorBy(selectedTeams, [item], 'id'))
   }
 
   function onChange() {
@@ -84,7 +89,7 @@ const AsignWorkScreen = () => {
 
         />
         
-          <Inputs height={100} title={'Description'} />
+          <Inputs height={100} bgColor='#f0f0f0' multiline={true} zIndex={2} title={'Description'} />
        
          <FullButton btnTitle={'Asign'} />
       </View>
