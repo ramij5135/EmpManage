@@ -57,10 +57,11 @@ const AdminLoginScreen = ({ navigation }) => {
       if (responseData.status === "success") {
         // console.log('successggggg', responseData.Token);
         const data = await AsyncStorage.setItem('token', responseData?.Token?.toString());
-        navigation.navigate('AdminScreen')
+        console.log('data======>',data);
+        navigation.navigate('AdminScreen',{data})
       }
       else {
-        // console.log(response);
+        // // // // console.log(response);
       }
     })
       .catch((error) => {

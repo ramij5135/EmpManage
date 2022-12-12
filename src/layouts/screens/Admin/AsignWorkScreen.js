@@ -11,6 +11,8 @@ const AsignWorkScreen = () => {
   const [selectedTeams, setSelectedTeams] = useState([])
   const [statedata, setStatedata] = useState([]);
   const [Work, setWork] = useState([]);
+  // console.log('selectedTeam=============>',selectedTeam);
+  // console.log('selectedTeams=============>',selectedTeams);
   useEffect(() => {
     var axios = require('axios');
 
@@ -24,10 +26,9 @@ const AsignWorkScreen = () => {
         var count = Object.keys(response.data.data).length;
         let countArray = [];
         for (var i = 0; i < count; i++) {
-          // console.log('response.data.data[i]======>',response.data.data[i].ID);
           countArray.push({
             id: response.data.data[i]?.ID,
-            item: `${response.data.data[i]?.Item} (${response.data.data[i]?.ID})`
+            item: `${response.data.data[i]?.Item} (SW_000${response.data.data[i]?.ID})`
             
           })
         }

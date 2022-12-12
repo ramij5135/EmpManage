@@ -2,9 +2,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect } from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons'
-const AdminScreen = ({navigation}) => {
+const AdminScreen = ({navigation,route}) => {
+    console.log('route==================>',route.params);
     useEffect(()=>{
-        AsyncStorage.getItem('token').then((res)=>console.log('token=============>>>>', res))
+        AsyncStorage.getItem('token').then((res)=>{
+            // if(res){
+            //     navigation.goBack()
+            // }
+        })
     })
     return (
         <>
