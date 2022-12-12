@@ -67,6 +67,12 @@ const optionButton =[
     icon:'notifications-off-outline',
     btnTitle:'Complaint'
   },
+  {
+    id:10,
+    optionName:'Vichele',
+    icon:'notifications-off-outline',
+    btnTitle:'Vechile'
+  },
 ]
 
 
@@ -112,7 +118,9 @@ const HomeScreen = () => {
                     op.btnTitle === 'In Time' ? 
                     <>
                       <Text style={styles.buttonTitle}>{op.optionName}</Text>
-                      <Text>{time}</Text>
+                      {
+                        time ? <Text>{time}</Text>: null
+                      }
                       <View style={styles.button}>
                         <Ionicons name='time-outline' size={15} color={'#fff'} />
                         <Text onPress={time ? null : getInTime} style={{color:'#fff', marginLeft:5}}>{op.btnTitle}</Text>
@@ -120,7 +128,9 @@ const HomeScreen = () => {
                     </> : op.btnTitle === 'Out Time' ? 
                     <>
                       <Text style={styles.buttonTitle}>{op.optionName}</Text>
-                      <Text>{outTime}</Text>
+                      {
+                        outTime ? <Text>{outTime}</Text> : null
+                      }
                       <View style={styles.button}>
                         <Ionicons name='time-outline' size={15} color={'#fff'} />
                         <Text onPress={getOutTime} style={{color:'#fff', marginLeft:5}}>{op.btnTitle}</Text>
@@ -129,7 +139,7 @@ const HomeScreen = () => {
                     <>
                       <Ionicons name={op.icon} size={30} />
                       <Text onPress={
-                        op.optionName === 'Attendence' ? ()=> navigation.navigate('Attendence',{time, outTime, date}) : op.optionName === 'My visit list' ? ()=> navigation.navigate('VisitList') : op.optionName === 'Your Task' ? () => navigation.navigate('YourTask') : op.optionName === 'Visiting Report' ? () => navigation.navigate('Report') : op.optionName === 'Add New Shop' ? () => navigation.navigate('NewShop') : op.optionName === 'My Location' ? () => navigation.navigate('Location') : op.optionName === 'My Store' ? ()=> navigation.navigate('Store') : op.optionName === 'Complaint' ? ()=> navigation.navigate('Complaint') : null
+                        op.optionName === 'Attendence' ? ()=> navigation.navigate('Attendence',{time, outTime, date}) : op.optionName === 'My visit list' ? ()=> navigation.navigate('VisitList') : op.optionName === 'Your Task' ? () => navigation.navigate('YourTask') : op.optionName === 'Visiting Report' ? () => navigation.navigate('Report') : op.optionName === 'Add New Shop' ? () => navigation.navigate('NewShop') : op.optionName === 'My Location' ? () => navigation.navigate('Location') : op.optionName === 'My Store' ? ()=> navigation.navigate('Store') : op.optionName === 'Complaint' ? ()=> navigation.navigate('Complaint') : op.optionName === 'Vichele' ? ()=> navigation.navigate('VechicleDetails') : null
                       } style={{fontFamily:'Poppins-Regular', fontSize:16}}>{op.optionName}</Text>
                     </>
                   }

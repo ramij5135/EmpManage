@@ -18,6 +18,7 @@ import NewShopScreen from '../screens/Employee/NewShopScreen';
 import LocationScreen from '../screens/Employee/LocationScreen';
 import MyStore from '../screens/Employee/MyStoreScreen';
 import Complaint from '../screens/Employee/ComplaintScreen';
+import Vechicle from '../screens/Employee/VechicleDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,7 @@ const AppNavigation = () => {
             <Stack.Screen name='Location' component={LocationScreen} />
             <Stack.Screen name='Store' component={MyStore} />
             <Stack.Screen name='Complaint' component={Complaint} />
+            <Stack.Screen name='VechicleDetails' component={Vechicle} />
         </Stack.Navigator>
     );
 };
