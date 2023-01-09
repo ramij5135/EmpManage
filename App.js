@@ -6,6 +6,7 @@ import AppNavigation from "./src/layouts/navigation/AppNavigation";
 import { StatusBar } from 'react-native';
 import { COLORS } from './src/utils/globalStyles';
 
+
 export default function App() {
     return (
             <PaperProvider theme={CombinedDefaultTheme}>
