@@ -53,11 +53,13 @@ const EmployeeLogin = () => {
             postMethod('LoginApi/Login',raw).then((res)=>{
                 const resData = res.data.data[0];
                 const dataFilter = res.data;
-                storeData(dataFilter);
-                const getStore = getStorageData();
-                // console.log('getdata===========>', getStore);
+                const token = dataFilter.Token;
+                console.log('token=========>', token);
+                // console.log('response data======>', resData);
+                // console.log('data filter=======>', dataFilter);
                 setLoading(false);
                 resData.Type === "EMP" ?  navigation.navigate('BottomTab') : null
+                storeData(token);
             }).catch((error) =>{
                     setLoading(false);
             })

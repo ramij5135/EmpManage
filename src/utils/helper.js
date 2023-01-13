@@ -6,7 +6,7 @@ import NetInfo from '@react-native-community/netinfo';
 export const storeData = async data => {
     try {
         await AsyncStorage.setItem('user_data', JSON.stringify(data));
-        // console.log('data save');
+        console.log('data save');
     } catch (error) {
         console.log('storeData err', error);
     }
