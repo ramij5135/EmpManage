@@ -7,6 +7,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
 import axios from "axios"
+import { baseURL } from "../../../utils/config";
 const Active = ["TRUE", "FALSE"]
 const EmployeeEntryScreen = ({navigation}) => {
     const [date, setDate] = useState(new Date())

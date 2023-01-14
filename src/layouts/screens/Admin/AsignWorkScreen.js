@@ -6,23 +6,38 @@ import { xorBy } from 'lodash'
 import { COLORS } from '../../../utils/globalStyles'
 import FullButton from '../../components/fullButton'
 import Inputs from '../../components/inputs'
+import axios from 'axios'
+import { set } from 'react-native-reanimated'
+import { baseURL } from '../../../utils/config'
 const AsignWorkScreen = () => {
   const [selectedTeam, setSelectedTeam] = useState({})
   const [selectedTeams, setSelectedTeams] = useState([])
   const [statedata, setStatedata] = useState([]);
   const [Work, setWork] = useState([]);
-  // console.log('selectedTeam=============>',selectedTeam);
-  // console.log('selectedTeams=============>',selectedTeams);
+  const [text,setText]=useState()
+  // const [jobData,setJobdat]=useState()
+  // const [data,set]=useState()
+   const [data,setdata]=useState([])
+
+  console.log('selectedTeam=============>',selectedTeam.id);
+  console.log('text=============>',text);
+  useEffect(()=>{
+    selectedTeams.map((item,index)=>{
+      setdata([...data,item.id])
+    })
+  },[selectedTeams])
+  // console.log('dtaa====>',data.toString());
+  const value=data?.toString()
   useEffect(() => {
     var axios = require('axios');
 
     var config = {
       method: 'get',
-      url: 'https://demo38.gowebbi.in/api/JobMasterApi/FetchEmployee',
+      url: `${baseURL}JobMasterApi/FetchEmployee`,
     };
     axios(config)
       .then(function (response) {
-        console.log('response-==============>',response);
+        // console.log('response-==============>',response);
         var count = Object.keys(response.data.data).length;
         let countArray = [];
         for (var i = 0; i < count; i++) {
@@ -37,7 +52,7 @@ const AsignWorkScreen = () => {
       .catch(function (error) {
         console.log(error);
       });
-    axios.get("https://demo38.gowebbi.in/api/JobMasterApi/GetJobMaster").then((response) => {
+    axios.get(`${baseURL}JobMasterApi/GetJobMaster`).then((response) => {
       var count = Object.keys(response.data.data).length;
       let Work = [];
       for (var i = 0; i < count; i++) {
@@ -52,11 +67,20 @@ const AsignWorkScreen = () => {
 
   }, [])
   function onMultiChange() {
-    return (item) =>
+    return (item) =>{
     // console.log('itemkjifijfh======>',item);
-     setSelectedTeams(xorBy(selectedTeams, [item], 'id'))
+     setSelectedTeams(xorBy(selectedTeams, [item], 'id'))}
   }
-
+  const asignWork=()=>{
+    const data={
+      EmpId:selectedTeam.id,
+      JobId:value,
+      Note:text
+    }
+    axios.post(`${baseURL}TaskApi/TaskAssign`,data).then((response)=>{
+      console.log(response);
+    })
+  }
   function onChange() {
     return (val) => setSelectedTeam(val)
   }
@@ -90,9 +114,9 @@ const AsignWorkScreen = () => {
 
         />
         
-          <Inputs height={100} bgColor='#f0f0f0' multiline={true} zIndex={2} title={'Description'} />
+          <Inputs onChangeText={(text)=>setText(text)} height={100} bgColor='#f0f0f0' multiline={true} zIndex={2} title={'Description'} />
        
-         <FullButton btnTitle={'Asign'} />
+         <FullButton onPressName={asignWork} btnTitle={'Asign'} />
       </View>
      
     </View>

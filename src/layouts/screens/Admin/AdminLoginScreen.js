@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
-import { Text, View, StyleSheet, Image, TextInput, Keyboard } from "react-native";
+import { Text, View, StyleSheet, Image, TextInput, Keyboard, ActivityIndicator } from "react-native";
 import FullButton from "../../components/fullButton";
 import { postMethod } from "../../../utils/helper";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Loader from "../../components/loader";
 const AdminLoginScreen = ({ navigation }) => {
-
+  const [loading, setLoading] = useState(false)
   const [input, setInput] = useState(
     {
       email: '',
@@ -44,6 +45,7 @@ const AdminLoginScreen = ({ navigation }) => {
     setError((prevState) => ({ ...prevState, [inputError]: errorMessage }))
   }
   const Login = async () => {
+    setLoading(true)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
@@ -53,12 +55,13 @@ const AdminLoginScreen = ({ navigation }) => {
     // console.log(raw);
     axios.post('https://demo38.gowebbi.in/api/LoginApi/Login', raw, { headers: { 'Content-Type': 'application/json' } }).then(async (response) => {
       const responseData = response.data;
-      console.log("responseData===============>",responseData);
+      console.log("responseData===============>", responseData);
       if (responseData.status === "success") {
         // console.log('successggggg', responseData.Token);
-        const data = await AsyncStorage.setItem('token', responseData?.Token?.toString());
-        console.log('data======>',data);
-        navigation.navigate('AdminScreen',{data})
+        setLoading(false)
+        const data =await AsyncStorage.setItem('token', responseData?.Token?.toString());
+        console.log('data======>', data);
+        navigation.navigate('AdminScreen', { data })
       }
       else {
         // // // // console.log(response);
@@ -68,32 +71,53 @@ const AdminLoginScreen = ({ navigation }) => {
         console.log(error);
       });
   }
+  const isloading = () => {
+    return (
+      <View>
+        {/* <ActivityIndicator style={{flex:1,justifyContent:'center',alignItems:'center'}} size={'large'} /> */}
+        <Text style={{ flex: 1, justifyContent: 'center', textAlign: 'center' }}>loading............</Text>
+      </View>
+    )
+  }
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.header1}>
-          <Image style={styles.img} source={require('../../../assets/imgs/SwadeshSoftware.png')} />
-          <Text style={[styles.headersText,]}>Admin Login</Text>
-        </View>
-        <View style={styles.header2}>
-          <View style={styles.loginContainer}>
-            <Text style={styles.text}>Enter Your Email</Text>
-            <TextInput value={input.email} onFocus={() => { handleError('email', null) }} onChangeText={(text) => handleOnChange(text, 'email')} style={error.email == 'Please Input Email' ? styles.TextInput :
-              error.password == 'Pleae input valid email' ?
-                styles.TextInput :
-                styles.dTextInput}
-            />
-            <Text style={styles.inputError}>{error.email}</Text>
-            <Text style={styles.text}>Enter Your Password</Text>
-            <TextInput onFocus={() => { handleError('password', null) }} value={input.password} onChangeText={(text) => handleOnChange(text, 'password')} style={error.password == 'Please input Password' ? styles.TextInput :
-              error.password == 'Minimum leagth of Password 5' ?
-                styles.TextInput :
-                styles.dTextInput} />
-            <Text style={styles.inputError}>{error.password}</Text>
-            <FullButton btnTitle={'LogIn'} onPressName={() => Validate()} />
+      {
+        loading ?
+
+          <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+            <ActivityIndicator style={{}} size={'large'} />
+            <Text>loading.....</Text>
           </View>
-        </View>
-      </View>
+          :
+
+          <>
+            <View style={styles.container}>
+              {/* <Loader visible={loading} /> */}
+
+              <View style={styles.header1}>
+                <Image style={styles.img} source={require('../../../assets/imgs/SwadeshSoftware.png')} />
+                <Text style={[styles.headersText,]}>Admin Login</Text>
+              </View>
+              <View style={styles.header2}>
+                <View style={styles.loginContainer}>
+                  <Text style={styles.text}>Enter Your Email</Text>
+                  <TextInput value={input.email} onFocus={() => { handleError('email', null) }} onChangeText={(text) => handleOnChange(text, 'email')} style={error.email == 'Please Input Email' ? styles.TextInput :
+                    error.password == 'Pleae input valid email' ?
+                      styles.TextInput :
+                      styles.dTextInput}
+                  />
+                  <Text style={styles.inputError}>{error.email}</Text>
+                  <Text style={styles.text}>Enter Your Password</Text>
+                  <TextInput onFocus={() => { handleError('password', null) }} value={input.password} onChangeText={(text) => handleOnChange(text, 'password')} style={error.password == 'Please input Password' ? styles.TextInput :
+                    error.password == 'Minimum leagth of Password 5' ?
+                      styles.TextInput :
+                      styles.dTextInput} />
+                  <Text style={styles.inputError}>{error.password}</Text>
+                  <FullButton btnTitle={'LogIn'} onPressName={() => Validate()} />
+                </View>
+              </View>
+            </View>
+          </>}
     </>
   )
 }
@@ -102,10 +126,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(130,209,209,0.4)'
   },
-  header1:{
-    flex:4,
-    justifyContent:'center',
-    alignItems:'center'
+  header1: {
+    flex: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   header2: {
     flex: 6,

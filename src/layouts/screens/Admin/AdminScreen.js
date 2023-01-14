@@ -4,13 +4,14 @@ import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 const AdminScreen = ({navigation,route}) => {
     console.log('route==================>',route.params);
-    useEffect(()=>{
+    
         AsyncStorage.getItem('token').then((res)=>{
+            console.log('res=======>',res);
             // if(res){
-            //     navigation.goBack()
+            //     navigation.goBack('Login')
             // }
-        })
-    })
+        },[])
+    
     return (
         <>
             <View style={styles.container}>
