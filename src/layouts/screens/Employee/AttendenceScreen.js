@@ -20,8 +20,8 @@ const Attendence = ({route}) => {
             </View>
             <View style={styles.tableName}>
                 <Text style={styles.tableField}>Present 0</Text>
-                <Text style={styles.tableField}>Absent 0</Text>
-                <Text style={[styles.tableField, {borderRightWidth:null}]}>Left 0</Text>
+                <Text style={[styles.tableField, {borderRightWidth:null}]}>Absent 0</Text>
+                {/* <Text style={[styles.tableField, {borderRightWidth:null}]}>Left 0</Text> */}
             </View>
             <View style={{flexDirection:'row',marginTop:10, flexWrap:'wrap'}}>
                 <View style={{flexDirection:'row'}}>
@@ -68,14 +68,15 @@ const styles = StyleSheet.create({
     tableName:{
         flexDirection:'row', 
         backgroundColor:COLORS.light,
-        padding:10
+        padding:10,
+        justifyContent:'space-evenly'
     },
     tableField:{
         borderColor:COLORS.grey,
-        borderRightWidth:1,
+        // borderRightWidth:1,
         fontFamily:'Poppins-Regular',
         fontSize:16,
-        paddingRight:width*0.15,
+        // paddingRight:width*0.15,
         paddingLeft:10,
     },
     tableHeading:{

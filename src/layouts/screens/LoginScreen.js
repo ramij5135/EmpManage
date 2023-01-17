@@ -17,7 +17,6 @@ const LoginScreen = () => {
 
     const Check_Emp_Login = () => {
         const tData = getStorageData();
-        console.log('tdata=======>', tData);
         tData ? navigation.navigate('BottomTab') : navigation.navigate('Emp_Login')
     }
 
