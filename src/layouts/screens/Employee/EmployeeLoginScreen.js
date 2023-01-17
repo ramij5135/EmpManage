@@ -54,9 +54,6 @@ const EmployeeLogin = () => {
                 const resData = res.data.data[0];
                 const dataFilter = res.data;
                 const token = dataFilter.Token;
-                console.log('token=========>', token);
-                // console.log('response data======>', resData);
-                // console.log('data filter=======>', dataFilter);
                 setLoading(false);
                 resData.Type === "EMP" ?  navigation.navigate('BottomTab') : null
                 storeData(token);
