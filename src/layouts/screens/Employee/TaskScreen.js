@@ -4,27 +4,29 @@ import { COLORS } from "../../../utils/globalStyles";
 import Header from "../../components/header";
 
 const TaskScreen = () => {
+
     return(
         <View style={styles.container}>
             <Header title='Task' />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.header}>
                     <Image style={styles.imgIcon} source={require('../../../assets/imgs/build.png')} />
-                    <Text style={styles.attendence}>Attendence Details</Text>
+                    <Text style={styles.attendence}>Today's Tasks Details</Text>
                 </View>
                 <View style={{paddingHorizontal:20, paddingVertical:10}}>
                     <Text style={[styles.date,{paddingVertical:10}]}>22-05-2022</Text>
                     <View style={styles.detail}>
-                        <Text style={styles.date}>Shop Name</Text>
+                        <Text style={styles.date}>Visit Bagha Beach in Goa</Text>
                         <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magni </Text>
                     </View>
                     <View style={styles.detail}>
-                        <Text style={styles.date}>Shop Name</Text>
+                        <Text style={styles.date}>Visit Water Park in Durgapur</Text>
                         <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magni </Text>
                     </View>
+                    <Text style={[styles.date,{paddingVertical:10}]}>16-05-2022</Text>
                     <View style={styles.detail}>
-                        <Text style={styles.date}>Shop Name</Text>
-                        <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magni </Text>
+                        <Text style={styles.date}>Visit Eco Park in Kolkata</Text>
+                        <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magni</Text>
                     </View>
                 </View>
             </ScrollView>

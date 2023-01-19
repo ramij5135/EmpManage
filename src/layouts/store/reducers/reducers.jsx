@@ -1,4 +1,4 @@
-import {EMP_LOGIN} from '../common/types';
+import {EMP_LOGIN} from '../constants/actionsType';
 
 const initialState = {
     user: []
@@ -6,6 +6,7 @@ const initialState = {
 
 
 export const Authentication = (state = initialState, action)=>{
+    console.log('action======>',action);
     switch (action.type) {
         case EMP_LOGIN:
             return{

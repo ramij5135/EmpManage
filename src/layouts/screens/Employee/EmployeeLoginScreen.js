@@ -7,7 +7,7 @@ import FullTextInput from "../../components/textInput";
 import Loader from "../../components/loader";
 import { postMethod, storeData, getStorageData } from "../../../utils/helper";
 import { COLORS } from "../../../utils/globalStyles";
-
+// import { useDispatch } from "react-redux";
 
 const EmployeeLogin = () => {
     const navigation = useNavigation();
@@ -19,7 +19,7 @@ const EmployeeLogin = () => {
     });
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
-
+    // const dispatch=useDispatch()
     const validate = () => {
         Keyboard.dismiss();
         let valid = true;
@@ -40,6 +40,7 @@ const EmployeeLogin = () => {
 
         if(valid){
             login();
+            // dispatch(login())
         }
     }
 

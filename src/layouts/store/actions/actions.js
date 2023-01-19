@@ -1,4 +1,4 @@
-import {EMP_LOGIN} from '../common/types';
+import {EMP_LOGIN} from '../constants/actionsType';
 
 const Employee_Login = (user) => {
     return{

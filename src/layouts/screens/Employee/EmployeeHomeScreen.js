@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../../../utils/globalStyles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const optionButton =[
