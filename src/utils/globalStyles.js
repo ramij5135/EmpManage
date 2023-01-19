@@ -8,7 +8,8 @@ export const COLORS = {
     grey:'rgba(100,100,100,0.4)',
     black:'#2a2a22',
     red:'red',
-    White:'white'
+    White:'white',
+    tab: 'rgba(130,209,209,1)'
 }
 
 export const {height, width} = Dimensions.get('window');
