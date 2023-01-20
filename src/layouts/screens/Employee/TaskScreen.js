@@ -5,6 +5,8 @@ import Header from "../../components/header";
 
 const TaskScreen = () => {
 
+    
+
     return(
         <View style={styles.container}>
             <Header title='Task' />
@@ -18,15 +20,6 @@ const TaskScreen = () => {
                     <View style={styles.detail}>
                         <Text style={styles.date}>Visit Bagha Beach in Goa</Text>
                         <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magni </Text>
-                    </View>
-                    <View style={styles.detail}>
-                        <Text style={styles.date}>Visit Water Park in Durgapur</Text>
-                        <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magni </Text>
-                    </View>
-                    <Text style={[styles.date,{paddingVertical:10}]}>16-05-2022</Text>
-                    <View style={styles.detail}>
-                        <Text style={styles.date}>Visit Eco Park in Kolkata</Text>
-                        <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magni</Text>
                     </View>
                 </View>
             </ScrollView>

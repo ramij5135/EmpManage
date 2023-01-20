@@ -17,7 +17,7 @@ const BottomTab = () => {
                 // position:'absolute',
                 // marginHorizontal:10,
                 // bottom:5,
-                // backgroundColor:'transparent'
+                // backgroundColor:COLORS.white
             }
         }}>
             <Tab.Screen name="Dashboard" component={HomeScreen} options={{ tabBarIcon: ({ focused }) => (

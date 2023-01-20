@@ -55,7 +55,7 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:COLORS.primary
+        backgroundColor:COLORS.primary,
     },
     header:{
         backgroundColor:COLORS.white,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         borderRadius:50,
         resizeMode:'contain',
         alignSelf:'center',
-        marginBottom:20
+        marginBottom:20,
     },
     workTitle:{
         fontFamily:'Poppins-SemiBold',
