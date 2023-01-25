@@ -1,11 +1,10 @@
 import React from "react";
+import { useEffect } from "react";
 import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
 import { COLORS } from "../../../utils/globalStyles";
 import Header from "../../components/header";
 
 const TaskScreen = () => {
-
-    
 
     return(
         <View style={styles.container}>

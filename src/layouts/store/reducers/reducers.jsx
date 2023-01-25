@@ -5,13 +5,15 @@ const initialState = {
 }
 
 
-export const Authentication = (state = initialState, action)=>{
-    console.log('action======>',action);
+export const Authentication = (state = [], action)=>{
+    console.log('reducer hi');
+    // console.log('reducer state======>', state);
     switch (action.type) {
         case EMP_LOGIN:
-            return{
-                ...state
-            }
+            return [
+                ...state,
+                action.payload
+            ]
     
         default:
             state;

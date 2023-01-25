@@ -25,7 +25,7 @@ const LoginScreen = () => {
         <View style={styles.container}>
             <Logo/>
             <View style={styles.loginSection}>
-                <FullButton btnTitle={'Employee Login'} onPressName={()=>Check_Emp_Login()} />
+                <FullButton btnTitle={'Employee Login'} onPressName={()=>navigation.navigate('Emp_Login')} />
                 <FullButton btnTitle={'Admin Login'} onPressName={() => checkUser()} />
             </View>
         </View>

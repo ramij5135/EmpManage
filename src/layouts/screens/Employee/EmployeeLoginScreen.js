@@ -7,10 +7,12 @@ import FullTextInput from "../../components/textInput";
 import Loader from "../../components/loader";
 import { postMethod, storeData, getStorageData } from "../../../utils/helper";
 import { COLORS } from "../../../utils/globalStyles";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Employee_Login } from "../../store/actions/actions";
 
 const EmployeeLogin = () => {
     const navigation = useNavigation();
+    const dispatch=useDispatch()
     const [text, setText] = useState("");
 
     const [inputs, setInputs] = useState({
@@ -19,7 +21,7 @@ const EmployeeLogin = () => {
     });
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
-    // const dispatch=useDispatch()
+    
     const validate = () => {
         Keyboard.dismiss();
         let valid = true;
@@ -58,6 +60,7 @@ const EmployeeLogin = () => {
                 setLoading(false);
                 resData.Type === "EMP" ?  navigation.navigate('BottomTab') : null
                 storeData(token);
+                dispatch(Employee_Login(dataFilter))
             }).catch((error) =>{
                     setLoading(false);
             })
@@ -65,6 +68,7 @@ const EmployeeLogin = () => {
             Alert.alert("Error", 'Something went wrong');
         }
     }
+
     const handleOnChange = (text, input) => {
         setInputs((prevState) => ({...prevState, [input]: text}))
     }

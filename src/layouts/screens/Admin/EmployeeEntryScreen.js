@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Alert } from "react-native";
+import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Alert, TouchableHighlight, ToastAndroid } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import DatePicker from 'react-native-date-picker'
 import FullTextInput from "../../components/textInput";
@@ -8,6 +8,10 @@ import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
 import axios from "axios"
 import { baseURL } from "../../../utils/config";
+import { Avatar } from "react-native-paper";
+import { launchImageLibrary } from "react-native-image-picker";
+
+
 const Active = ["TRUE", "FALSE"]
 const EmployeeEntryScreen = ({navigation}) => {
     const [date, setDate] = useState(new Date())
@@ -20,7 +24,39 @@ const EmployeeEntryScreen = ({navigation}) => {
     const [citydata, setCitydata] = useState([]);
     const [state, setState] = useState([]);
     const [city, setCity] = useState([]);
-    const [address, setaddress] = useState()
+    const [address, setaddress] = useState();
+    const [pic, setPic] = useState('');
+    //for show toast msg
+    const setToastMsg = msg => {
+        ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
+    }
+
+    const uploadImage = () => {
+        let options = {
+            mediaType: 'photo',
+            quality: 1,
+            includeBase64: true
+        };
+
+        launchImageLibrary(options, response => {
+            if(response.didCancel){
+                setToastMsg('Cancelled image selection');
+            } else if(response.errorCode == 'permission'){
+                setToastMsg('Permission not satisfied');
+            } else if(response.errorCode == 'others'){
+                setToastMsg(response.errorMessage);
+            } else if(response.assets[0].fileSize > 2097152){
+                Alert.alert(
+                    'Maximum size exceeded', 
+                    'Please choose image under 2 mb', 
+                    [{text: 'OK'}]
+                );
+            } else {
+                setPic(response.assets[0].base64);
+            }
+        });
+    }
+
 
     const [input, setInput] = useState({
         emailId: '',
@@ -143,6 +179,17 @@ const Register = async () => {
             <ScrollView style={styles.container}>
                 <View style={{ paddingBottom: 30 }}>
                     <Text style={styles.headersText}>Enter employee details</Text>
+                    <View style={styles.imageBox}>
+                        <TouchableHighlight 
+                            underlayColor='rgba(0,0,0,0)'
+                            onPress={()=> uploadImage()}
+                        >
+                            <Avatar.Image 
+                                size={80} 
+                                source={{uri: 'data:image/png;base64,' + pic}}
+                            />
+                        </TouchableHighlight>
+                    </View>
                     <FullTextInput onChangeText={(text) => handleOnChange(text,'emailId')} title={'Email Id'} />
 
                     <FullTextInput onChangeText={(text) => handleOnChange(text, 'userName')} title={'Employee name'} />
@@ -272,6 +319,9 @@ const styles = StyleSheet.create({
         marginBottom: 4,
         color: '#414242',
         marginTop: 5
+    },
+    imageBox:{
+        alignSelf:'center',
     },
     TextInput: {
         backgroundColor: '#fff',
