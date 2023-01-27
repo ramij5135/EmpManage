@@ -1,6 +1,7 @@
-import { createStore, combineReducers } from 'redux';
+// import { createStore, combineReducers } from 'redux';
+import {configureStore} from '@reduxjs/toolkit';
 import {Authentication} from './reducers/reducers';
 
-export const myStore = createStore(Authentication);
-
-console.log('store====>', myStore);
+export const store = configureStore({
+    reducer: Authentication,
+})

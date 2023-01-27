@@ -2,47 +2,49 @@ import React from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { COLORS, width } from "../../../utils/globalStyles";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useSelector } from "react-redux";
 
 const ProfileScreen = () => {
+    const userData = useSelector(state => state.user);
     return(
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.welcome}>Welcome</Text>
-                <Text style={styles.welcomeName}>Ramij Dafadar</Text>
+                <Text style={styles.welcomeName}>{userData.UserName}</Text>
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.wrapper}>
                     <View style={styles.square} />
                     <Image style={styles.profileImg} source={require('../../../assets/imgs/profile.jpg')} />
-                    <Text style={styles.workTitle}>Sales Executive</Text>
+                    <Text style={styles.workTitle}>{userData.Designation}</Text>
                 </View>
                 <View style={styles.fieldSection}>
                     <View style={styles.field1}>
                         <Ionicons name="person" size={25} />
                         <View style={styles.fieldName}>
                             <Text style={styles.fieldTitle}>Employee Id</Text>
-                            <Text style={[styles.fieldTitle,{ color:COLORS.blue}]}>3</Text>
+                            <Text style={[styles.fieldTitle,{ color:COLORS.blue}]}>{userData.ID}</Text>
                         </View>
                     </View>
                     <View style={styles.field1}>
                         <Ionicons name="calendar-outline" size={25} />
                         <View style={styles.fieldName}>
                             <Text style={styles.fieldTitle}>Date of Joining</Text>
-                            <Text style={[styles.fieldTitle,{ color:COLORS.blue}]}>21/01/2022</Text>
+                            <Text style={[styles.fieldTitle,{ color:COLORS.blue}]}>{userData.Doj}</Text>
                         </View>
                     </View>
                     <View style={styles.field1}>
                         <Ionicons name="mail-outline" size={25} />
                         <View style={styles.fieldName}>
                             <Text style={styles.fieldTitle}>Email</Text>
-                            <Text style={[styles.fieldTitle,{ color:COLORS.blue}]}>abcd@example.com</Text>
+                            <Text style={[styles.fieldTitle,{ color:COLORS.blue}]}>{userData.EmailId}</Text>
                         </View>
                     </View>
                     <View style={styles.field1}>
                         <Ionicons name="call-outline" size={25} />
                         <View style={styles.fieldName}>
                             <Text style={styles.fieldTitle}>Contact</Text>
-                            <Text style={[styles.fieldTitle,{ color:COLORS.blue}]}>7699259492</Text>
+                            <Text style={[styles.fieldTitle,{ color:COLORS.blue}]}>{userData.ContactNumber}</Text>
                         </View>
                     </View>
                     

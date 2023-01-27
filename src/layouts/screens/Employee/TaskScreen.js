@@ -1,10 +1,31 @@
 import React from "react";
 import { useEffect } from "react";
-import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
+import { View, StyleSheet, Image, Text, ScrollView, Alert } from "react-native";
 import { COLORS } from "../../../utils/globalStyles";
 import Header from "../../components/header";
+import { useSelector } from "react-redux";
+import { getMethod } from "../../../utils/helper";
+import { useState } from "react";
 
 const TaskScreen = () => {
+    const [taskList, setTaskList] = useState([]);
+    const Emp = useSelector(state => state.user);
+    const Emp_Id = Emp.ID;
+
+    useEffect(()=>{
+        try {
+            getMethod(`EmployeeApi/Tasklist?Emp_Id=${Emp_Id}`).then((res) =>{
+                const resData = res.data.Tasklist[0];
+                setTaskList(resData);
+            }).catch((error) => {
+                console.log('hi');
+            })
+        } catch (error) {
+            Alert.alert("Error", 'Something went wrong');
+        }
+    }, [])
+
+    console.log('task list======>', taskList);
 
     return(
         <View style={styles.container}>

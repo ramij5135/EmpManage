@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../../../utils/globalStyles';
+import { useSelector } from 'react-redux';
 
 
 const optionButton =[
@@ -80,6 +81,7 @@ const HomeScreen = () => {
   const [time, setTime] = useState('');
   const [outTime, setOutTime] = useState('');
   const [date, setDate] = useState('');
+  const userData = useSelector(state=>state.user)
   
   const getInTime = () => {
     const today = new Date();
@@ -94,17 +96,16 @@ const HomeScreen = () => {
     setOutTime(time);
   }
 
-
   return(
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.welcome}>Welcome</Text>
-        <Text style={styles.welcomeName}>Ramij Dafadar</Text>
+        <Text style={styles.welcomeName}>{userData.UserName}</Text>
       </View>
       <View style={styles.wrapper}>
         <View style={styles.square} />
         <Image style={styles.profileImg} source={require('../../../assets/imgs/profile.jpg')} />
-        <Text style={styles.workTitle}>Sales Executive</Text>
+        <Text style={styles.workTitle}>{userData.Designation}</Text>
         <Text style={styles.workTime}>Office In-Out Time</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false} style={{paddingHorizontal:20}}>

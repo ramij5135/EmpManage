@@ -5,7 +5,7 @@ import Logo from "../../components/logo";
 import FullButton from "../../components/fullButton";
 import FullTextInput from "../../components/textInput";
 import Loader from "../../components/loader";
-import { postMethod, storeData, getStorageData } from "../../../utils/helper";
+import { postMethod, storeData } from "../../../utils/helper";
 import { COLORS } from "../../../utils/globalStyles";
 import { useDispatch } from "react-redux";
 import { Employee_Login } from "../../store/actions/actions";
@@ -60,7 +60,7 @@ const EmployeeLogin = () => {
                 setLoading(false);
                 resData.Type === "EMP" ?  navigation.navigate('BottomTab') : null
                 storeData(token);
-                dispatch(Employee_Login(dataFilter))
+                dispatch(Employee_Login(resData))
             }).catch((error) =>{
                     setLoading(false);
             })

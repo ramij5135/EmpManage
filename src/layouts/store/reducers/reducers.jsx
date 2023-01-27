@@ -1,19 +1,21 @@
 import {EMP_LOGIN} from '../constants/actionsType';
 
 const initialState = {
-    user: []
+    user: [],
+    isUserAvailable : false
 }
 
 
-export const Authentication = (state = [], action)=>{
+export const Authentication = (state = initialState, action)=>{
     console.log('reducer hi');
-    // console.log('reducer state======>', state);
     switch (action.type) {
-        case EMP_LOGIN:
-            return [
+        case EMP_LOGIN: {
+            let data = action.payload
+            return {
                 ...state,
-                action.payload
-            ]
+                user: data
+            }
+        }
     
         default:
             state;

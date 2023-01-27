@@ -1,1 +1,1 @@
-export const EMP_LOGIN = 'Emp_Login';
+export const EMP_LOGIN = 'EMP_LOGIN';
