@@ -1,7 +1,7 @@
 import {EMP_LOGIN} from '../constants/actionsType';
 
 const initialState = {
-    user: [],
+    user: {},
     isUserAvailable : false
 }
 

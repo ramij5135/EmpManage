@@ -82,6 +82,8 @@ const HomeScreen = () => {
   const [outTime, setOutTime] = useState('');
   const [date, setDate] = useState('');
   const userData = useSelector(state=>state.user)
+
+  // console.log('user undefined-========>', userData);
   
   const getInTime = () => {
     const today = new Date();
