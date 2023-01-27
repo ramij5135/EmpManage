@@ -39,7 +39,7 @@ const TaskScreen = () => {
                     <Text style={[styles.date,{paddingVertical:10}]}>22-05-2022</Text>
                     <View style={styles.detail}>
                         <Text style={styles.date}>Visit Bagha Beach in Goa</Text>
-                        <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magni </Text>
+                        <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magnification</Text>
                     </View>
                 </View>
             </ScrollView>
