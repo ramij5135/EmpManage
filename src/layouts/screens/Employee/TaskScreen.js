@@ -6,6 +6,7 @@ import Header from "../../components/header";
 import { useSelector } from "react-redux";
 import { getMethod } from "../../../utils/helper";
 import { useState } from "react";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const TaskScreen = () => {
     const [taskList, setTaskList] = useState([]);
@@ -15,17 +16,16 @@ const TaskScreen = () => {
     useEffect(()=>{
         try {
             getMethod(`EmployeeApi/Tasklist?Emp_Id=${Emp_Id}`).then((res) =>{
-                const resData = res.data.Tasklist[0];
+                const resData = res.data.Tasklist;
                 setTaskList(resData);
             }).catch((error) => {
-                console.log('hi');
+                console.log(error);
             })
         } catch (error) {
             Alert.alert("Error", 'Something went wrong');
         }
     }, [])
 
-    console.log('task list======>', taskList);
 
     return(
         <View style={styles.container}>
@@ -36,11 +36,24 @@ const TaskScreen = () => {
                     <Text style={styles.attendence}>Today's Tasks Details</Text>
                 </View>
                 <View style={{paddingHorizontal:20, paddingVertical:10}}>
-                    <Text style={[styles.date,{paddingVertical:10}]}>22-05-2022</Text>
-                    <View style={styles.detail}>
-                        <Text style={styles.date}>Visit Bagha Beach in Goa</Text>
+                    {/* <Text style={[styles.date,{paddingVertical:10}]}>22-05-2022</Text> */}
+                    {
+                        taskList.map((item, index) => {
+                            return (
+                                <View style={styles.detail} key={index}>
+                                    <Text style={styles.date}>{item.JobName}</Text>
+                                    <Text style={styles.description}>{item.Note}</Text>
+                                </View>
+                            )
+                        })
+                    }
+                    {/* <View style={styles.detail}>
+                        <View style={{ justifyContent:'space-between', flexDirection:'row', alignItems:'center'}}>
+                            <Text style={styles.date}>Visit Bagha Beach in Goa</Text>
+                            <Ionicons name="eye" size={25} color={COLORS.black} />
+                        </View>
                         <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magnification</Text>
-                    </View>
+                    </View> */}
                 </View>
             </ScrollView>
         </View>
@@ -83,7 +96,7 @@ const styles = StyleSheet.create({
     },
     detail:{
         paddingVertical:5
-    }
+    },
 });
 
 export default TaskScreen;
