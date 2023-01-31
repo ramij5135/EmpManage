@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -82,8 +82,6 @@ const HomeScreen = () => {
   const [outTime, setOutTime] = useState('');
   const [date, setDate] = useState('');
   const userData = useSelector(state=>state.user)
-
-  // console.log('user undefined-========>', userData);
   
   const getInTime = () => {
     const today = new Date();
@@ -98,16 +96,24 @@ const HomeScreen = () => {
     setOutTime(time);
   }
 
+  const Attendence = () => {
+    console.log(hi);
+  }
+
   return(
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.welcome}>Welcome</Text>
-        <Text style={styles.welcomeName}>{userData.UserName}</Text>
+        <Text style={styles.welcomeName}>
+          {userData.UserName}
+        </Text>
       </View>
       <View style={styles.wrapper}>
         <View style={styles.square} />
         <Image style={styles.profileImg} source={require('../../../assets/imgs/profile.jpg')} />
-        <Text style={styles.workTitle}>{userData.Designation}</Text>
+        <Text style={styles.workTitle}>
+          {userData.Designation}
+        </Text>
         <Text style={styles.workTime}>Office In-Out Time</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false} style={{paddingHorizontal:20}}>

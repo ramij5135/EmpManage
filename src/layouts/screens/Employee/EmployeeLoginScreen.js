@@ -58,9 +58,9 @@ const EmployeeLogin = () => {
                 const dataFilter = res.data;
                 const token = dataFilter.Token;
                 setLoading(false);
+                dispatch(Employee_Login(resData))
                 resData.Type === "EMP" ?  navigation.navigate('BottomTab') : null
                 storeData(token);
-                dispatch(Employee_Login(resData))
             }).catch((error) =>{
                     setLoading(false);
             })
