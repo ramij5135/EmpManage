@@ -1,8 +1,7 @@
-import {EMP_LOGIN} from '../constants/actionsType';
+import {EMP_LOGIN, EMP_ATTENDENCE} from '../constants/actionsType';
 
 const initialState = {
     user: {},
-    isUserAvailable : false
 }
 
 

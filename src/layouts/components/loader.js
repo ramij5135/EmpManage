@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         position:'absolute',
         zIndex:10,
         backgroundColor:'rgba(0,0,0,0.5)',
-        justifyContent:'center'
+        justifyContent:'center',
     },
     loader:{
         height:70,
