@@ -1,41 +1,77 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect } from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity,ScrollView } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons'
-const AdminScreen = ({navigation,route}) => {
-    console.log('route==================>',route.params);
-    
-        AsyncStorage.getItem('token').then((res)=>{
-            console.log('res=======>',res);
-            // if(res){
-            //     navigation.goBack('Login')
-            // }
-        },[])
-    
+const AdminScreen = ({ navigation, route }) => {
+    console.log('route==================>', route.params);
+
+    AsyncStorage.getItem('token').then((res) => {
+        console.log('res=======>', res);
+        // if(res){
+        //     navigation.goBack('Login')
+        // }
+    }, [])
+    const DATA = [
+
+        {
+            id: 0,
+            name: 'Employee Registration'
+        },
+        {
+            id: 1,
+            name: 'Asign Work'
+        },
+        {
+            id: 2,
+            name: 'Vichel Information'
+        },
+        {
+            id: 3,
+            name: 'List Of Employee'
+        },
+    ]
+    const Navigation = (item) => {
+        {
+            item.id == 0 ? navigation.navigate('EmployeeEntryScreen') :
+            item.id == 1 ? navigation.navigate('AsignWorkScreen') :
+            item.id == 2 ?  navigation.navigate('VicheleScreen'):
+            navigation.navigate('EmployeeListScreen')
+        }
+    }
     return (
         <>
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <View style={styles.heading} >
-                <Image style={styles.Logoimg} source={require('../../../assets/imgs/SwadeshSoftware.png')} />
+                    <Image style={styles.Logoimg} source={require('../../../assets/imgs/SwadeshSoftware.png')} />
 
                     <Ionicons name="notifications-outline" size={34} />
                 </View>
                 <Image style={styles.Image} source={require('../../../assets/imgs/Rectangle.png')} />
                 <View style={styles.employeeSection}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('EmployeeEntryScreen')}>
-                    <Image style={styles.employeeImg} source={require('../../../assets/imgs/employee2.png')} />
-                        <Text style={styles.employeeText}>Employee Entry </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>navigation.navigate('AsignWorkScreen')}>
+                    {
+                        DATA.map((item) => {
+                            return (
+                                <View style={{}}>
+                                    <TouchableOpacity style={{ padding: 5 }} onPress={() => Navigation(item)}>
+                                        <Image style={styles.employeeImg} source={require('../../../assets/imgs/employee2.png')} />
+                                        <Text numberOfLines={1} style={styles.employeeText}>{item.name}</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                            )
+                        })
+                    }
+
+                    {/* <TouchableOpacity onPress={()=>navigation.navigate('AsignWorkScreen')}>
                         <Image style={styles.employeeImg} source={require('../../../assets/imgs/employee2.png')} />
                         <Text style={styles.employeeText}>Asign Work </Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>navigation.navigate('VicheleScreen')}>
                     <Image style={styles.employeeImg} source={require('../../../assets/imgs/employee2.png')} />
                         <Text numberOfLines={1} style={[styles.employeeText]}>Vichel Information </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
-            </View>
+            </ScrollView>
         </>
     )
 }
@@ -45,9 +81,7 @@ const styles = StyleSheet.create({
     },
     Logoimg: {
         height: 80,
-        width:100,
-        // marginTop: 40,
-        alignSelf: 'center',
+        width: 100,
         borderRadius: 15
     },
     Image: {
@@ -75,22 +109,19 @@ const styles = StyleSheet.create({
         width: 80,
         borderRadius: 80,
         resizeMode: 'contain',
-        alignSelf: 'center'
     },
     employeeSection: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
         backgroundColor: '#fff',
-        marginLeft: 16,
-        marginRight: 16,
-        borderRadius: 10,
-        marginTop: 50,
-        padding:5
+        borderRadius: 20,
+        margin: 15
     },
     employeeText: {
         color: '#414242',
         fontFamily: 'Poppins-SemiBold',
-        
+        width: 80
     }
 })
 export default AdminScreen;  

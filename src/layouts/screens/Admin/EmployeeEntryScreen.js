@@ -26,6 +26,7 @@ const EmployeeEntryScreen = ({navigation}) => {
     const [city, setCity] = useState([]);
     const [address, setaddress] = useState();
     const [pic, setPic] = useState('');
+    console.log('pic==========>',pic);
     //for show toast msg
     const setToastMsg = msg => {
         ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
@@ -80,7 +81,7 @@ const EmployeeEntryScreen = ({navigation}) => {
         };
         axios(config)
             .then(function (response) {
-                console.log('response================>',response);
+                // console.log('response================>',response);
                 var count = Object.keys(response.data.data).length;
                 let countArray = [];
                 for (var i = 0; i < count; i++) {
