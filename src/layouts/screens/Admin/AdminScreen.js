@@ -1,16 +1,30 @@
+import React, { useEffect,useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect } from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity,ScrollView } from "react-native";
+
+import { Text, View, StyleSheet, Image, TouchableOpacity,ScrollView,BackHandler } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 const AdminScreen = ({ navigation, route }) => {
+    const [response,setResponse]=useState()
     console.log('route==================>', route.params);
+    useEffect(() => {
+        const backAction = () => {
+            AsyncStorage.getItem('token').then((res) => {
+                setResponse(res)
+            },)
+          return response ? navigation.navigate('Login') : navigation.navigate('AdminLoginScreen');
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          'hardwareBackPress',
+          backAction,
+        );
+    
+        return () => backHandler.remove();
+      }, []);
+ 
+        
 
-    AsyncStorage.getItem('token').then((res) => {
-        console.log('res=======>', res);
-        // if(res){
-        //     navigation.goBack('Login')
-        // }
-    }, [])
+    
     const DATA = [
 
         {
@@ -51,7 +65,7 @@ const AdminScreen = ({ navigation, route }) => {
                     {
                         DATA.map((item) => {
                             return (
-                                <View style={{}}>
+                                <View key={item.id.toString()} style={{}}>
                                     <TouchableOpacity style={{ padding: 5 }} onPress={() => Navigation(item)}>
                                         <Image style={styles.employeeImg} source={require('../../../assets/imgs/employee2.png')} />
                                         <Text numberOfLines={1} style={styles.employeeText}>{item.name}</Text>
