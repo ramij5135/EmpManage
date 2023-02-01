@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../../../utils/globalStyles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { postMethod } from '../../../utils/helper';
+import {Employee_Attendence_In, Employee_Attendence_Out} from '../../store/actions/actions';
 
 
 const optionButton =[
@@ -78,26 +80,51 @@ const optionButton =[
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const [time, setTime] = useState('');
-  const [outTime, setOutTime] = useState('');
-  const [date, setDate] = useState('');
-  const userData = useSelector(state=>state.user)
-  
-  const getInTime = () => {
+  const dispatch = useDispatch();
+
+  const userData = useSelector(state=>state.auth.user)
+  const attendence = useSelector(state => state.attendence)
+  const InTime = attendence.inTime.InTime
+  const OutTime = attendence.outTime.OutTime
+
+  const AttendenceInTime = () => {
     const today = new Date();
-    const date = today.getDay() + "-" + today.getMonth() + "-" + today.getFullYear();
-    const time = today.getHours() + ":" + today.getMinutes();
-    setTime(time)
-    setDate(date)
-  }
-  const getOutTime = () => {
-    const today = new Date();
-    const time = today.getHours() + ":" + today.getMinutes();
-    setOutTime(time);
+    const timeIn = today.getHours() + ":" + today.getMinutes();
+    // setTime(timeIn);
+    try{
+      var raw = JSON.stringify({
+        User_Id: userData.ID,
+        InTime: timeIn,
+      });
+      postMethod('EmployeeApi/EmpAttendance', raw).then((res)=>{
+        Alert.alert(res.data.msg);
+        dispatch(Employee_Attendence_In(JSON.parse(raw)));
+      }).catch((error)=>{
+        console.log('hi');
+      })
+    } catch (error){
+      console.log('error', error);
+    }
   }
 
-  const Attendence = () => {
-    console.log(hi);
+  const AttendenceOutTime = () => {
+    const today = new Date();
+    const timeOut = today.getHours() + ":" + today.getMinutes();
+    // setOutTime(time);
+    try{
+      var raw = JSON.stringify({
+        User_Id: userData.ID,
+        OutTime: timeOut,
+      });
+      postMethod('EmployeeApi/EmpAttendance', raw).then((res)=>{
+       Alert.alert(res.data.msg);
+       dispatch(Employee_Attendence_Out(JSON.parse(raw)));
+      }).catch((error)=>{
+        console.log('hi');
+      })
+    } catch (error){
+      console.log('error', error);
+    }
   }
 
   return(
@@ -106,17 +133,19 @@ const HomeScreen = () => {
         <Text style={styles.welcome}>Welcome</Text>
         <Text style={styles.welcomeName}>
           {userData.UserName}
+          {/* Name */}
         </Text>
       </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.wrapper}>
         <View style={styles.square} />
         <Image style={styles.profileImg} source={require('../../../assets/imgs/profile.jpg')} />
         <Text style={styles.workTitle}>
           {userData.Designation}
+          {/* Designation */}
         </Text>
         <Text style={styles.workTime}>Office In-Out Time</Text>
       </View>
-      <ScrollView showsVerticalScrollIndicator={false} style={{paddingHorizontal:20}}>
         <View style={styles.option}>
           {
             optionButton.map((op) =>{
@@ -127,27 +156,27 @@ const HomeScreen = () => {
                     <>
                       <Text style={styles.buttonTitle}>{op.optionName}</Text>
                       {
-                        time ? <Text>{time}</Text>: null
+                        InTime ? <Text>{InTime}</Text> : null
                       }
                       <View style={styles.button}>
                         <Ionicons name='time-outline' size={15} color={'#fff'} />
-                        <Text onPress={time ? null : getInTime} style={{color:'#fff', marginLeft:5}}>{op.btnTitle}</Text>
+                        <Text onPress={InTime ? null : AttendenceInTime} style={{color:'#fff', marginLeft:5}}>{op.btnTitle}</Text>
                       </View>
                     </> : op.btnTitle === 'Out Time' ? 
                     <>
                       <Text style={styles.buttonTitle}>{op.optionName}</Text>
                       {
-                        outTime ? <Text>{outTime}</Text> : null
+                        OutTime ? <Text>{OutTime}</Text> : null
                       }
                       <View style={styles.button}>
                         <Ionicons name='time-outline' size={15} color={'#fff'} />
-                        <Text onPress={getOutTime} style={{color:'#fff', marginLeft:5}}>{op.btnTitle}</Text>
+                        <Text onPress={AttendenceOutTime} style={{color:'#fff', marginLeft:5}}>{op.btnTitle}</Text>
                       </View>
                     </> :
                     <>
                       <Ionicons name={op.icon} size={30} />
                       <Text onPress={
-                        op.optionName === 'Attendence' ? ()=> navigation.navigate('Attendence',{time, outTime, date}) : op.optionName === 'My visit list' ? ()=> navigation.navigate('VisitList') : op.optionName === 'Your Task' ? () => navigation.navigate('YourTask') : op.optionName === 'Visiting Report' ? () => navigation.navigate('Report') : op.optionName === 'Add New Shop' ? () => navigation.navigate('NewShop') : op.optionName === 'My Location' ? () => navigation.navigate('Location') : op.optionName === 'My Store' ? ()=> navigation.navigate('Store') : op.optionName === 'Complaint' ? ()=> navigation.navigate('Complaint') : op.optionName === 'Vichele' ? ()=> navigation.navigate('VechicleDetails') : null
+                        op.optionName === 'Attendence' ? ()=> navigation.navigate('Attendence') : op.optionName === 'My visit list' ? ()=> navigation.navigate('VisitList') : op.optionName === 'Your Task' ? () => navigation.navigate('YourTask') : op.optionName === 'Visiting Report' ? () => navigation.navigate('Report') : op.optionName === 'Add New Shop' ? () => navigation.navigate('NewShop') : op.optionName === 'My Location' ? () => navigation.navigate('Location') : op.optionName === 'My Store' ? ()=> navigation.navigate('Store') : op.optionName === 'Complaint' ? ()=> navigation.navigate('Complaint') : op.optionName === 'Vichele' ? ()=> navigation.navigate('VechicleDetails') : null
                       } style={{fontFamily:'Poppins-Regular', fontSize:16}}>{op.optionName}</Text>
                     </>
                   }
@@ -230,7 +259,8 @@ const styles = StyleSheet.create({
   option:{
     flexDirection:'row',
     flexWrap:'wrap',
-    justifyContent:'space-between'
+    justifyContent:'space-between',
+    paddingHorizontal:20
   },
   optionButton:{
     backgroundColor:COLORS.white,

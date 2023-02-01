@@ -10,10 +10,10 @@ import Loader from "../../components/loader";
 const {width, height} = Dimensions.get('window');
 
 const Attendence = ({route}) => {
-    const {time, outTime, date} = route.params;
+    // const {time, outTime, date} = route.params;
     const [attendence, setAttendence] = useState([]);
     const [count, setCount] = useState({});
-    const Emp = useSelector(state => state.user);
+    const Emp = useSelector(state => state.auth.user);
     const Emp_Id = Emp.ID;
     const [loading, setLoading] = useState(false);
 
@@ -51,8 +51,8 @@ const Attendence = ({route}) => {
                 </View>
                 <View style={styles.tableName}>
                     <Text style={styles.tableField}>Present {count.Present}</Text>
-                    {/* <Text style={[styles.tableField, {borderRightWidth:null}]}>Absent {count[0].Leftdays}</Text> */}
-                    <Text style={[styles.tableField, {borderRightWidth:null}]}>Left {count.Leftdays}</Text>
+                    <Text style={[styles.tableField, {borderRightWidth:null}]}>Absent {count.Absent}</Text>
+                    {/* <Text style={[styles.tableField, {borderRightWidth:null}]}>Left {count.Leftdays}</Text> */}
                 </View>
                 <View style={{flexDirection:'row',marginTop:10, flexWrap:'wrap', marginBottom:10}}>
                     <View style={{flexDirection:'row'}}>
@@ -64,15 +64,11 @@ const Attendence = ({route}) => {
                     {
                         attendence.map((item, index) => {
                             return(
-                                <View style={{flexDirection:'row', }} key={index}>
+                                <View style={{flexDirection:'row'}} key={index}>
                                     <Text style={[styles.tableHeading, { width: Date ? width*0.29 : width*0.25}]}>{item.Date}</Text>
                                     <Text style={[styles.tableHeading, {backgroundColor:null}]}>{item.InTime}</Text>
                                     <Text style={[styles.tableHeading, {backgroundColor:null}]}>{item.OutTime}</Text>
-                                    <View>
-                                        {
-                                            item.InTime ? <Text style={[styles.tableHeading, {color:'green'}]}>{item.status}</Text> : <Text style={[styles.tableHeading, {color:COLORS.red}]}>{item.status}</Text> 
-                                        }
-                                    </View>
+                                    <Text style={[styles.tableHeading, {color: item.status == 'Present' ? 'green' : item.status == 'Absent'? COLORS.red : COLORS.black}]}>{item.status}</Text>
                                 </View>
                             )
                         })

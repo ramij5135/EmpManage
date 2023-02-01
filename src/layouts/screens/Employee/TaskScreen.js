@@ -10,7 +10,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 const TaskScreen = () => {
     const [taskList, setTaskList] = useState([]);
-    const Emp = useSelector(state => state.user);
+    const Emp = useSelector(state => state.auth.user);
     const Emp_Id = Emp.ID;
 
     useEffect(()=>{

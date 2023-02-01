@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector } from "react-redux";
 
 const ProfileScreen = () => {
-    const userData = useSelector(state => state.user);
+    const userData = useSelector(state => state.auth.user);
     return(
         <View style={styles.container}>
             <View style={styles.header}>
