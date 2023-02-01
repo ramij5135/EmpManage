@@ -11,7 +11,8 @@ const AdminScreen = ({ navigation, route }) => {
             AsyncStorage.getItem('token').then((res) => {
                 setResponse(res)
             },)
-          return response ? navigation.navigate('Login') : navigation.navigate('AdminLoginScreen');
+            response ? navigation.navigate('Login') : navigation.navigate('AdminScreen')
+          return true;
         };
     
         const backHandler = BackHandler.addEventListener(
