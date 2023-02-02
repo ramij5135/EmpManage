@@ -1,4 +1,4 @@
-import {EMP_LOGIN, EMP_ATTENDENCE_IN, EMP_ATTENDENCE_OUT} from '../constants/actionsType';
+import {EMP_LOGIN, EMP_ATTENDENCE_LIST, EMP_ATTENDENCE_DATA} from '../constants/actionsType';
 
 export const Employee_Login = (user) => {
     // console.log('user data', user);
@@ -8,18 +8,18 @@ export const Employee_Login = (user) => {
     }
 }
 
-export const Employee_Attendence_In = (attendence) => {
+export const Employee_Attendence_List= (attendence) => {
     // console.log('attendence data', attendence);
     return {
-        type: EMP_ATTENDENCE_IN,
+        type: EMP_ATTENDENCE_LIST,
         payload:  attendence
     }
 } 
 
-export const Employee_Attendence_Out = (attendence) => {
+export const Employee_Attendence_Data = (attendence) => {
     console.log('attendence data out', attendence);
     return {
-        type: EMP_ATTENDENCE_OUT,
+        type: EMP_ATTENDENCE_DATA,
         payload: attendence
     }
 }

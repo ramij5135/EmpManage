@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text, Image } from "react-native";
+import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
 import { COLORS } from "../../../utils/globalStyles";
 import Header from "../../components/header";
 import Inputs from '../../components/inputs';
@@ -9,15 +9,17 @@ const Complaint = () => {
     return(
         <View style={styles.container}>
             <Header title='Complaint' />
-            <View style={styles.header}>
-                <Image style={styles.imgIcon} source={require('../../../assets/imgs/build.png')} />
-                <Text style={styles.attendence}>Add Complaint</Text>
-            </View>
-            <View style={{padding:10}}>
-                <Inputs title={'Topic'} />
-                <Inputs title={'Complaint'} multiline={true} height={90} />
-                <FullButton btnTitle={'Send Report'} />
-            </View>
+            <ScrollView>
+                <View style={styles.header}>
+                    <Image style={styles.imgIcon} source={require('../../../assets/imgs/build.png')} />
+                    <Text style={styles.attendence}>Add Complaint</Text>
+                </View>
+                <View style={{padding:10}}>
+                    <Inputs title={'Topic'} />
+                    <Inputs title={'Complaint'} multiline={true} height={90} />
+                    <FullButton btnTitle={'Send Report'} />
+                </View>
+            </ScrollView>
         </View>
     )
 }

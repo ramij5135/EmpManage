@@ -14,8 +14,6 @@ const styles = StyleSheet.create({
         alignItems:'center',
         flex:0.4,
         justifyContent:'center',
-        // backgroundColor:'red'
-        // marginTop:-50
     },
     logo:{
         height:100,

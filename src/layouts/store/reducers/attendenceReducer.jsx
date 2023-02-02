@@ -1,25 +1,25 @@
-import { EMP_ATTENDENCE_IN, EMP_ATTENDENCE_OUT } from "../constants/actionsType";
+import { EMP_ATTENDENCE_LIST, EMP_ATTENDENCE_DATA } from "../constants/actionsType";
 
 const initialState = {
-    inTime : {},
-    outTime: {}
+    atnList : {},
+    atnData: {}
 }
 
 export const Employee_Attendence_Record = (state = initialState, action) => {
     console.log('attendence hi');
     switch (action.type) {
-        case EMP_ATTENDENCE_IN: {
+        case EMP_ATTENDENCE_LIST: {
             let data = action.payload
             return{
                 ...state,
-                inTime: data
+                atnList: data
             }
         }
-        case EMP_ATTENDENCE_OUT: {
+        case EMP_ATTENDENCE_DATA: {
             let data = action.payload
             return {
                 ...state,
-                outTime: data
+                atnData: data
             }
         }
         default:

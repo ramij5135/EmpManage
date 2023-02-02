@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { View, Text, StyleSheet, Image, Dimensions, Alert, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions, Alert, ScrollView, Modal } from "react-native";
 import Header from "../../components/header";
 import FullButton from '../../components/fullButton';
 import { COLORS } from "../../../utils/globalStyles";
@@ -9,13 +9,14 @@ import Loader from "../../components/loader";
 
 const {width, height} = Dimensions.get('window');
 
-const Attendence = ({route}) => {
+const Attendence = () => {
     // const {time, outTime, date} = route.params;
     const [attendence, setAttendence] = useState([]);
     const [count, setCount] = useState({});
     const Emp = useSelector(state => state.auth.user);
     const Emp_Id = Emp.ID;
     const [loading, setLoading] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(()=> {
         try {
@@ -34,7 +35,6 @@ const Attendence = ({route}) => {
         }
     }, [])
 
-    console.log('count==========>', count);
     return(
         <>
         {

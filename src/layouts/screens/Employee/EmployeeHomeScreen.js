@@ -4,8 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../../../utils/globalStyles';
 import { useDispatch, useSelector } from 'react-redux';
-import { postMethod } from '../../../utils/helper';
-import {Employee_Attendence_In, Employee_Attendence_Out} from '../../store/actions/actions';
+import { getMethod, postMethod } from '../../../utils/helper';
+import {Employee_Attendence_Data, Employee_Attendence_In, Employee_Attendence_List, Employee_Attendence_Out} from '../../store/actions/actions';
 
 
 const optionButton =[
@@ -83,14 +83,31 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   const userData = useSelector(state=>state.auth.user)
+  const Emp_Id = userData.ID;
   const attendence = useSelector(state => state.attendence)
-  const InTime = attendence.inTime.InTime
-  const OutTime = attendence.outTime.OutTime
+  console.log('attendence', attendence.atnList);
+  const InTime = 0
+  const OutTime = 0
+
+  useEffect(()=>{
+    const today = new Date().toJSON().slice(0,10);
+    try {
+      getMethod(`EmployeeApi/AttendanceList?Emp_Id=${Emp_Id}`).then(async (res) =>{
+        const AtnList = res?.data.AttendanceList;
+        const AtnData = res?.data.data;
+        dispatch(Employee_Attendence_List(AtnList));
+        dispatch(Employee_Attendence_Data(AtnData))
+    }).catch((error) => {
+        console.log(error);
+    })
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, []);
 
   const AttendenceInTime = () => {
     const today = new Date();
     const timeIn = today.getHours() + ":" + today.getMinutes();
-    // setTime(timeIn);
     try{
       var raw = JSON.stringify({
         User_Id: userData.ID,
@@ -98,7 +115,7 @@ const HomeScreen = () => {
       });
       postMethod('EmployeeApi/EmpAttendance', raw).then((res)=>{
         Alert.alert(res.data.msg);
-        dispatch(Employee_Attendence_In(JSON.parse(raw)));
+        // dispatch(Employee_Attendence_In(JSON.parse(raw)));
       }).catch((error)=>{
         console.log('hi');
       })
@@ -110,7 +127,6 @@ const HomeScreen = () => {
   const AttendenceOutTime = () => {
     const today = new Date();
     const timeOut = today.getHours() + ":" + today.getMinutes();
-    // setOutTime(time);
     try{
       var raw = JSON.stringify({
         User_Id: userData.ID,
@@ -118,7 +134,7 @@ const HomeScreen = () => {
       });
       postMethod('EmployeeApi/EmpAttendance', raw).then((res)=>{
        Alert.alert(res.data.msg);
-       dispatch(Employee_Attendence_Out(JSON.parse(raw)));
+      //  dispatch(Employee_Attendence_Out(JSON.parse(raw)));
       }).catch((error)=>{
         console.log('hi');
       })
