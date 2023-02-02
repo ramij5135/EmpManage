@@ -5,7 +5,7 @@ import { Text, View, StyleSheet, Image, TouchableOpacity,ScrollView,BackHandler 
 import Ionicons from 'react-native-vector-icons/Ionicons'
 const AdminScreen = ({ navigation, route }) => {
     const [response,setResponse]=useState()
-    console.log('route==================>', route.params);
+    console.log('route==================>', response);
     useEffect(() => {
         const backAction = () => {
             AsyncStorage.getItem('token').then((res) => {

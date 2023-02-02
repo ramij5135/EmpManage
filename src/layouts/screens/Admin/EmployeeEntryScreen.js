@@ -10,6 +10,7 @@ import axios from "axios"
 import { baseURL } from "../../../utils/config";
 import { Avatar } from "react-native-paper";
 import { launchImageLibrary } from "react-native-image-picker";
+import PlacePicker from "../../components/PlacePicker";
 
 
 const Active = ["TRUE", "FALSE"]
@@ -26,8 +27,11 @@ const EmployeeEntryScreen = ({navigation}) => {
     const [city, setCity] = useState([]);
     const [address, setaddress] = useState();
     const [pic, setPic] = useState('');
+    const [lat, setLat] = useState();
+    const [lang, setLang] = useState();
     console.log('pic==========>',pic);
     //for show toast msg
+    
     const setToastMsg = msg => {
         ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
     }
@@ -66,9 +70,18 @@ const EmployeeEntryScreen = ({navigation}) => {
         designation: '',
         pinCode: '',
         setPassword: '',
-        lat: '',
-        long: '',
+        // lat: '',
+        // long: '',
     })
+    const getCurrentLocation=(address,lat,lang)=>{
+        // console.log('address======>',address);
+        setaddress(address)
+        // console.log('lat======>',lat);
+       setLat(lat)
+       setLang(lang)
+
+        // console.log('lang======>',lang);
+    }
     const handleOnChange = (text, input) => {
         setInput(prevState => ({ ...prevState, [input]: text }))
     }
@@ -125,16 +138,16 @@ const EmployeeEntryScreen = ({navigation}) => {
     const map=()=>{
         Geolocation.getCurrentPosition(info => {
             // console.log('info.coords.latitude===',info.coords.latitude);
-            setInput((prev) => ({...prev,lat : info.coords.latitude}))
+            // setInput((prev) => ({...prev,lat : info.coords.latitude}))
             if(info.coords.longitude){
                 // console.log('info.coords.longitude===',info.coords.longitude);
-            setInput((prev) => ({...prev,long : info.coords.longitude}))
+            // setInput((prev) => ({...prev,long : info.coords.longitude}))
             }
             Geocoder.from(info.coords.latitude,info.coords.longitude)
            
                 .then(json => {
                     var location = json.results[0].address_components[3].long_name;
-              setaddress(location)
+            //   setaddress(location)
                 })
                 .catch(error => console.log('error============>',error));
           })
@@ -155,10 +168,11 @@ const Register = async () => {
         City:city,
         Pin:input.pinCode,
         CurrentLocation:address,
-        Latitude:input.lat,
-        Longitude:input.long
+        Latitude:lat,
+        Longitude:lang,
+        ImgUrl:pic
     };
-    // console.log({data});
+    console.log('data========>',data);
     const response = await axios.post("https://demo38.gowebbi.in/api/RegisterApi/Register",data,{
         headers:{
             'Content-Type': 'application/json'
@@ -174,10 +188,15 @@ const Register = async () => {
 
     }
   }
-  console.log('input====>',input);
+  console.log('input.lat====>',lat);
+  console.log('input.long====>',lang);
+  console.log('address====>',address);
+//   console.log('input===========22====>',input);
+
+
     return (
         <>
-            <ScrollView style={styles.container}>
+            <ScrollView keyboardShouldPersistTaps='handled' nestedScrollEnabled={true} style={styles.container}>
                 <View style={{ paddingBottom: 30 }}>
                     <Text style={styles.headersText}>Enter employee details</Text>
                     <View style={styles.imageBox}>
@@ -288,9 +307,10 @@ const Register = async () => {
                     />
                     <FullTextInput onChangeText={(text) => handleOnChange(text, 'pinCode')} title={'Pin Code'} />
                     <Text style={[styles.text,]}>Current Location</Text>
-                    <View style={[styles.TextInput, { backgroundColor: '#E0E1E2', justifyContent: 'center' }]} >
+                    {/* <View style={[styles.TextInput, { backgroundColor: '#E0E1E2', justifyContent: 'center' }]} >
                         <Text style={[styles.text, { marginLeft: 15 }]}>{address}</Text>
-                    </View>
+                    </View> */}
+                    <PlacePicker getCurrentLocation={getCurrentLocation} />
                     <FullTextInput onChangeText={(text) => handleOnChange(text, 'setPassword')} title={'Set Password'} />
                     <TouchableOpacity onPress={Register} style={styles.LoginButton} >
                         <Text style={styles.LoginText}>Register</Text>

@@ -1,34 +1,35 @@
 //import liraries
 import React, { useState, useEffect, } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, BackHandler,ActivityIndicator } from 'react-native';
 import { Dialog } from 'react-native-paper';
 import { COLORS } from '../../../utils/globalStyles';
 import axios from 'axios';
-import Ionicons from 'react-native-vector-icons/Ionicons'
-// create a component
+import { baseURL } from '../../../utils/config';
 const btn = [
     {
         id: 0,
         name: 'View',
-        color:'green'
+        color: 'green'
     },
     {
         id: 1,
         name: 'Edit',
-        color:'yellow'
+        color: 'yellow'
     },
     {
         id: 2,
         name: 'Delete',
-        color:'red'
+        color: 'red'
     },
 ]
 const EmployeeListScreen = ({ navigation }) => {
     const [empList, setEmpList] = useState()
+    const [loading,setLoading] = useState(true)
     useEffect(() => {
-        axios.get('https://demo38.gowebbi.in/api/JobMasterApi/FetchEmployee').then((res) => {
+        axios.get(`${baseURL}JobMasterApi/FetchEmployee`).then((res) => {
             // console.log('res=====>',res.data.data);
             setEmpList(res?.data?.data)
+            setLoading(false)
         }
         )
     }, [])
@@ -46,25 +47,31 @@ const EmployeeListScreen = ({ navigation }) => {
         return () => backHandler.remove();
     }, []);
     return (
+        <>{
+            loading?<ActivityIndicator size={'large'} color={'green'} style={{flex:1,justifyContent:'center',alignItems:'center'}} /> :
+        
         <ScrollView style={styles.container}>
             {
                 empList?.map((item2) => {
-                    // console.log('item=========>', item2);
+                    console.log('item=========>', item2);
                     return (
 
                         <View key={item2?.ID?.toString()} style={styles.list_container}>
-                            <Image style={styles.profileImg} source={require('../../../assets/imgs/profile.jpg')} />
+                            <Image style={styles.profileImg} source={ item2.ImgUrl?{uri:`https://demo38.gowebbi.in${item2.ImgUrl}`} : require('../../../assets/imgs/profile.jpg')} />
                             <View style={styles.emp_NameView}>
                                 <Text>{item2.Item}</Text>
-                                <Text >Email Id :- {item2.EmailId.substr(0, 14)}...</Text>
+                                <Text  >Email Id :- {item2.EmailId.substr(0, 18)}...</Text>
                                 <View style={styles.btnView}>
                                     {
                                         btn.map((data) => {
                                             return (
                                                 <TouchableOpacity
-                                                onPress={()=>navigation.navigate('EmployeeDetailsScreen',{profileData:item2})}
-                                                 key={data.name.toString()} style={[styles.btn,{backgroundColor:data.color}]} >
-                                                    <Text style={{ color:data.name=='Edit' ? 'black' : '#fff', fontFamily: 'Poppins-SemiBold' }}>{data.name}</Text>
+                                                    onPress={() => data.id==0 ? navigation.navigate('EmployeeDetailsScreen', { profileData: item2 }) 
+                                                    :
+                                                    data.id==1 ? navigation.navigate('EditProfileScreen', { profileData: item2 }):undefined
+                                                }
+                                                    key={data.name.toString()} style={[styles.btn, { backgroundColor: data.color }]} >
+                                                    <Text style={{ color: data.name == 'Edit' ? 'black' : '#fff', fontFamily: 'Poppins-SemiBold' }}>{data.name}</Text>
                                                 </TouchableOpacity>
                                             )
                                         })
@@ -85,6 +92,8 @@ const EmployeeListScreen = ({ navigation }) => {
             }
 
         </ScrollView>
+}
+        </>
 
     );
 };
@@ -118,7 +127,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         marginTop: 5,
-        width:'80%'
+        width: '80%'
     },
     btn: {
         padding: 4,

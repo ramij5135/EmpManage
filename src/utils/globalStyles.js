@@ -9,7 +9,8 @@ export const COLORS = {
     black:'#2a2a22',
     red:'red',
     White:'white',
-    tab: 'rgba(130,209,209,1)'
+    tab: 'rgba(130,209,209,1)',
+    profileBackGroundColor:'#a4dbd4',
 }
 
 export const {height, width} = Dimensions.get('window');

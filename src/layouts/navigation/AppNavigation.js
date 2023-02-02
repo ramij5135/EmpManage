@@ -21,6 +21,7 @@ import Complaint from '../screens/Employee/ComplaintScreen';
 import Vechicle from '../screens/Employee/VechicleDetailsScreen';
 import EmployeeListScreen from '../screens/Admin/EmployeeListScreen';
 import EmployeeDetailsScreen from '../screens/Admin/EmployeeDetailsScreen';
+import EditProfileScreen from '../screens/Admin/EditProfileScreen';
 const Stack = createNativeStackNavigator();
 
 const AppNavigation = () => {
@@ -45,6 +46,7 @@ const AppNavigation = () => {
             <Stack.Screen name='VechicleDetails' component={Vechicle} />
             <Stack.Screen name='EmployeeListScreen' component={EmployeeListScreen} />
             <Stack.Screen name='EmployeeDetailsScreen' component={EmployeeDetailsScreen} />
+            <Stack.Screen name='EditProfileScreen' component={EditProfileScreen} />
         </Stack.Navigator>
     );
 };
