@@ -53,7 +53,7 @@ const EmployeeListScreen = ({ navigation }) => {
         <ScrollView style={styles.container}>
             {
                 empList?.map((item2) => {
-                    console.log('item=========>', item2);
+                    // console.log('item=========>', item2);
                     return (
 
                         <View key={item2?.ID?.toString()} style={styles.list_container}>
@@ -125,9 +125,9 @@ const styles = StyleSheet.create({
     },
     btnView: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
         marginTop: 5,
-        width: '80%'
+        width: '75%'
     },
     btn: {
         padding: 4,

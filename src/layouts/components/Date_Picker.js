@@ -2,12 +2,17 @@ import React, { useState } from 'react'
 import { View,Text,StyleSheet,TextInput} from 'react-native'
 import DatePicker from 'react-native-date-picker'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
-const PickDate = () => {
+import moment from 'moment'
+const Date_Picker = ({Pick_Date}) => {
     const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
-    // console.log('date========>',date);
+    const dateOfJoin = moment(date).format('DD/MM/YYYY')
+    // console.log('dateOfJoin========>',dateOfJoin);
 
+    const currentDate=(date)=>{
+        Pick_Date(date)
+    }
+    
     return (
         <>
             <DatePicker
@@ -19,13 +24,14 @@ const PickDate = () => {
                 onConfirm={(date) => {
                     setOpen(false)
                     setDate(date)
+                    currentDate(date)
                 }}
                 onCancel={() => {
                     setOpen(false)
                 }}
             />
             <View style={styles.dateview}>
-                <TextInput value={date.toDateString()} style={{ width: '92%', fontSize: 20 }} />
+                <TextInput value={dateOfJoin} style={{ width: '92%', fontSize: 20 }} />
                 <Ionicons name="calendar-outline" size={30} style={{ alignSelf: 'center' }} onPress={() => setOpen(true)} />
             </View> 
       
@@ -43,4 +49,4 @@ const styles=StyleSheet.create({
         paddingHorizontal: 10
     }
 })
-export default PickDate;
+export default Date_Picker;

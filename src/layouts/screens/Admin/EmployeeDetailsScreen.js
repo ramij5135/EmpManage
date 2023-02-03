@@ -49,7 +49,7 @@ const EmployeeDetailsScreen = ({ navigation, route }) => {
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.textStyle} >Current Address :-</Text>
-                        <Text style={styles.textStyle}> {empDetails.CurrentLocation}</Text>
+                        <Text numberOfLines={1} style={[styles.textStyle,{width:'54%'}]}> {empDetails.CurrentLocation}</Text>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.textStyle}>City :-</Text>

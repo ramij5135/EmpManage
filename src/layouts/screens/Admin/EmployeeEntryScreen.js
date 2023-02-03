@@ -12,7 +12,6 @@ import { Avatar } from "react-native-paper";
 import { launchImageLibrary } from "react-native-image-picker";
 import PlacePicker from "../../components/PlacePicker";
 
-
 const Active = ["TRUE", "FALSE"]
 const EmployeeEntryScreen = ({navigation}) => {
     const [date, setDate] = useState(new Date())
@@ -29,7 +28,7 @@ const EmployeeEntryScreen = ({navigation}) => {
     const [pic, setPic] = useState('');
     const [lat, setLat] = useState();
     const [lang, setLang] = useState();
-    console.log('pic==========>',pic);
+    // console.log('pic==========>',pic);
     //for show toast msg
     
     const setToastMsg = msg => {
@@ -90,7 +89,7 @@ const EmployeeEntryScreen = ({navigation}) => {
 
         var config = {
             method: 'get',
-            url: 'https://demo38.gowebbi.in/api/RegisterApi/FetchState',
+            url: `${baseURL}RegisterApi/FetchState`,
         };
         axios(config)
             .then(function (response) {
@@ -114,7 +113,7 @@ const EmployeeEntryScreen = ({navigation}) => {
         var axios = require('axios');
         var config = {
             method: 'get',
-            url: `https://demo38.gowebbi.in/api/RegisterApi/FetchCity?SID=${stateCode}`,
+            url: `${baseURL}RegisterApi/FetchCity?SID=${stateCode}`,
             headers: {
             }
         };
@@ -134,27 +133,27 @@ const EmployeeEntryScreen = ({navigation}) => {
                 console.log(error);
             });
     }
-    Geocoder.init("AIzaSyD6WfSwXXdRhyMtTgLU9KY1XGnMdiOcbek");
-    const map=()=>{
-        Geolocation.getCurrentPosition(info => {
-            // console.log('info.coords.latitude===',info.coords.latitude);
-            // setInput((prev) => ({...prev,lat : info.coords.latitude}))
-            if(info.coords.longitude){
-                // console.log('info.coords.longitude===',info.coords.longitude);
-            // setInput((prev) => ({...prev,long : info.coords.longitude}))
-            }
-            Geocoder.from(info.coords.latitude,info.coords.longitude)
+    // Geocoder.init("AIzaSyD6WfSwXXdRhyMtTgLU9KY1XGnMdiOcbek");
+    // const map=()=>{
+    //     Geolocation.getCurrentPosition(info => {
+    //         // console.log('info.coords.latitude===',info.coords.latitude);
+    //         // setInput((prev) => ({...prev,lat : info.coords.latitude}))
+    //         if(info.coords.longitude){
+    //             // console.log('info.coords.longitude===',info.coords.longitude);
+    //         // setInput((prev) => ({...prev,long : info.coords.longitude}))
+    //         }
+    //         Geocoder.from(info.coords.latitude,info.coords.longitude)
            
-                .then(json => {
-                    var location = json.results[0].address_components[3].long_name;
-            //   setaddress(location)
-                })
-                .catch(error => console.log('error============>',error));
-          })
-    }
-useEffect(()=>{
-    map()
-},[])
+    //             .then(json => {
+    //                 var location = json.results[0].address_components[3].long_name;
+    //         //   setaddress(location)
+    //             })
+    //             .catch(error => console.log('error============>',error));
+    //       })
+    // }
+// useEffect(()=>{
+//     map()
+// },[])
 const Register = async () => {
     var data = {
         EmailId: input.emailId,
@@ -172,14 +171,14 @@ const Register = async () => {
         Longitude:lang,
         ImgUrl:pic
     };
-    console.log('data========>',data);
-    const response = await axios.post("https://demo38.gowebbi.in/api/RegisterApi/Register",data,{
+    // console.log('data========>',data);
+    const response = await axios.post(`${baseURL}RegisterApi/Register`,data,{
         headers:{
             'Content-Type': 'application/json'
         }
     })
     const responseData = await response.data;
-    console.log('responseData=================>',responseData);
+    // console.log('responseData=================>',responseData);
     if(responseData.status=="Success"){
         Alert.alert("Registration Sucessfull")
         navigation.navigate('AdminScreen')
@@ -188,9 +187,9 @@ const Register = async () => {
 
     }
   }
-  console.log('input.lat====>',lat);
-  console.log('input.long====>',lang);
-  console.log('address====>',address);
+//   console.log('input.lat====>',lat);
+//   console.log('input.long====>',lang);
+//   console.log('address====>',address);
 //   console.log('input===========22====>',input);
 
 
