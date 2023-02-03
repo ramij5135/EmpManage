@@ -1,44 +1,19 @@
-import React, {useEffect, useState} from "react";
-import { View, Text, StyleSheet, Image, Dimensions, Alert, ScrollView, Modal } from "react-native";
+import React, {useState} from "react";
+import { View, Text, StyleSheet, Image, Dimensions, ScrollView, Modal } from "react-native";
 import Header from "../../components/header";
 import FullButton from '../../components/fullButton';
 import { COLORS } from "../../../utils/globalStyles";
 import { useSelector } from "react-redux";
-import {getMethod} from '../../../utils/helper';
-import Loader from "../../components/loader";
 
 const {width, height} = Dimensions.get('window');
 
 const Attendence = () => {
-    // const {time, outTime, date} = route.params;
-    const [attendence, setAttendence] = useState([]);
-    const [count, setCount] = useState({});
-    const Emp = useSelector(state => state.auth.user);
-    const Emp_Id = Emp.ID;
-    const [loading, setLoading] = useState(false);
-    const [modalVisible, setModalVisible] = useState(false);
-
-    useEffect(()=> {
-        try {
-            setLoading(true);
-            getMethod(`EmployeeApi/AttendanceList?Emp_Id=${Emp_Id}`).then((res) =>{
-                const resData = res.data.AttendanceList;
-                setAttendence(resData);
-                const days = res.data.data[0];
-                setLoading(false);
-                setCount(days);
-            }).catch((error) => {
-                console.log(error);
-            })
-        } catch (error) {
-            Alert.alert("Error", 'Something went wrong');
-        }
-    }, [])
+    // const [modalVisible, setModalVisible] = useState(false);
+    const attendenceList = useSelector(state => state.attendence.atnList)
+    const attendenceData = useSelector(state => state.attendence.atnData[0])
 
     return(
         <>
-        {
-            loading ? <Loader visible={loading} /> :
             <View style={styles.container}>
                 <Header title={'Attendence'} />
                 <ScrollView showsVerticalScrollIndicator={false}>
@@ -50,8 +25,8 @@ const Attendence = () => {
                     <FullButton btnTitle={'Select Month'} />
                 </View>
                 <View style={styles.tableName}>
-                    <Text style={styles.tableField}>Present {count.Present}</Text>
-                    <Text style={[styles.tableField, {borderRightWidth:null}]}>Absent {count.Absent}</Text>
+                    <Text style={styles.tableField}>Present {attendenceData.Present}</Text>
+                    <Text style={[styles.tableField, {borderRightWidth:null}]}>Absent {attendenceData.Absent}</Text>
                     {/* <Text style={[styles.tableField, {borderRightWidth:null}]}>Left {count.Leftdays}</Text> */}
                 </View>
                 <View style={{flexDirection:'row',marginTop:10, flexWrap:'wrap', marginBottom:10}}>
@@ -62,7 +37,7 @@ const Attendence = () => {
                         <Text style={styles.tableHeading}>Status</Text>
                     </View>
                     {
-                        attendence.map((item, index) => {
+                        attendenceList.map((item, index) => {
                             return(
                                 <View style={{flexDirection:'row'}} key={index}>
                                     <Text style={[styles.tableHeading, { width: Date ? width*0.29 : width*0.25}]}>{item.Date}</Text>
@@ -76,7 +51,6 @@ const Attendence = () => {
                 </View>
                 </ScrollView>
             </View>
-        }
         </>
     )
 }

@@ -84,10 +84,10 @@ const HomeScreen = () => {
 
   const userData = useSelector(state=>state.auth.user)
   const Emp_Id = userData.ID;
-  const attendence = useSelector(state => state.attendence)
-  console.log('attendence', attendence.atnList);
-  const InTime = 0
-  const OutTime = 0
+  const attendence = useSelector(state => state.attendence.atnList[0])
+  console.log('attendence', attendence);
+  const InTime = attendence?.InTime;
+  const OutTime = attendence?.OutTime;
 
   useEffect(()=>{
     const today = new Date().toJSON().slice(0,10);
@@ -115,7 +115,6 @@ const HomeScreen = () => {
       });
       postMethod('EmployeeApi/EmpAttendance', raw).then((res)=>{
         Alert.alert(res.data.msg);
-        // dispatch(Employee_Attendence_In(JSON.parse(raw)));
       }).catch((error)=>{
         console.log('hi');
       })
@@ -134,7 +133,6 @@ const HomeScreen = () => {
       });
       postMethod('EmployeeApi/EmpAttendance', raw).then((res)=>{
        Alert.alert(res.data.msg);
-      //  dispatch(Employee_Attendence_Out(JSON.parse(raw)));
       }).catch((error)=>{
         console.log('hi');
       })
@@ -172,17 +170,17 @@ const HomeScreen = () => {
                     <>
                       <Text style={styles.buttonTitle}>{op.optionName}</Text>
                       {
-                        InTime ? <Text>{InTime}</Text> : null
+                        attendence?.Date === new Date().toJSON().slice(0,10) && InTime ? <Text>{InTime}</Text> : null      
                       }
                       <View style={styles.button}>
                         <Ionicons name='time-outline' size={15} color={'#fff'} />
-                        <Text onPress={InTime ? null : AttendenceInTime} style={{color:'#fff', marginLeft:5}}>{op.btnTitle}</Text>
+                        <Text onPress={attendence?.Date === new Date().toJSON().slice(0,10) && InTime ? null : AttendenceInTime} style={{color:'#fff', marginLeft:5}}>{op.btnTitle}</Text>
                       </View>
                     </> : op.btnTitle === 'Out Time' ? 
                     <>
                       <Text style={styles.buttonTitle}>{op.optionName}</Text>
                       {
-                        OutTime ? <Text>{OutTime}</Text> : null
+                        attendence?.Date === new Date().toJSON().slice(0,10) && OutTime ? <Text>{OutTime}</Text> : null
                       }
                       <View style={styles.button}>
                         <Ionicons name='time-outline' size={15} color={'#fff'} />

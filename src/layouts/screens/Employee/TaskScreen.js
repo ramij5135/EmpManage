@@ -1,23 +1,28 @@
 import React from "react";
 import { useEffect } from "react";
 import { View, StyleSheet, Image, Text, ScrollView, Alert } from "react-native";
-import { COLORS } from "../../../utils/globalStyles";
+import { COLORS, height, width } from "../../../utils/globalStyles";
 import Header from "../../components/header";
 import { useSelector } from "react-redux";
 import { getMethod } from "../../../utils/helper";
 import { useState } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Loader from "../../components/loader";
 
 const TaskScreen = () => {
     const [taskList, setTaskList] = useState([]);
+    const [loading, setLoading] = useState(false);
     const Emp = useSelector(state => state.auth.user);
     const Emp_Id = Emp.ID;
 
     useEffect(()=>{
         try {
+            setLoading(true);
             getMethod(`EmployeeApi/Tasklist?Emp_Id=${Emp_Id}`).then((res) =>{
+                console.log('res', res);
                 const resData = res.data.Tasklist;
                 setTaskList(resData);
+                setLoading(false);
             }).catch((error) => {
                 console.log(error);
             })
@@ -29,31 +34,30 @@ const TaskScreen = () => {
 
     return(
         <View style={styles.container}>
+            <Loader visible={loading} />
             <Header title='Task' />
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{flex:1}}>
                 <View style={styles.header}>
                     <Image style={styles.imgIcon} source={require('../../../assets/imgs/build.png')} />
                     <Text style={styles.attendence}>Today's Tasks Details</Text>
                 </View>
-                <View style={{paddingHorizontal:20, paddingVertical:10}}>
+                <View style={[styles.taskSection ,{ flex:taskList?.length < 0 ? null : 1}]}>
                     {/* <Text style={[styles.date,{paddingVertical:10}]}>22-05-2022</Text> */}
                     {
-                        taskList.map((item, index) => {
-                            return (
-                                <View style={styles.detail} key={index}>
-                                    <Text style={styles.date}>{item.JobName}</Text>
-                                    <Text style={styles.description}>{item.Note}</Text>
-                                </View>
-                            )
-                        })
+                        taskList?.length > 0 ?  
+                            taskList?.map((item, index) => {
+                                return (
+                                    <View style={styles.detail} key={index}>
+                                        <Text style={styles.date}>{item.JobName}</Text>
+                                        <Text style={styles.description}>{item.Note}</Text>
+                                    </View>
+                                )
+                            }) : 
+                            <View style={styles.taskContainer}>
+                                <Text style={styles.taskWord}>No Task Available</Text>
+                                <Image style={styles.emoji} source={require('../../../assets/imgs/happy.png')} />
+                            </View>
                     }
-                    {/* <View style={styles.detail}>
-                        <View style={{ justifyContent:'space-between', flexDirection:'row', alignItems:'center'}}>
-                            <Text style={styles.date}>Visit Bagha Beach in Goa</Text>
-                            <Ionicons name="eye" size={25} color={COLORS.black} />
-                        </View>
-                        <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam qui, tenetur optio vel, deserunt dolores rem nobis a quos distinctio laborum, magnification</Text>
-                    </View> */}
                 </View>
             </ScrollView>
         </View>
@@ -97,6 +101,21 @@ const styles = StyleSheet.create({
     detail:{
         paddingVertical:5
     },
+    taskSection:{
+        paddingHorizontal:20, 
+        paddingVertical:10,
+    },
+    taskContainer:{
+        alignSelf:'center', justifyContent:'center', flex:1, alignItems:'center'
+    },
+    taskWord: {
+        fontSize:22, letterSpacing:0.5, lineHeight:19, fontWeight:'bold', marginVertical:15
+    },
+    emoji:{
+        height:height*0.3,
+        width:width*0.5,
+        resizeMode:'contain'
+    }
 });
 
 export default TaskScreen;

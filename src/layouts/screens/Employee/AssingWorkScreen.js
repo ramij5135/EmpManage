@@ -10,6 +10,7 @@ const AssignWork = () => {
                 <Text style={styles.welcome}>Welcome</Text>
                 <Text style={styles.welcomeName}>Ramij Dafadar</Text>
             </View>
+            
         </View>
     )
 }
