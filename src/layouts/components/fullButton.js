@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         borderRadius:15,
-        marginVertical:10
+        marginVertical:10,
+        marginBottom:20
     },
     btnText:{
         fontSize:17,
