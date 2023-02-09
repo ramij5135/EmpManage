@@ -1,16 +1,19 @@
 import React, {useState} from "react";
-import { View, Text, StyleSheet, Image, Dimensions, ScrollView, Modal } from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions, ScrollView, Modal, TouchableOpacity } from "react-native";
 import Header from "../../components/header";
 import FullButton from '../../components/fullButton';
 import { COLORS } from "../../../utils/globalStyles";
 import { useSelector } from "react-redux";
+import {Calendar} from 'react-native-calendars';
 
 const {width, height} = Dimensions.get('window');
 
 const Attendence = () => {
-    // const [modalVisible, setModalVisible] = useState(false);
     const attendenceList = useSelector(state => state.attendence.atnList)
     const attendenceData = useSelector(state => state.attendence.atnData[0])
+    const [modalVisible, setModalVisible] = useState(false);
+    const [fromdays, setFromdays] = useState(false)
+    const [todays, setTodays] = useState(false)
 
     return(
         <>
@@ -22,7 +25,7 @@ const Attendence = () => {
                     <Text style={styles.attendence}>Attendence Details</Text>
                 </View>
                 <View style={{paddingHorizontal:20}}>
-                    <FullButton btnTitle={'Select Month'} />
+                    <FullButton btnTitle={'Select Month'} onPressName={() => setModalVisible(true)} />
                 </View>
                 <View style={styles.tableName}>
                     <Text style={styles.tableField}>Present {attendenceData.Present}</Text>
@@ -50,6 +53,45 @@ const Attendence = () => {
                     }
                 </View>
                 </ScrollView>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    setModalVisible(!modalVisible);
+
+                }}>
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>Choose date to see your attendence!</Text>
+                            <View style={styles.modalBtnSection}>
+                                <TouchableOpacity style={styles.modalBtn} onPress={()=> setFromdays(!fromdays)}>
+                                    <Text style={styles.modalBtnText}>From Days</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.modalBtn} onPress={()=> setTodays(!todays)}>
+                                    <Text style={styles.modalBtnText}>To Days</Text>
+                                </TouchableOpacity>
+                            </View>
+                            {
+                                fromdays || todays ? <View>
+                                    <Calendar 
+                                        onDayPress={day => {
+                                            console.log('selected day', day);
+                                            setFromdays(false)
+                                        }}
+                                    /> 
+                                </View> : null
+                            }
+                            
+                            <TouchableOpacity
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() => setModalVisible(!modalVisible)}>
+                            <Text style={styles.textStyle}>Hide Modal</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
             </View>
         </>
     )
@@ -96,6 +138,53 @@ const styles = StyleSheet.create({
         textAlign:'center',
         paddingVertical:2,
         height:25
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalView: {
+        backgroundColor: 'white',
+        borderRadius: 20,
+        paddingVertical: 25,
+        paddingHorizontal:10,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 20,
+          height: 10,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 4,
+        elevation: 5,
+        // height:height*0.5,
+        width:width*0.8
+    },
+    modalText:{
+        fontSize:14,
+        fontWeight:'500',
+        paddingBottom:5
+    },
+    modalBtnSection:{
+        flexDirection:'row',
+        padding:3,
+    },
+    modalBtn:{
+        marginHorizontal:5,
+        backgroundColor:COLORS.primary,
+        paddingVertical:3,
+        paddingHorizontal:8,
+        borderRadius:10,
+        alignItems:'center',
+        justifyContent:'center'
+    }, 
+    modalBtnText:{
+        color:COLORS.blue,
+        fontWeight:'400'
+    },
+    button:{
+        position:'absolute'
     }
 })
 

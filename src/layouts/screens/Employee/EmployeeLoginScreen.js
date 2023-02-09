@@ -9,7 +9,8 @@ import { postMethod, storeData } from "../../../utils/helper";
 import { COLORS } from "../../../utils/globalStyles";
 import { useDispatch } from "react-redux";
 import { Employee_Login } from "../../store/actions/actions";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
 const EmployeeLogin = () => {
     const navigation = useNavigation();
     const dispatch=useDispatch()
@@ -54,16 +55,16 @@ const EmployeeLogin = () => {
                 Password:inputs.password
             });
             postMethod('LoginApi/Login',raw).then((res)=>{
+                console.log('res dsata=======>', res);
                 const resData = res.data.data[0];
                 const dataFilter = res.data;
                 const token = dataFilter.Token;
-                console.log('token====>',token);
-                 const data=AsyncStorage.setItem('token',token?.toString())
+                storeData(token);
                 setLoading(false);
                 dispatch(Employee_Login(resData))
-                resData.Type === "EMP" ?  navigation.navigate('BottomTab',{data:data}) : null
-                storeData(token);
+                resData.Type === "EMP" ?  navigation.navigate('BottomTab') : null
             }).catch((error) =>{
+                    console.log('error1', error);
                     setLoading(false);
             })
         } catch (error) {

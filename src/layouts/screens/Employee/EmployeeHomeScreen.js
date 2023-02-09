@@ -84,24 +84,23 @@ const HomeScreen = () => {
   const [res, setRes] = useState()
   const userData = useSelector(state => state.auth.user)
   const Emp_Id = userData.ID;
-  // const attendence = useSelector(state => state?.attendence?.atnList[0])
-  const attendence = useSelector(state => state)
+  const attendence = useSelector(state => state?.attendence?.atnList[0])
   console.log('attendence', attendence);
   const InTime = attendence?.InTime;
   const OutTime = attendence?.OutTime;
-  useEffect(() => {
-    const backAction = () => {
-      AsyncStorage.getItem('token').then((res) =>
-        res ? navigation.navigate('Login') : undefined
-      )
-      return true;
-    };
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-    return () => backHandler.remove();
-  }, []);
+  // useEffect(() => {
+  //   const backAction = () => {
+  //     AsyncStorage.getItem('token').then((res) =>
+  //       res ? navigation.goBack() : undefined
+  //     )
+  //     return true;
+  //   };
+  //   const backHandler = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     backAction,
+  //   );
+  //   return () => backHandler.remove();
+  // }, []);
 
   useEffect(() => {
     const today = new Date().toJSON().slice(0, 10);
@@ -167,7 +166,7 @@ const HomeScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.wrapper}>
           <View style={styles.square} />
-          <Image style={styles.profileImg} source={require('../../../assets/imgs/profile.jpg')} />
+          <Image style={styles.profileImg} source={ userData.ImgUrl ? {uri: `https://demo38.gowebbi.in${userData.ImgUrl}`} : require('../../../assets/imgs/user.png')} />
           <Text style={styles.workTitle}>
             {userData.Designation}
             {/* Designation */}
