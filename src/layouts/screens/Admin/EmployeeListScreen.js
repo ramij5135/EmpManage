@@ -1,10 +1,11 @@
 //import liraries
 import React, { useState, useEffect, } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, BackHandler, ActivityIndicator,Alert } from 'react-native';
-import { Dialog } from 'react-native-paper';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, BackHandler, ActivityIndicator,Alert,TextInput } from 'react-native';
 import { COLORS } from '../../../utils/globalStyles';
 import axios from 'axios';
 import { baseURL } from '../../../utils/config';
+import Ionicons from  'react-native-vector-icons/Ionicons';
+// import { COLORS } from '../../../utils/globalStyles';
 const btn = [
     {
         id: 0,
@@ -24,12 +25,14 @@ const btn = [
 ]
 const EmployeeListScreen = ({ navigation }) => {
     const [empList, setEmpList] = useState()
-    const [data2, setData] = useState()
+    const [olddata, setOldata] = useState()
+    const [search, setSearch] = useState()
     const [loading, setLoading] = useState(true)
     useEffect(() => {
         axios.get(`${baseURL}JobMasterApi/FetchEmployee`).then((res) => {
             // console.log('res=====>',res.data.data);
             setEmpList(res?.data?.data)
+            setOldata(res?.data?.data)
             setLoading(false)
         }
         )
@@ -51,7 +54,7 @@ const EmployeeListScreen = ({ navigation }) => {
                 return elem
             }
         })
-        Alert.alert('', 'Are you want to delete', [
+        Alert.alert('', 'Are you want to delete?', [
             {
               text: 'Cancel',
               onPress: () => console.log('Cancel Pressed'),
@@ -61,11 +64,26 @@ const EmployeeListScreen = ({ navigation }) => {
           ])
         
     }
+    const OnSearch=(text)=>{
+        let data = olddata.filter((item)=>{
+            return item.Item.toLowerCase().indexOf(text.toLowerCase())> -1
+        })
+        setEmpList(data)
+
+    }
     return (
         <>{
             loading ? <ActivityIndicator size={'large'} color={'green'} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} /> :
 
                 <ScrollView style={styles.container}>
+                    <View style={{flexDirection :'row',backgroundColor:COLORS.White,marginVertical:10,borderRadius:10,height:40,}}>
+                    <TextInput style={{height:40,borderRadius:10,width:'90%',}} onChangeText={(text)=>{
+                         setSearch(text)
+                         OnSearch(text)
+                    }
+                        } />
+                        <Ionicons style={{alignSelf:'center'}} name={'search-outline'} size={30} />
+                    </View>
                     {
                         empList?.map((item2) => {
                             // console.log('item=========>', item2);

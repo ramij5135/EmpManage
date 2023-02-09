@@ -137,35 +137,38 @@
 //   }
 // })
 // export default VicheleScreen;       
-import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Button, Snackbar } from 'react-native-paper';
 
 const MyComponent = () => {
-  const [visible, setVisible] = React.useState(false);
+  const [increment, setIncrement] = useState(0)
+  const [decrement, setDecrement] = useState(100)
+  const incrementt = () => {
+    setIncrement(increment + 1)
+  }
+  const decrementt = () => {
+    setDecrement(decrement - 1)
+  }
+  const even = useMemo(() => {
+    let i = 0
+    console.log('hiiii');
+    while (i < 2000000000000000) {
+      return increment % 2 === 0
 
-  const onToggleSnackBar = () => setVisible(!visible);
-
-  const onDismissSnackBar = () => setVisible(false);
-
+    }
+  },[increment])
   return (
     <>
-      <Button onPress={onToggleSnackBar}>{visible ? 'Hide' : 'Show'}</Button>
       <View style={styles.container}>
-      <Snackbar
-        visible={visible}
-        onDismiss={onDismissSnackBar}
-        style={styles.snackbar}
-        action={{
-          onPress: () => {
-            // Do something
-          },
-        }}>
-        Hey there! I'm a Snackbar.
-      </Snackbar>
-    </View>
+        <Text>{increment}</Text>
+        <Text>{even ? 'even' : 'odd'}</Text>
+        <TouchableOpacity onPress={incrementt}><Text>increment</Text></TouchableOpacity>
+        <Text>{decrement}</Text>
+        <TouchableOpacity onPress={decrementt}><Text>decrement</Text></TouchableOpacity>
+      </View>
     </>
-    
+
   );
 };
 
@@ -175,11 +178,11 @@ const styles = StyleSheet.create({
     // justifyContent: 'space-between',
     // position:'absolute',
     // top:0,
-    marginTop:'10%'
+    marginTop: '10%'
   },
-  snackbar:{
-    backgroundColor:'green',
-   
+  snackbar: {
+    backgroundColor: 'green',
+
   }
 });
 

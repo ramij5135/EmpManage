@@ -41,20 +41,16 @@ const EditProfileScreen = ({ route,navigation }) => {
             console.log('image======>',image);
             setImage(image)
           });
-          
     }
-    // console.log('image',image.data);
     const setToastMsg = msg => {
         ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
     }
-
     const uploadImage = () => {
         let options = {
             mediaType: 'photo',
             quality: 1,
             includeBase64: true
         };
-
         launchImageLibrary(options, response => {
             console.log('options====>', options);
             console.log('response====>', response.didCancel);
@@ -78,7 +74,6 @@ const EditProfileScreen = ({ route,navigation }) => {
             }
         });
     }
-    // console.log('empDetails=ddddd=>',empDetails);
     const [text, setText] = useState({
         Id: empDetails.ID,
         EmailId: empDetails.EmailId,
@@ -93,7 +88,6 @@ const EditProfileScreen = ({ route,navigation }) => {
         Password: empDetails.Password
     })
     const [value, setValue] = useState(empDetails.CurrentLocation)
-
     const handleOnchange = (text, input) => {
         setText(pevState => ({ ...pevState, [input]: text }))
     }
@@ -108,8 +102,6 @@ const EditProfileScreen = ({ route,navigation }) => {
         setLat(lat)
         setLang(lang)
     }
-    // console.log('dateOfBirth2======>123',NewdateOfBirth2);
-    // console.log('text=========>',text);
     const UpdateProfile = () => {
         var data = {
             ID: text.Id,
@@ -130,7 +122,7 @@ const EditProfileScreen = ({ route,navigation }) => {
         };
         console.log('data=========>', data);
         axios.post(`${baseURL}EmployeeApi/EditProfile`, data).then((res) => {
-            console.log(res.data.status);
+            console.log(res.data);
             if(res.data.status=='Success'){
             showModal()
             }
@@ -142,8 +134,6 @@ const EditProfileScreen = ({ route,navigation }) => {
         <View style={styles.container} >
             <View style={styles.backgrondColor} />
             <>
-
-                {/* <Image source={require('../../../assets/imgs/profile.jpg')} style={styles.img} /> */}
                 <Image source={image ? { uri: `data:${image.mime};base64,${image.data}` } : empDetails.ImgUrl ? { uri: `https://demo38.gowebbi.in${empDetails.ImgUrl}` } : require('../../../assets/imgs/profile.jpg')} style={styles.img} />
                 {/* <Image source={{uri: `data:${image.mime};base64,${image.data}`}} style={styles.img} /> */}
                 <TouchableOpacity onPress={() => onSelectimage()} style={{ position: 'absolute', top: 151, right: 105 }}>
@@ -195,7 +185,7 @@ const EditProfileScreen = ({ route,navigation }) => {
                 <Modal visible={visible} onDismiss={hideModal} >
                     <View style={styles.containerStyle}>
                     <Text style={{fontFamily:'Poppins-SemiBold',color:'#36ba5e',fontSize:17}}>Profile update sucessfully..</Text>
-                    <TouchableOpacity onPress={()=>navigation.navigate('EmployeeListScreen')} style={styles.btn}>
+                    <TouchableOpacity onPress={()=>navigation.navigate('AdminScreen')} style={styles.btn}>
                         <Text style={{color:'#fff'}}>OK</Text>
                     </TouchableOpacity>
 

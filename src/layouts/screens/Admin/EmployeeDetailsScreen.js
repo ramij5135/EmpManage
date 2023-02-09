@@ -1,9 +1,7 @@
-//import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { COLORS } from '../../../utils/globalStyles';
 import moment from 'moment';
-// create a component
 const EmployeeDetailsScreen = ({ navigation, route }) => {
     console.log('props======?>', route.params.profileData);
     const empDetails = route.params?.profileData
@@ -69,35 +67,24 @@ const EmployeeDetailsScreen = ({ navigation, route }) => {
         </View>
     );
 };
-
-// define your styles
 const styles = StyleSheet.create({
     container: {
-        // padding: 12,
         flex: 1,
-        // backgroundColor:'red'
     },
     img: {
         height: 130,
         width: 130,
         resizeMode: 'contain',
-        borderRadius: 40,
+        borderRadius: 20,
         alignSelf: 'center',
         marginBottom: 10,
-        // position:'absolute',
-
-        // zIndex:1
-
     },
     imgView: {
-        // flex: 0.35,
         height: 170,
         backgroundColor: COLORS.primary,
         borderBottomLeftRadius: 50,
         borderBottomRightRadius: 50,
         padding: 10,
-        // zIndex:1
-
     },
     profileData_container: {
         backgroundColor: COLORS.profileBackGroundColor,
@@ -108,7 +95,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderRadius: 10,
         padding: 5,
-        // flex: 1
     },
     profile_datastyle: {
         fontFamily: 'Poppins-SemiBold',
@@ -123,6 +109,4 @@ const styles = StyleSheet.create({
     }
 
 });
-
-//make this component available to the app
 export default EmployeeDetailsScreen;
