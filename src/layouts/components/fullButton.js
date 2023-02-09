@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     btnText:{
         fontSize:17,
         color:'#fff',
-        fontWeight:'bold'
+        fontFamily :'Poppins-Bold'
     }
 });
 

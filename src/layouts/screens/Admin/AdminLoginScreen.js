@@ -60,7 +60,7 @@ const AdminLoginScreen = ({ navigation }) => {
         // console.log('successggggg', responseData.Token);
         setLoading(false)
         const data =await AsyncStorage.setItem('token', responseData?.Token?.toString());
-        console.log('data======>', data);
+        // console.log('data======>', data);
         navigation.navigate('AdminScreen', { data })
       }
       else {

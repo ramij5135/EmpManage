@@ -5,7 +5,7 @@ import FullButton from "../components/fullButton";
 import Logo from "../components/logo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {getStorageData} from '../../utils/helper';
-
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
     const navigation = useNavigation();
@@ -17,8 +17,11 @@ const LoginScreen = () => {
     }
 
     const Check_Emp_Login = () => {
-        const tData = getStorageData();
-        tData ? navigation.navigate('BottomTab') : navigation.navigate('Emp_Login')
+        AsyncStorage.getItem('token').then((res)=>
+        res ? navigation.navigate('BottomTab') : navigation.navigate('Emp_Login')
+
+        )
+
     }
     
 

@@ -19,7 +19,9 @@ const Inputs = ({title, iconName, multiline, height, bgColor, zIndex,onChangeTex
 
 const styles = StyleSheet.create({
     inputWrap:{
-        marginVertical:10, 
+        // marginVertical:0, 
+        // marginTop:10,
+        marginBottom:7,
         backgroundColor:COLORS.white,
         borderRadius:10
     },
@@ -29,13 +31,14 @@ const styles = StyleSheet.create({
         marginTop:-20,
         borderBottomLeftRadius:10,
         borderBottomRightRadius:10,
+        // marginBottom:2
         // textAlignVertical:"top"
     },
     label:{
         color:COLORS.black,
         fontSize:16,
         paddingVertical:3,
-        paddingHorizontal:5
+        paddingHorizontal:5,
     },
     inputIcon:{
         position:'absolute',

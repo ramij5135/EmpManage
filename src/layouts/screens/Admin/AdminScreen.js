@@ -4,14 +4,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Text, View, StyleSheet, Image, TouchableOpacity,ScrollView,BackHandler } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 const AdminScreen = ({ navigation, route }) => {
-    const [response,setResponse]=useState()
-    console.log('route==================>', response);
+    // const [response,setResponse]=useState()
+    // console.log('route==================>', response);
     useEffect(() => {
         const backAction = () => {
             AsyncStorage.getItem('token').then((res) => {
-                setResponse(res)
+                res ? navigation.goBack() : undefined
             },)
-            response ? navigation.navigate('Login') : navigation.navigate('AdminScreen')
           return true;
         };
     
@@ -19,13 +18,8 @@ const AdminScreen = ({ navigation, route }) => {
           'hardwareBackPress',
           backAction,
         );
-    
         return () => backHandler.remove();
       }, []);
- 
-        
-
-    
     const DATA = [
 
         {

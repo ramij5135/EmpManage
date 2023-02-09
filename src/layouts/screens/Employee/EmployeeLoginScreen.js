@@ -9,7 +9,7 @@ import { postMethod, storeData } from "../../../utils/helper";
 import { COLORS } from "../../../utils/globalStyles";
 import { useDispatch } from "react-redux";
 import { Employee_Login } from "../../store/actions/actions";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const EmployeeLogin = () => {
     const navigation = useNavigation();
     const dispatch=useDispatch()
@@ -57,9 +57,11 @@ const EmployeeLogin = () => {
                 const resData = res.data.data[0];
                 const dataFilter = res.data;
                 const token = dataFilter.Token;
+                console.log('token====>',token);
+                 const data=AsyncStorage.setItem('token',token?.toString())
                 setLoading(false);
                 dispatch(Employee_Login(resData))
-                resData.Type === "EMP" ?  navigation.navigate('BottomTab') : null
+                resData.Type === "EMP" ?  navigation.navigate('BottomTab',{data:data}) : null
                 storeData(token);
             }).catch((error) =>{
                     setLoading(false);

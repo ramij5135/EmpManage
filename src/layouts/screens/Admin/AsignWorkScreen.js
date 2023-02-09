@@ -111,7 +111,7 @@ const AsignWorkScreen = ({ navigation }) => {
         Work asign successfully
       </Snackbar>
     </View>
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
         {/* <Snackbar
           visible={visible}
           onDismiss={onDismissSnackBar}
@@ -168,7 +168,7 @@ const AsignWorkScreen = ({ navigation }) => {
 
 
       </View>
-    </ScrollView>
+    </View>
     </>
     
   );
@@ -199,7 +199,6 @@ const styles = StyleSheet.create({
   },
   container2:{
     backgroundColor: COLORS.primary,
-
     paddingTop:'20%',
     // position:'absolute',
     // top:500

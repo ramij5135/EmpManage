@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity,ToastAndroid } from 'react-native';
 import Inputs from '../../components/inputs';
 import { COLORS, height } from '../../../utils/globalStyles';
 import moment from 'moment';
@@ -8,10 +8,11 @@ import axios from 'axios';
 import { baseURL } from '../../../utils/config';
 import PlacePicker from '../../components/PlacePicker';
 import FullButton from '../../components/fullButton';
+import ImagePicker from 'react-native-image-crop-picker';
 // import { baseURL } from "../../../utils/config";
-import { Avatar } from "react-native-paper";
-import { launchImageLibrary,launchCamera } from "react-native-image-picker";
-const EditProfileScreen = ({ route }) => {
+import { Modal } from "react-native-paper";
+import { launchImageLibrary, launchCamera } from "react-native-image-picker";
+const EditProfileScreen = ({ route,navigation }) => {
     const empDetails = route.params?.profileData
     const dateOfJoin = moment(empDetails.Doj).format('DD/MM/YYYY')
     const fomatedOldDateOfBirth = moment(empDetails.Dob).format('DD/MM/YYYY')
@@ -20,12 +21,29 @@ const EditProfileScreen = ({ route }) => {
     const [lang, setLang] = useState();
     const [address, setaddress] = useState();
     const [pic, setPic] = useState('');
-    console.log('pic-============>',);
+    const [image, setImage] = useState('');
+    console.log('pic-============>', pic);
     const updateLat = lat ? lat : empDetails.Latitude
     const updateAddress = address ? address : empDetails.CurrentLocation
     const updatelang = lang ? lang : empDetails.Longitude
     const NewdateOfBirth2 = dateOfBirth ? dateOfBirth : fomatedOldDateOfBirth
+    const [visible, setVisible] = React.useState(false);
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
+    const onSelectimage=()=>{
+        ImagePicker.openPicker({
+            // width: 300,
+            // height: 400,
+            cropping: false,
+            includeBase64 :true
 
+          }).then(image => {
+            console.log('image======>',image);
+            setImage(image)
+          });
+          
+    }
+    // console.log('image',image.data);
     const setToastMsg = msg => {
         ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
     }
@@ -38,23 +56,25 @@ const EditProfileScreen = ({ route }) => {
         };
 
         launchImageLibrary(options, response => {
-            console.log('options====>',options);
-            console.log('response====>',response);
+            console.log('options====>', options);
+            console.log('response====>', response.didCancel);
 
-            if(response.didCancel){
+            if (response.didCancel) {
                 setToastMsg('Cancelled image selection');
-            } else if(response.errorCode == 'permission'){
+            } else if (response.errorCode == 'permission') {
                 setToastMsg('Permission not satisfied');
-            } else if(response.errorCode == 'others'){
+            } else if (response.errorCode == 'others') {
                 setToastMsg(response.errorMessage);
-            } else if(response.assets[0].fileSize > 2097152){
+            } else if (response.assets[0].fileSize > 2097152) {
                 Alert.alert(
-                    'Maximum size exceeded', 
-                    'Please choose image under 2 mb', 
-                    [{text: 'OK'}]
+                    'Maximum size exceeded',
+                    'Please choose image under 2 mb',
+                    [{ text: 'OK' }]
                 );
             } else {
                 setPic(response.assets[0].base64);
+                console.log('hiiiii');
+
             }
         });
     }
@@ -92,7 +112,7 @@ const EditProfileScreen = ({ route }) => {
     // console.log('text=========>',text);
     const UpdateProfile = () => {
         var data = {
-            Id: text.Id,
+            ID: text.Id,
             EmailId: empDetails.EmailId,
             UserName: text.EmpName,
             Password: text.Password,
@@ -106,23 +126,31 @@ const EditProfileScreen = ({ route }) => {
             CurrentLocation: updateAddress,
             Latitude: updateLat,
             Longitude: updatelang,
-            ImgUrl: pic
+            ImgUrl: image.data
         };
         console.log('data=========>', data);
-        axios.post(`${baseURL}EmployeeApi/EditProfile`, data).then((res) => console.log('res=========>2', res))
+        axios.post(`${baseURL}EmployeeApi/EditProfile`, data).then((res) => {
+            console.log(res.data.status);
+            if(res.data.status=='Success'){
+            showModal()
+            }
+
+        }
+        )
     }
     return (
         <View style={styles.container} >
             <View style={styles.backgrondColor} />
-            <>  
-                
+            <>
+
                 {/* <Image source={require('../../../assets/imgs/profile.jpg')} style={styles.img} /> */}
-                 <Image source={ pic ?{uri: `data:image/jpg;base64,${pic}`} : empDetails.ImgUrl ?{uri:`https://demo38.gowebbi.in${empDetails.ImgUrl}`}: require('../../../assets/imgs/profile.jpg')} style={styles.img} />
-                <TouchableOpacity onPress={()=>uploadImage()} style={{position:'absolute',top:151,right:105}}>
-                <Image style={{height:27,width:27}} source={require('../../../assets/imgs/editIcon.png')} />
-                    
+                <Image source={image ? { uri: `data:${image.mime};base64,${image.data}` } : empDetails.ImgUrl ? { uri: `https://demo38.gowebbi.in${empDetails.ImgUrl}` } : require('../../../assets/imgs/profile.jpg')} style={styles.img} />
+                {/* <Image source={{uri: `data:${image.mime};base64,${image.data}`}} style={styles.img} /> */}
+                <TouchableOpacity onPress={() => onSelectimage()} style={{ position: 'absolute', top: 151, right: 105 }}>
+                    <Image style={{ height: 27, width: 27 }} source={require('../../../assets/imgs/editIcon.png')} />
+
                 </TouchableOpacity>
-                <ScrollView keyboardShouldPersistTaps='handled' style={{ padding: 10}}>
+                <ScrollView keyboardShouldPersistTaps='handled' style={{ padding: 10 }}>
                     <Text style={styles.textStyle}>Email Id :-</Text>
                     <View style={styles.staticData_section}>
                         <Text numberOfLines={1} style={[styles.textStyle, { width: '75%' }]}> {empDetails.EmailId}</Text>
@@ -155,20 +183,41 @@ const EditProfileScreen = ({ route }) => {
 
                     <Text style={styles.textStyle}>Pin Code :-</Text>
                     <Inputs value={text.PinCode} onChangeText={(text) => handleOnchange(text, 'PinCode')} />
-
+                    <Text style={styles.textStyle}>State :-</Text>
+                    <Inputs value={text.State} onChangeText={(text) => handleOnchange(text, 'State')} />
                     <Text style={styles.textStyle}>Password :-</Text>
                     <Inputs value={text.Password} onChangeText={(text) => handleOnchange(text, 'Password')} />
 
-                    <Text style={styles.textStyle}>State :-</Text>
-                    <Inputs value={text.State} onChangeText={(text) => handleOnchange(text, 'State')} />
+                    
                     <FullButton onPressName={UpdateProfile} btnTitle={'Update'} />
                 </ScrollView>
+                {/* <View style={{flex:1,justifyContent:'center',alignItems:'center'}}> */}
+                <Modal visible={visible} onDismiss={hideModal} >
+                    <View style={styles.containerStyle}>
+                    <Text style={{fontFamily:'Poppins-SemiBold',color:'#36ba5e',fontSize:17}}>Profile update sucessfully..</Text>
+                    <TouchableOpacity onPress={()=>navigation.navigate('EmployeeListScreen')} style={styles.btn}>
+                        <Text style={{color:'#fff'}}>OK</Text>
+                    </TouchableOpacity>
+
+
+                    </View>
+                </Modal>
+                {/* </View> */}
+                
             </>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    containerStyle: {
+        backgroundColor:'#fff',
+       padding:10,
+        justifyContent:'center',
+        alignItems:'center',
+        margin:20,
+        borderRadius:10
+    },
     container: {
         flex: 1,
         // marginBottom:10
@@ -187,9 +236,9 @@ const styles = StyleSheet.create({
         marginTop: -55,
         alignSelf: 'center',
         marginBottom: 10,
-        borderColor:'black',
-        borderWidth:1,
-        width:100
+        borderColor: 'black',
+        borderWidth: 1,
+        width: 100
     },
     editDataSection: {
         backgroundColor: COLORS.White,
@@ -205,6 +254,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 10,
         borderRadius: 10
+    },
+    btn:{
+        backgroundColor:'#0891b2',
+        paddingHorizontal:30,
+        paddingVertical:5,
+        marginTop:10,
+        borderRadius:10
     }
 
 
