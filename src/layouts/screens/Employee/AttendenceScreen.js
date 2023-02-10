@@ -109,6 +109,7 @@ const Attendence = () => {
                                             setFromDays(day.dateString)
                                             setFromdaysVisible(false)
                                         }}
+                                        enableSwipeMonths={true}
                                     /> 
                                 </View> : todaysVisible ? <View>
                                     <Calendar 
@@ -116,6 +117,7 @@ const Attendence = () => {
                                             setTodays(day.dateString)
                                             setTodaysVisible(false)
                                         }}
+                                        enableSwipeMonths={true}
                                     /> 
                                 </View> : null
                             }
@@ -124,15 +126,14 @@ const Attendence = () => {
                                 <FullButton btnTitle={'Submit'} onPressName={()=> getSearchData()} />
                                 </View>
                             }
-                            
-                            
                             <TouchableOpacity
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() => {
-                                setModalVisible(!modalVisible)
-                                setFromdaysVisible(false)
-                                setTodaysVisible(false)
-                                }}>
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={() => {
+                                    setModalVisible(!modalVisible)
+                                    setFromdaysVisible(false)
+                                    setTodaysVisible(false)
+                                }}
+                            >
                                 <Ionicons name="close" size={25} color={COLORS.red} />
                             </TouchableOpacity>
                         </View>
@@ -211,7 +212,8 @@ const styles = StyleSheet.create({
     modalText:{
         fontSize:14,
         fontWeight:'500',
-        paddingBottom:5
+        paddingBottom:10,
+        paddingTop:5
     },
     modalBtnSection:{
         flexDirection:'row',
