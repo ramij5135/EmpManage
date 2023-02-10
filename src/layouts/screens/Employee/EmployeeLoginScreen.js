@@ -14,7 +14,6 @@ import { Employee_Login } from "../../store/actions/actions";
 const EmployeeLogin = () => {
     const navigation = useNavigation();
     const dispatch=useDispatch()
-    const [text, setText] = useState("");
 
     const [inputs, setInputs] = useState({
         email:'',
@@ -43,7 +42,6 @@ const EmployeeLogin = () => {
 
         if(valid){
             login();
-            // dispatch(login())
         }
     }
 
@@ -55,7 +53,6 @@ const EmployeeLogin = () => {
                 Password:inputs.password
             });
             postMethod('LoginApi/Login',raw).then((res)=>{
-                console.log('res dsata=======>', res);
                 const resData = res.data.data[0];
                 const dataFilter = res.data;
                 const token = dataFilter.Token;
@@ -64,8 +61,8 @@ const EmployeeLogin = () => {
                 dispatch(Employee_Login(resData))
                 resData.Type === "EMP" ?  navigation.navigate('BottomTab') : null
             }).catch((error) =>{
-                    console.log('error1', error);
-                    setLoading(false);
+                console.log('error1', error);
+                setLoading(false);
             })
         } catch (error) {
             Alert.alert("Error", 'Something went wrong');

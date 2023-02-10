@@ -6,7 +6,7 @@ const initialState = {
 }
 
 export const Employee_Attendence_Record = (state = initialState, action) => {
-    console.log('attendence hi');
+    // console.log('attendence hi');
     switch (action.type) {
         case EMP_ATTENDENCE_LIST: {
             let data = action.payload
