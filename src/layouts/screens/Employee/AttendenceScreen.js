@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { View, Text, StyleSheet, Image, Dimensions, ScrollView, Modal, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions, ScrollView, Modal, TouchableOpacity,  } from "react-native";
 import Header from "../../components/header";
 import FullButton from '../../components/fullButton';
 import { COLORS } from "../../../utils/globalStyles";
@@ -58,7 +58,7 @@ const Attendence = () => {
                     transparent={true}
                     visible={modalVisible}
                     onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
+                    // Alert.alert('Modal has been closed.');
                     setModalVisible(!modalVisible);
 
                 }}>
