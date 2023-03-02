@@ -6,7 +6,6 @@ import Header from "../../components/header";
 import { useSelector } from "react-redux";
 import { getMethod } from "../../../utils/helper";
 import { useState } from "react";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import Loader from "../../components/loader";
 
 const TaskScreen = () => {
@@ -19,7 +18,7 @@ const TaskScreen = () => {
         try {
             setLoading(true);
             getMethod(`EmployeeApi/Tasklist?Emp_Id=${Emp_Id}`).then((res) =>{
-                console.log('res', res);
+                // console.log('res', res);
                 const resData = res.data.Tasklist;
                 setTaskList(resData);
                 setLoading(false);

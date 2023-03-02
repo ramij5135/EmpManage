@@ -5,7 +5,6 @@ import FullButton from "../components/fullButton";
 import Logo from "../components/logo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {getStorageData} from '../../utils/helper';
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
     const navigation = useNavigation();

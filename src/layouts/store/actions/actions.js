@@ -17,7 +17,7 @@ export const Employee_Attendence_List= (attendence) => {
 } 
 
 export const Employee_Attendence_Data = (attendence) => {
-    console.log('attendence data out', attendence);
+    // console.log('attendence data out', attendence);
     return {
         type: EMP_ATTENDENCE_DATA,
         payload: attendence

@@ -6,7 +6,7 @@ const initialState = {
 
 
 export const Authentication = (state = initialState, action)=>{
-    console.log('reducer hi');
+    // console.log('reducer hi');
     switch (action.type) {
         case EMP_LOGIN: {
             let data = action.payload;

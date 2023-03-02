@@ -86,6 +86,7 @@ const HomeScreen = () => {
   const Emp_Id = userData.ID;
   const attendence = useSelector(state => state?.attendence?.atnList[0])
   const data2 = useSelector(state => state)
+  console.log('attendence', data2);
   const InTime = attendence?.InTime;
   const OutTime = attendence?.OutTime;
   // useEffect(() => {

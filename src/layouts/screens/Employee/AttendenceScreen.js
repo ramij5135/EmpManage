@@ -5,15 +5,35 @@ import FullButton from '../../components/fullButton';
 import { COLORS } from "../../../utils/globalStyles";
 import { useSelector } from "react-redux";
 import {Calendar} from 'react-native-calendars';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { getMethod } from "../../../utils/helper";
 
 const {width, height} = Dimensions.get('window');
 
 const Attendence = () => {
-    const attendenceList = useSelector(state => state.attendence.atnList)
+    const [attendenceList, setattendenceList] = useState(useSelector(state => state.attendence.atnList))
     const attendenceData = useSelector(state => state.attendence.atnData[0])
+    const userData = useSelector(state => state.auth.user)
+    const Emp_Id = userData.ID;
     const [modalVisible, setModalVisible] = useState(false);
-    const [fromdays, setFromdays] = useState(false)
-    const [todays, setTodays] = useState(false)
+    const [fromdaysVisible, setFromdaysVisible] = useState(false)
+    const [todaysVisible, setTodaysVisible] = useState(false)
+    const [todays, setTodays] = useState('');
+    const [fromdays, setFromDays] = useState('');
+
+    const getSearchData = () => {
+        try {
+            getMethod(`EmployeeApi/AttendanceDatewiseList?Todate=${todays}&Fromdate=${fromdays}&Emp_Id=${Emp_Id}`).then(async (res) => {
+                const data = res.data.AttendanceList;
+                setattendenceList(data);
+                setModalVisible(false)
+            }).catch((error) => {
+              console.log(error);
+            })
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
 
     return(
         <>
@@ -63,31 +83,58 @@ const Attendence = () => {
 
                 }}>
                     <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
+                        <View style={[styles.modalView, {paddingBottom: fromdays && todays ? 0 : 25}]}>
                             <Text style={styles.modalText}>Choose date to see your attendence!</Text>
                             <View style={styles.modalBtnSection}>
-                                <TouchableOpacity style={styles.modalBtn} onPress={()=> setFromdays(!fromdays)}>
+                                <TouchableOpacity style={styles.modalBtn} onPress={()=> setFromdaysVisible(!fromdaysVisible)}>
+                                    {
+                                        fromdays ?
+                                    
+                                    <Text style={styles.modalBtnText}>{fromdays}</Text> :
                                     <Text style={styles.modalBtnText}>From Days</Text>
+                                    }
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.modalBtn} onPress={()=> setTodays(!todays)}>
-                                    <Text style={styles.modalBtnText}>To Days</Text>
+                                <TouchableOpacity style={styles.modalBtn} onPress={()=> setTodaysVisible(!todaysVisible)}>
+                                    {
+                                        todays ?
+                                        <Text style={styles.modalBtnText}>{todays}</Text> : 
+                                        <Text style={styles.modalBtnText}>To Days</Text>
+                                    }
                                 </TouchableOpacity>
                             </View>
                             {
-                                fromdays || todays ? <View>
+                                fromdaysVisible  ? <View>
                                     <Calendar 
                                         onDayPress={day => {
-                                            console.log('selected day', day);
-                                            setFromdays(false)
+                                            setFromDays(day.dateString)
+                                            setFromdaysVisible(false)
                                         }}
+                                        enableSwipeMonths={true}
+                                    /> 
+                                </View> : todaysVisible ? <View>
+                                    <Calendar 
+                                        onDayPress={day => {
+                                            setTodays(day.dateString)
+                                            setTodaysVisible(false)
+                                        }}
+                                        enableSwipeMonths={true}
                                     /> 
                                 </View> : null
                             }
-                            
+                            {
+                                fromdays && todays && <View style={{width:'100%'}}>
+                                <FullButton btnTitle={'Submit'} onPressName={()=> getSearchData()} />
+                                </View>
+                            }
                             <TouchableOpacity
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() => setModalVisible(!modalVisible)}>
-                            <Text style={styles.textStyle}>Hide Modal</Text>
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={() => {
+                                    setModalVisible(!modalVisible)
+                                    setFromdaysVisible(false)
+                                    setTodaysVisible(false)
+                                }}
+                            >
+                                <Ionicons name="close" size={25} color={COLORS.red} />
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -143,11 +190,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor:COLORS.grey,
     },
     modalView: {
         backgroundColor: 'white',
         borderRadius: 20,
-        paddingVertical: 25,
+        paddingTop: 25,
         paddingHorizontal:10,
         alignItems: 'center',
         shadowColor: '#000',
@@ -164,7 +212,8 @@ const styles = StyleSheet.create({
     modalText:{
         fontSize:14,
         fontWeight:'500',
-        paddingBottom:5
+        paddingBottom:10,
+        paddingTop:5
     },
     modalBtnSection:{
         flexDirection:'row',
@@ -183,8 +232,20 @@ const styles = StyleSheet.create({
         color:COLORS.blue,
         fontWeight:'400'
     },
+    dateView:{
+        flexDirection:'row',
+        // padding:3
+    },
+    dateViewText:{
+        marginHorizontal:5,
+        paddingHorizontal:8
+    },
     button:{
-        position:'absolute'
+        position:'absolute',
+        top:-5,
+        right:0,
+        padding:5,
+        paddingHorizontal:10
     }
 })
 
