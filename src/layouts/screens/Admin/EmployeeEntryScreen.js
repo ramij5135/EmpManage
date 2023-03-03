@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Alert, TouchableHighlight, ToastAndroid } from "react-native";
+import { Text, View, StyleSheet, ScrollView, TextInput, Image, TouchableOpacity, Alert, TouchableHighlight, ToastAndroid } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import DatePicker from 'react-native-date-picker'
 import FullTextInput from "../../components/textInput";
@@ -11,9 +11,14 @@ import { baseURL } from "../../../utils/config";
 import { Avatar } from "react-native-paper";
 import { launchImageLibrary } from "react-native-image-picker";
 import PlacePicker from "../../components/PlacePicker";
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import Inputs from "../../components/inputs";
+import Date_Picker from "../../components/Date_Picker";
+import { COLORS } from "../../../utils/globalStyles";
+import moment from 'moment';
 
 const Active = ["TRUE", "FALSE"]
-const EmployeeEntryScreen = ({navigation}) => {
+const EmployeeEntryScreen = ({ navigation }) => {
     const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
     const [doj, setDoj] = useState(new Date())
@@ -28,9 +33,13 @@ const EmployeeEntryScreen = ({navigation}) => {
     const [pic, setPic] = useState('');
     const [lat, setLat] = useState();
     const [lang, setLang] = useState();
+    const [dateOfBirth, setDateOfBirth] = useState()
+    const [dojd, setDojd] = useState()
+    console.log('dateOfBirth========>', dateOfBirth);
+    console.log('dojd========>', dojd);
     // console.log('pic==========>',pic);
     //for show toast msg
-    
+
     const setToastMsg = msg => {
         ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
     }
@@ -43,17 +52,17 @@ const EmployeeEntryScreen = ({navigation}) => {
         };
 
         launchImageLibrary(options, response => {
-            if(response.didCancel){
+            if (response.didCancel) {
                 setToastMsg('Cancelled image selection');
-            } else if(response.errorCode == 'permission'){
+            } else if (response.errorCode == 'permission') {
                 setToastMsg('Permission not satisfied');
-            } else if(response.errorCode == 'others'){
+            } else if (response.errorCode == 'others') {
                 setToastMsg(response.errorMessage);
-            } else if(response.assets[0].fileSize > 2097152){
+            } else if (response.assets[0].fileSize > 2097152) {
                 Alert.alert(
-                    'Maximum size exceeded', 
-                    'Please choose image under 2 mb', 
-                    [{text: 'OK'}]
+                    'Maximum size exceeded',
+                    'Please choose image under 2 mb',
+                    [{ text: 'OK' }]
                 );
             } else {
                 setPic(response.assets[0].base64);
@@ -72,15 +81,15 @@ const EmployeeEntryScreen = ({navigation}) => {
         // lat: '',
         // long: '',
     })
-    const getCurrentLocation=(address,lat,lang)=>{
-        // console.log('address======>',address);
-        setaddress(address)
-        // console.log('lat======>',lat);
-       setLat(lat)
-       setLang(lang)
+    // const getCurrentLocation = (address, lat, lang) => {
+    //     // console.log('address======>',address);
+    //     setaddress(address)
+    //     // console.log('lat======>',lat);
+    //     setLat(lat)
+    //     setLang(lang)
 
-        // console.log('lang======>',lang);
-    }
+    //     // console.log('lang======>',lang);
+    // }
     const handleOnChange = (text, input) => {
         setInput(prevState => ({ ...prevState, [input]: text }))
     }
@@ -143,7 +152,7 @@ const EmployeeEntryScreen = ({navigation}) => {
     //         // setInput((prev) => ({...prev,long : info.coords.longitude}))
     //         }
     //         Geocoder.from(info.coords.latitude,info.coords.longitude)
-           
+
     //             .then(json => {
     //                 var location = json.results[0].address_components[3].long_name;
     //         //   setaddress(location)
@@ -151,178 +160,205 @@ const EmployeeEntryScreen = ({navigation}) => {
     //             .catch(error => console.log('error============>',error));
     //       })
     // }
-// useEffect(()=>{
-//     map()
-// },[])
-const Register = async () => {
-    var data = {
-        EmailId: input.emailId,
-        UserName:input.userName,
-        Password: input.setPassword,
-        ContactNumber:input.contactNumber,
-        Dob:date,
-        Doj:doj,
-        Designation:input.designation,
-        State:state,
-        City:city,
-        Pin:input.pinCode,
-        CurrentLocation:address,
-        Latitude:lat,
-        Longitude:lang,
-        ImgUrl:pic
-    };
-    // console.log('data========>',data);
-    const response = await axios.post(`${baseURL}RegisterApi/Register`,data,{
-        headers:{
-            'Content-Type': 'application/json'
+    // useEffect(()=>{
+    //     map()
+    // },[])
+    const Register = async () => {
+        var data = {
+            EmailId: input.emailId,
+            UserName: input.userName,
+            Password: input.setPassword,
+            ContactNumber: input.contactNumber,
+            Dob: dateOfBirth,
+            Doj: dojd,
+            Designation: input.designation,
+            State: state,
+            City: city,
+            Pin: input.pinCode,
+            CurrentLocation: address,
+            Latitude: lat,
+            Longitude: lang,
+            ImgUrl: pic
+        };
+        console.log('data========>', data);
+        const response = await axios.post(`${baseURL}RegisterApi/Register`, data, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const responseData = await response.data;
+        console.log('responseData=================>', responseData);
+        if (responseData.status == "Success") {
+            Alert.alert("Registration Sucessfull")
+            navigation.navigate('AdminScreen')
+        } else {
+            Alert.alert("Wrong Details")
+
         }
-    })
-    const responseData = await response.data;
-    // console.log('responseData=================>',responseData);
-    if(responseData.status=="Success"){
-        Alert.alert("Registration Sucessfull")
-        navigation.navigate('AdminScreen')
-    } else{
-        Alert.alert("Wrong Details")
+    }
+    //   console.log('input.lat====>',lat);
+    //   console.log('input.long====>',lang);
+    //   console.log('address====>',address);
+    //   console.log('input===========22====>',input);
+    const getLoc = (data, details) => {
+        console.log('details=======>', details);
+        setaddress(details?.formatted_address);
+        setLat(details?.geometry?.location?.lat)
+        setLang(details?.geometry?.location?.lng)
+        // getCurrentLocation(address, lat, lang)
+    }
+    const Pick_Date = (date) => {
+        // console.log('date2 544545',date2);
+        console.log('hoiiii');
+
+        // console.log('new date of birth====>',date);
+        setDateOfBirth(moment(date).format('DD/MM/YYYY'))
 
     }
-  }
-//   console.log('input.lat====>',lat);
-//   console.log('input.long====>',lang);
-//   console.log('address====>',address);
-//   console.log('input===========22====>',input);
+
+    const Pick_Date1 = (date) => {
+        // console.log('date2 544545',date2);
+        console.log('dojj 544545', date);
+
+        // console.log('new date of birth====>',date);
+        setDojd(moment(date).format('DD/MM/YYYY'))
+
+    }
 
 
     return (
         <>
-            <ScrollView keyboardShouldPersistTaps='handled' nestedScrollEnabled={true} style={styles.container}>
-                <View style={{ paddingBottom: 30 }}>
-                    <Text style={styles.headersText}>Enter employee details</Text>
+            <View style={styles.container} >
+                <View style={{ backgroundColor: COLORS.white, borderBottomLeftRadius: 40, borderBottomRightRadius: 40, marginBottom: 10, padding: 10 }}>
                     <View style={styles.imageBox}>
-                        <TouchableHighlight 
+                        <Avatar.Image
+                            size={100}
+                            source={pic ? { uri: 'data:image/png;base64,' + pic } : require('../../../assets/imgs/user.png')}
+                        />
+                        <TouchableHighlight
                             underlayColor='rgba(0,0,0,0)'
-                            onPress={()=> uploadImage()}
+                            onPress={() => uploadImage()}
                         >
-                            <Avatar.Image 
-                                size={80} 
-                                source={{uri: 'data:image/png;base64,' + pic}}
-                            />
+                            <Image style={{ height: 22, width: 22, borderRadius: 20, position: 'absolute', right: 19, top: -29 }} source={require('../../../assets/imgs/penIcon.png')} />
                         </TouchableHighlight>
                     </View>
-                    <FullTextInput onChangeText={(text) => handleOnChange(text,'emailId')} title={'Email Id'} />
-
-                    <FullTextInput onChangeText={(text) => handleOnChange(text, 'userName')} title={'Employee name'} />
-                    <FullTextInput onChangeText={(text) => handleOnChange(text, 'contactNumber')} title={'Contact number'} />
-                    <Text style={styles.text}>Date of birth</Text>
-                    <DatePicker
-                        modal
-                        textColor='black'
-                        mode={'date'}
-                        open={open}
-                        date={date}
-                        onConfirm={(date) => {
-                            setOpen(false)
-                            setDate(date)
-                        }}
-                        onCancel={() => {
-                            setOpen(false)
-                        }}
-                    />
-                    <View style={styles.dateview}>
-                        <TextInput value={date.toDateString()} style={{ width: '92%', fontSize: 20 }} />
-                        <Ionicons name="calendar-outline" size={30} style={{ alignSelf: 'center' }} onPress={() => setOpen(true)} />
-                    </View>
-                    <Text style={styles.text}>Date of joining</Text>
-                    <DatePicker
-                        modal
-                        textColor='black'
-                        mode={'date'}
-                        open={dojopen}
-                        date={doj}
-                        onConfirm={(date) => {
-                            setdojopen(false)
-                            setDoj(date)
-                        }}
-                        onCancel={() => {
-                            setOpen(false)
-                        }}
-                    />
-                    <View style={styles.dateview}>
-                        <TextInput value={doj.toDateString()} style={{ width: '92%', fontSize: 20 }} />
-                        <Ionicons name="calendar-outline" size={30} style={{ alignSelf: 'center' }} onPress={() => setdojopen(true)} />
-                    </View>
-                    <FullTextInput  onChangeText={(text) => handleOnChange(text,'designation')} title={'Designation'} />
-                    <Text style={styles.text}>State</Text>
-                    <Dropdown
-                        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        inputSearchStyle={styles.inputSearchStyle}
-                        iconStyle={styles.iconStyle}
-                        itemTextStyle={styles.itemTextStyle}
-                        data={statedata}
-                        search
-                        maxHeight={300}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={!isFocus ? 'Select State' : '...'}
-                        searchPlaceholder="Search..."
-                        value={statedata}
-                        onFocus={() => setIsFocus(true)}
-                        onBlur={() => setIsFocus(false)}
-                        onChange={item => {
-                            setValue(item.value);
-                            handlArray(item.value)
-                            console.log('item label===========', item.label);
-                            setState(item.label)
-                            setIsFocus(false);
-                        }}
-                    />
-                    <Text style={styles.text}>City</Text>
-                    <Dropdown
-                        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        inputSearchStyle={styles.inputSearchStyle}
-                        iconStyle={styles.iconStyle}
-                        itemTextStyle={styles.itemTextStyle}
-                        data={citydata}
-                        search
-                        maxHeight={300}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={!isFocus ? 'Select City' : '...'}
-                        searchPlaceholder="Search..."
-                        value={citydata}
-                        onFocus={() => setIsFocus(true)}
-                        onBlur={() => setIsFocus(false)}
-                        onChange={item => {
-                            setValue(item.value);
-                            console.log('itemlabel1===========', item.label);
-                            setCity(item.label)
-                            // setInput({citys:item.label})
-                            setIsFocus(false);
-                        }}
-                    />
-                    <FullTextInput onChangeText={(text) => handleOnChange(text, 'pinCode')} title={'Pin Code'} />
-                    <Text style={[styles.text,]}>Current Location</Text>
-                    {/* <View style={[styles.TextInput, { backgroundColor: '#E0E1E2', justifyContent: 'center' }]} >
-                        <Text style={[styles.text, { marginLeft: 15 }]}>{address}</Text>
-                    </View> */}
-                    <PlacePicker getCurrentLocation={getCurrentLocation} />
-                    <FullTextInput onChangeText={(text) => handleOnChange(text, 'setPassword')} title={'Set Password'} />
-                    <TouchableOpacity onPress={Register} style={styles.LoginButton} >
-                        <Text style={styles.LoginText}>Register</Text>
-                    </TouchableOpacity>
                 </View>
-            </ScrollView>
+                <ScrollView keyboardShouldPersistTaps='handled' nestedScrollEnabled={true} >
+                    <View style={{ paddingBottom: 30 }}>
+
+
+                        <Inputs title={'Email Id'} onChangeText={(text) => handleOnChange(text, 'emailId')} />
+                        <Inputs title={'Employee name'} onChangeText={(text) => handleOnChange(text, 'userName')} />
+                        <Inputs onChangeText={(text) => handleOnChange(text, 'contactNumber')} title={'Contact number'} />
+                        <View style={styles.staticData_section}>
+                            <Text style={styles.textStyle}>Date Of Birth :-</Text>
+                            <Date_Picker Pick_Date={Pick_Date} />
+                        </View>
+                        <View style={styles.staticData_section}>
+                            <Text style={styles.textStyle}>Date of joining :-</Text>
+                            <Date_Picker Pick_Date={Pick_Date1} />
+                        </View>
+                        <Inputs onChangeText={(text) => handleOnChange(text, 'designation')} title={'Designation'} />
+                        <View style={styles.staticData_section}>
+                            <Text style={styles.textStyle}>State :-</Text>
+                            <Dropdown
+                                style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                                placeholderStyle={styles.placeholderStyle}
+                                selectedTextStyle={styles.selectedTextStyle}
+                                inputSearchStyle={styles.inputSearchStyle}
+                                iconStyle={styles.iconStyle}
+                                itemTextStyle={styles.itemTextStyle}
+                                data={statedata}
+                                search
+                                maxHeight={300}
+                                labelField="label"
+                                valueField="value"
+                                placeholder={!isFocus ? 'Select State' : '...'}
+                                searchPlaceholder="Search..."
+                                value={statedata}
+                                onFocus={() => setIsFocus(true)}
+                                onBlur={() => setIsFocus(false)}
+                                onChange={item => {
+                                    setValue(item.value);
+                                    handlArray(item.value)
+                                    console.log('item label===========', item.label);
+                                    setState(item.label)
+                                    setIsFocus(false);
+                                }}
+                            />
+                        </View>
+                        <View style={styles.staticData_section}>
+                            <Text style={styles.textStyle}>City:-</Text>
+                            <Dropdown
+                                style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                                placeholderStyle={styles.placeholderStyle}
+                                selectedTextStyle={styles.selectedTextStyle}
+                                inputSearchStyle={styles.inputSearchStyle}
+                                iconStyle={styles.iconStyle}
+                                itemTextStyle={styles.itemTextStyle}
+                                data={citydata}
+                                search
+                                maxHeight={300}
+                                labelField="label"
+                                valueField="value"
+                                placeholder={!isFocus ? 'Select City' : '...'}
+                                searchPlaceholder="Search..."
+                                value={citydata}
+                                onFocus={() => setIsFocus(true)}
+                                onBlur={() => setIsFocus(false)}
+                                onChange={item => {
+                                    setValue(item.value);
+                                    console.log('itemlabel1===========', item.label);
+                                    setCity(item.label)
+                                    // setInput({citys:item.label})
+                                    setIsFocus(false);
+                                }}
+                            />
+                        </View>
+                        <Inputs onChangeText={(text) => handleOnChange(text, 'pinCode')} title={'Pin Code'} />
+                        <View style={styles.staticData_section}>
+                            <Text style={styles.textStyle}>Current Location :-</Text>
+                            <GooglePlacesAutocomplete
+                                // ref={ref}
+                                // placeholder={'hiiiiiiii'}
+                                onPress={getLoc}
+                                fetchDetails={true}
+                                query={{
+                                    key: 'AIzaSyD6WfSwXXdRhyMtTgLU9KY1XGnMdiOcbek',
+                                    language: 'en',
+                                }}
+                                styles={{
+                                    textInputContainer: {
+                                        // backgroundColor:COLORS.white,
+                                    },
+                                    textInput: {
+                                        // height: 38,
+                                        // // color: '#5d5d5d',
+                                        // fontSize: 16,
+                                        backgroundColor: COLORS.white,
+                                        borderBottomColor: COLORS.blue,
+                                        borderBottomWidth: 1
+                                    },
+                                    //   container:{
+                                    //     backgroundColor:COLORS.White
+                                    //   }
+                                }}
+                            />
+                        </View>
+                        <Inputs onChangeText={(text) => handleOnChange(text, 'setPassword')} title={'Set Password'} />
+                        <TouchableOpacity onPress={Register} style={styles.LoginButton} >
+                            <Text style={styles.LoginText}>Register</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+            </View>
         </>
     )
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#57befa',
+        backgroundColor: COLORS.profileBackGroundColor,
         paddingLeft: 20,
         paddingRight: 20,
         paddingTop: 20,
@@ -340,8 +376,10 @@ const styles = StyleSheet.create({
         color: '#414242',
         marginTop: 5
     },
-    imageBox:{
-        alignSelf:'center',
+    imageBox: {
+        alignSelf: 'center',
+        // marginBottom: 10,
+        // backgroundColor:'red',
     },
     TextInput: {
         backgroundColor: '#fff',
@@ -374,13 +412,17 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     },
     dropdown: {
-        height: 50,
+        height: 45,
         borderColor: 'gray',
-        borderWidth: 0.5,
+        // borderWidth: 0.5,
         borderRadius: 8,
-        paddingHorizontal: 8,
-        marginBottom: 20,
-        backgroundColor: '#fff'
+        // paddingHorizontal: 8,
+        borderBottomWidth: 1,
+        borderBottomColor: COLORS.blue,
+
+        // marginBottom: 20,
+        // backgroundColor:COLORS.white,
+
     },
     icon: {
         marginRight: 5,
@@ -413,6 +455,23 @@ const styles = StyleSheet.create({
     },
     iconStyle: {
         fontSize: 18
-    }
+    },
+    textStyle: {
+        // // fontFamily: 'Poppins-SemiBold',
+        // fontSize: 14,
+        // // color: '#3e403f',
+        // // marginBottom: 8,
+        color: COLORS.black,
+    },
+    staticData_section: {
+        backgroundColor: COLORS.white,
+        // // padding: 8,
+        paddingHorizontal: 4,
+        // borderRadius: 10,
+        marginBottom: 8,
+        // paddingVertical:7,
+        borderRadius: 10
+    },
+
 })
 export default EmployeeEntryScreen;     

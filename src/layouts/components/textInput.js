@@ -46,15 +46,15 @@ const styles = StyleSheet.create({
     },
     inputTitle:{
         fontSize:16,
-        paddingHorizontal:10,
+        // paddingHorizontal:10,
         color:'#2a2a2a',
-        marginVertical:10,
+        marginVertical:3,
         fontFamily:'Poppins-SemiBold'
     },
     inputField:{
         paddingHorizontal:10,
         borderWidth:0.5,
-        borderRadius:10,
+        borderRadius:5,
         flex:1,
         color:COLORS.black,
         backgroundColor:COLORS.White

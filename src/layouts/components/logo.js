@@ -12,15 +12,17 @@ const Logo = () => {
 const styles = StyleSheet.create({
     logoSection:{
         alignItems:'center',
-        flex:0.4,
-        justifyContent:'center',
+        // flex:0.4,
+        // justifyContent:'center',
     },
     logo:{
-        height:100,
-        resizeMode:'contain',
+        height:80,
         borderRadius:10,
-        position:'absolute',
-        top:50
+        resizeMode:'contain',
+        width:'60%'
+        // borderRadius:10,
+        // position:'absolute',
+        // top:50
     },
 });
 

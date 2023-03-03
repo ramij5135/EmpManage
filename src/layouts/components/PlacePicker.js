@@ -5,14 +5,14 @@ const PlacePicker = ({ getCurrentLocation, getAddressText, setAddressText }) => 
   console.log('predefinedPlaces=====>', getAddressText);
   const getLoc = (data, details) => {
     console.log('details=======>', details);
-    const address = details.formatted_address;
-    const lat = details.geometry.location.lat;
-    const lang = details.geometry.location.lng;
+    const address = details?.formatted_address;
+    const lat = details?.geometry?.location?.lat;
+    const lang = details?.geometry?.location?.lng;
     getCurrentLocation(address, lat, lang)
   }
   const ref = useRef()
   useEffect(() => {
-    ref.current.setAddressText(getAddressText)
+    ref?.current?.setAddressText(getAddressText)
   }, [])
   return (
     <GooglePlacesAutocomplete

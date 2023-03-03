@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     inputWrap:{
         // marginVertical:0, 
         // marginTop:10,
-        marginBottom:7,
+        marginBottom:9,
         backgroundColor:COLORS.white,
         borderRadius:10
     },
@@ -29,16 +29,19 @@ const styles = StyleSheet.create({
         borderBottomWidth:1,
         borderBottomColor:'blue',
         marginTop:-20,
-        borderBottomLeftRadius:10,
+        borderBottomLeftRadius:7,
         borderBottomRightRadius:10,
+        fontSize:14,
+        paddingBottom:3
         // marginBottom:2
         // textAlignVertical:"top"
     },
     label:{
         color:COLORS.black,
-        fontSize:16,
-        paddingVertical:3,
+        fontSize:13,
+        // paddingVertical:3,
         paddingHorizontal:5,
+        marginBottom:8
     },
     inputIcon:{
         position:'absolute',

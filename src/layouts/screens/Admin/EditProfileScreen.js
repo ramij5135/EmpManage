@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity,ToastAndroid } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, ToastAndroid } from 'react-native';
 import Inputs from '../../components/inputs';
 import { COLORS, height } from '../../../utils/globalStyles';
 import moment from 'moment';
@@ -12,7 +12,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 // import { baseURL } from "../../../utils/config";
 import { Modal } from "react-native-paper";
 import { launchImageLibrary, launchCamera } from "react-native-image-picker";
-const EditProfileScreen = ({ route,navigation }) => {
+const EditProfileScreen = ({ route, navigation }) => {
     const empDetails = route.params?.profileData
     const dateOfJoin = moment(empDetails.Doj).format('DD/MM/YYYY')
     const fomatedOldDateOfBirth = moment(empDetails.Dob).format('DD/MM/YYYY')
@@ -22,7 +22,7 @@ const EditProfileScreen = ({ route,navigation }) => {
     const [address, setaddress] = useState();
     const [pic, setPic] = useState('');
     const [image, setImage] = useState('');
-    console.log('pic-============>', pic);
+    console.log('empDetails-============>', empDetails);
     const updateLat = lat ? lat : empDetails.Latitude
     const updateAddress = address ? address : empDetails.CurrentLocation
     const updatelang = lang ? lang : empDetails.Longitude
@@ -30,17 +30,17 @@ const EditProfileScreen = ({ route,navigation }) => {
     const [visible, setVisible] = React.useState(false);
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
-    const onSelectimage=()=>{
+    const onSelectimage = () => {
         ImagePicker.openPicker({
             // width: 300,
             // height: 400,
             cropping: false,
-            includeBase64 :true
+            includeBase64: true
 
-          }).then(image => {
-            console.log('image======>',image);
+        }).then(image => {
+            console.log('image======>', image);
             setImage(image)
-          });
+        });
     }
     const setToastMsg = msg => {
         ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
@@ -78,7 +78,7 @@ const EditProfileScreen = ({ route,navigation }) => {
         Id: empDetails.ID,
         EmailId: empDetails.EmailId,
         Doj: dateOfJoin,
-        EmpName: empDetails.Item,
+        EmpName: empDetails.UserName,
         Designation: empDetails.Designation,
         // Dob: NewdateOfBirth2,
         ContactNumber: empDetails.ContactNumber,
@@ -123,8 +123,8 @@ const EditProfileScreen = ({ route,navigation }) => {
         console.log('data=========>', data);
         axios.post(`${baseURL}EmployeeApi/EditProfile`, data).then((res) => {
             console.log(res.data);
-            if(res.data.status=='Success'){
-            showModal()
+            if (res.data.status == 'Success') {
+                showModal()
             }
 
         }
@@ -137,63 +137,66 @@ const EditProfileScreen = ({ route,navigation }) => {
                 <Image source={image ? { uri: `data:${image.mime};base64,${image.data}` } : empDetails.ImgUrl ? { uri: `https://demo38.gowebbi.in${empDetails.ImgUrl}` } : require('../../../assets/imgs/profile.jpg')} style={styles.img} />
                 {/* <Image source={{uri: `data:${image.mime};base64,${image.data}`}} style={styles.img} /> */}
                 <TouchableOpacity onPress={() => onSelectimage()} style={{ position: 'absolute', top: 151, right: 105 }}>
-                    <Image style={{ height: 27, width: 27 }} source={require('../../../assets/imgs/editIcon.png')} />
+                    <Image style={{ height: 27, width: 27,borderRadius:30 }} source={require('../../../assets/imgs/editIcon.png')} />
 
                 </TouchableOpacity>
-                <ScrollView keyboardShouldPersistTaps='handled' style={{ padding: 10 }}>
-                    <Text style={styles.textStyle}>Email Id :-</Text>
-                    <View style={styles.staticData_section}>
+                <ScrollView keyboardShouldPersistTaps='handled' style={{ padding: 10, }}>
+                    {/* <View style={styles.staticData_section}>
+                        <Text style={styles.textStyle}>Email Id :-</Text>
                         <Text numberOfLines={1} style={[styles.textStyle, { width: '75%' }]}> {empDetails.EmailId}</Text>
-                    </View>
-
-                    <Text style={styles.textStyle}>Date Of Join :-</Text>
+                    </View> */}
                     <View style={styles.staticData_section}>
-                        <Text style={styles.textStyle}> {dateOfJoin}</Text>
+                        <Text style={styles.textStyle}>Email Id :-</Text>
+                        <Text style={styles.textStyle}>{empDetails.EmailId}</Text>
+                    </View>
+                    <View style={styles.staticData_section}>
+                        <Text style={styles.textStyle}>Date Of Join :-</Text>
+                        <Text style={styles.textStyle}>{dateOfJoin}</Text>
                     </View>
 
-                    <Text style={styles.textStyle} >Employee Name :-</Text>
-                    <Inputs value={text.EmpName} onChangeText={(text) => handleOnchange(text, 'EmpName')} />
+                    {/* <Text style={styles.textStyle} >Employee Name :-</Text> */}
+                    <Inputs title={'Employee Name :-'} value={text.EmpName} onChangeText={(text) => handleOnchange(text, 'EmpName')} />
 
-                    <Text style={styles.textStyle}>Designation :-</Text>
-                    <Inputs value={text.Designation} onChangeText={(text) => handleOnchange(text, 'Designation')} />
-
-                    <Text style={styles.textStyle}>Date Of Birth :-</Text>
-                    {/* <Inputs value={text.Dob} onChangeText={(text) => handleOnchange(text, 'Dob')} /> */}
-                    <Date_Picker dateOfBirth={empDetails.Dob} Pick_Date={Pick_Date} />
-
-                    <Text style={styles.textStyle}>Contact Number :-</Text>
-                    <Inputs value={text.ContactNumber} onChangeText={(text) => handleOnchange(text, 'ContactNumber')} />
+                    {/* <Text style={styles.textStyle}>Designation :-</Text> */}
+                    <Inputs title={'Designation :-'} value={text.Designation} onChangeText={(text) => handleOnchange(text, 'Designation')} />
+                   
+                    <View style={styles.staticData_section}>
+                        <Text style={styles.textStyle}>Date Of Birth :-</Text>
+                        <Date_Picker dateOfBirth={empDetails.Dob} Pick_Date={Pick_Date} />
+                    </View>
+                    {/* <Text style={styles.textStyle}>Contact Number :-</Text> */}
+                    <Inputs title={'Contact Number :-'} value={text.ContactNumber} onChangeText={(text) => handleOnchange(text, 'ContactNumber')} />
 
                     <Text style={styles.textStyle} >Current Address :-</Text>
                     {/* <Inputs value={text.CurrentAddress} onChangeText={(text) => handleOnchange(text, 'CurrentAddress')} /> */}
                     <PlacePicker predefinedPlaces={text.CurrentAddress} getCurrentLocation={getCurrentLocation} setAddressText={text.CurrentAddress} getAddressText={value?.toString()} />
 
-                    <Text style={styles.textStyle}>City :-</Text>
-                    <Inputs value={text.City} onChangeText={(text) => handleOnchange(text, 'City')} />
+                    {/* <Text style={styles.textStyle}>City :-</Text> */}
+                    <Inputs title={'City :-'} value={text.City} onChangeText={(text) => handleOnchange(text, 'City')} />
 
-                    <Text style={styles.textStyle}>Pin Code :-</Text>
-                    <Inputs value={text.PinCode} onChangeText={(text) => handleOnchange(text, 'PinCode')} />
-                    <Text style={styles.textStyle}>State :-</Text>
-                    <Inputs value={text.State} onChangeText={(text) => handleOnchange(text, 'State')} />
-                    <Text style={styles.textStyle}>Password :-</Text>
-                    <Inputs value={text.Password} onChangeText={(text) => handleOnchange(text, 'Password')} />
+                    {/* <Text style={styles.textStyle}>Pin Code :-</Text> */}
+                    <Inputs title={'Pin Code :-'} value={text.PinCode} onChangeText={(text) => handleOnchange(text, 'PinCode')} />
+                    {/* <Text style={styles.textStyle}>State :-</Text> */}
+                    <Inputs title={'State :-'} value={text.State} onChangeText={(text) => handleOnchange(text, 'State')} />
+                    {/* <Text style={styles.textStyle}>Password :-</Text> */}
+                    <Inputs title={'Password :-'} value={text.Password} onChangeText={(text) => handleOnchange(text, 'Password')} />
 
-                    
+
                     <FullButton onPressName={UpdateProfile} btnTitle={'Update'} />
                 </ScrollView>
                 {/* <View style={{flex:1,justifyContent:'center',alignItems:'center'}}> */}
                 <Modal visible={visible} onDismiss={hideModal} >
                     <View style={styles.containerStyle}>
-                    <Text style={{fontFamily:'Poppins-SemiBold',color:'#36ba5e',fontSize:17}}>Profile update sucessfully..</Text>
-                    <TouchableOpacity onPress={()=>navigation.navigate('AdminScreen')} style={styles.btn}>
-                        <Text style={{color:'#fff'}}>OK</Text>
-                    </TouchableOpacity>
+                        <Text style={{ fontFamily: 'Poppins-SemiBold', color: '#36ba5e', fontSize: 17 }}>Profile update sucessfully..</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('AdminScreen')} style={styles.btn}>
+                            <Text style={{ color: '#fff' }}>OK</Text>
+                        </TouchableOpacity>
 
 
                     </View>
                 </Modal>
                 {/* </View> */}
-                
+
             </>
         </View>
     );
@@ -201,12 +204,12 @@ const EditProfileScreen = ({ route,navigation }) => {
 
 const styles = StyleSheet.create({
     containerStyle: {
-        backgroundColor:'#fff',
-       padding:10,
-        justifyContent:'center',
-        alignItems:'center',
-        margin:20,
-        borderRadius:10
+        backgroundColor: '#fff',
+        padding: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 20,
+        borderRadius: 10
     },
     container: {
         flex: 1,
@@ -214,6 +217,7 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
         // alignItems: 'center',
         // backgroundColor: '#2c3e50',
+        backgroundColor: COLORS.primary
     },
     backgrondColor: {
         backgroundColor: COLORS.orange,
@@ -235,22 +239,27 @@ const styles = StyleSheet.create({
         // flex:1
     },
     textStyle: {
-        fontFamily: 'Poppins-SemiBold',
-        fontSize: 14,
-        color: '#3e403f',
-        marginBottom: 6
+        // // fontFamily: 'Poppins-SemiBold',
+        // fontSize: 14,
+        // // color: '#3e403f',
+        // // marginBottom: 8,
+        color:COLORS.black,
     },
     staticData_section: {
-        backgroundColor: '#fff',
-        padding: 10,
-        borderRadius: 10
-    },
-    btn:{
-        backgroundColor:'#0891b2',
-        paddingHorizontal:30,
-        paddingVertical:5,
-        marginTop:10,
+        backgroundColor:COLORS.white,
+        // // padding: 8,
+        paddingHorizontal:4,
+        // borderRadius: 10,
+        marginBottom:5,
+        paddingVertical:7,
         borderRadius:10
+    },
+    btn: {
+        backgroundColor: '#0891b2',
+        paddingHorizontal: 30,
+        paddingVertical: 5,
+        marginTop: 10,
+        borderRadius: 10
     }
 
 

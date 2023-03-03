@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Text, View, StyleSheet, Image, TextInput, Keyboard, ActivityIndicator } from "react-native";
+import { Text, View, StyleSheet, Image, TextInput, Keyboard, ActivityIndicator,ScrollView } from "react-native";
 import FullButton from "../../components/fullButton";
 import { postMethod } from "../../../utils/helper";
 import axios from "axios";
@@ -91,12 +91,12 @@ const AdminLoginScreen = ({ navigation }) => {
           :
 
           <>
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
               {/* <Loader visible={loading} /> */}
 
               <View style={styles.header1}>
                 <Image style={styles.img} source={require('../../../assets/imgs/SwadeshSoftware.png')} />
-                <Text style={[styles.headersText,]}>Admin Login</Text>
+                <Text style={[styles.headersText,]}>Admin Log In</Text>
               </View>
               <View style={styles.header2}>
                 <View style={styles.loginContainer}>
@@ -106,17 +106,17 @@ const AdminLoginScreen = ({ navigation }) => {
                       styles.TextInput :
                       styles.dTextInput}
                   />
-                  <Text style={styles.inputError}>{error.email}</Text>
+                  {error.email?<Text style={styles.inputError}>{error.email}</Text> :undefined}
                   <Text style={styles.text}>Enter Your Password</Text>
                   <TextInput onFocus={() => { handleError('password', null) }} value={input.password} onChangeText={(text) => handleOnChange(text, 'password')} style={error.password == 'Please input Password' ? styles.TextInput :
                     error.password == 'Minimum leagth of Password 5' ?
                       styles.TextInput :
                       styles.dTextInput} />
-                  <Text style={styles.inputError}>{error.password}</Text>
+                  {error.password?<Text style={styles.inputError}>{error.password}</Text>:undefined}
                   <FullButton btnTitle={'LogIn'} onPressName={() => Validate()} />
                 </View>
               </View>
-            </View>
+            </ScrollView>
           </>}
     </>
   )
@@ -124,7 +124,9 @@ const AdminLoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(130,209,209,0.4)'
+    backgroundColor: 'rgba(130,209,209,0.4)',
+    padding:18
+    // justifyContent:'center',
   },
   header1: {
     flex: 4,
@@ -133,19 +135,26 @@ const styles = StyleSheet.create({
   },
   header2: {
     flex: 6,
-    padding: 16,
+    // padding: 14,
     justifyContent: 'center',
+    // marginTop:-10
+  
   },
   img: {
     height: 100,
     alignSelf: 'center',
-    borderRadius: 15
+    borderRadius: 15,
+    marginBottom:10
   },
   headersText: {
     fontSize: 30,
     fontFamily: 'Poppins-SemiBold',
-    marginVertical: 10,
+    // marginVertical: 10,
     color: '#fff',
+    backgroundColor:'#137f87',
+    paddingHorizontal:20,
+    marginBottom:10,
+    borderRadius:5
   },
   loginContainer: {
     backgroundColor: '#fff',
@@ -159,20 +168,19 @@ const styles = StyleSheet.create({
   },
   TextInput: {
     backgroundColor: '#fff',
-    height: 50,
-    borderRadius: 10,
+    height: 40,
+    borderRadius: 5,
     borderColor: 'red',
     borderWidth: 1,
-    marginBottom: 5,
-
+    marginBottom: 2,
   },
   dTextInput: {
     backgroundColor: '#fff',
-    height: 50,
-    borderRadius: 10,
+    height: 40,
+    borderRadius: 5,
     borderColor: '#8d8f8e',
     borderWidth: 1,
-    marginBottom: 5
+    marginBottom: 2
   },
   inputError: {
     color: 'red',

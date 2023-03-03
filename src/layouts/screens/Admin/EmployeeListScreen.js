@@ -29,14 +29,19 @@ const EmployeeListScreen = ({ navigation }) => {
     const [search, setSearch] = useState()
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        axios.get(`${baseURL}JobMasterApi/FetchEmployee`).then((res) => {
-            // console.log('res=====>',res.data.data);
-            setEmpList(res?.data?.data)
-            setOldata(res?.data?.data)
+       
+        EmployeeList()
+    }, [])
+    const EmployeeList=()=>{
+        axios.get(`${baseURL}EmployeeApi/EmployeeList`).then((res) => {
+            console.log('res=====>',res);
+            setEmpList(res.data.EmployeeList)
+            setOldata(res.data.EmployeeList)
             setLoading(false)
         }
         )
-    }, [])
+    }
+    console.log('search============>',search);
     useEffect(() => {
         const backAction = () => {
             navigation.goBack()
@@ -49,26 +54,53 @@ const EmployeeListScreen = ({ navigation }) => {
         return () => backHandler.remove();
     }, []);
     const Remove = (id) => {
-        const data = empList.filter((elem) => {
-            if (elem.ID !== id) {
-                return elem
-            }
-        })
+        // const data = empList.filter((elem) => {
+        //     if (elem.ID !== id) {
+        //         return elem
+        //     }
+        // })
+        
         Alert.alert('', 'Are you want to delete?', [
             {
               text: 'Cancel',
               onPress: () => console.log('Cancel Pressed'),
               style: 'cancel',
             },
-            {text: 'OK', onPress: () => {return setEmpList(data)}},
+            {text: 'OK', onPress: () => {axios.get(`https://demo38.gowebbi.in/api/EmployeeApi/DeleteEmployee?id=${id}`).then((res)=>{
+                console.log('res=======>',res.data.data)
+                EmployeeList()
+    
+            }).catch((error)=>{
+                console.log('error========>',error);
+            })}},
           ])
         
     }
     const OnSearch=(text)=>{
-        let data = olddata.filter((item)=>{
-            return item.Item.toLowerCase().indexOf(text.toLowerCase())> -1
+        console.log('text=========>',text);
+        // let data = olddata.filter((item)=>{
+        //     return item.Item.toLowerCase().indexOf(text.toLowerCase())> -1
+        // })
+        // axios.get(`https://demo38.gowebbi.in/api/EmployeeApi/SearchEmployeef?key=raja}`).then((res) => {
+        //     console.log('res=====>',res);
+        //     setEmpList(res?.data?.data)
+        //     setOldata(res?.data?.data)
+        //     setLoading(false)
+        // }
+        // ).catch((err)=>{
+        //     console.log('err=========>',err);
+        // })
+        axios.get(`${baseURL}EmployeeApi/SearchEmployee?key=${text}`).then((res)=>{
+                console.log('res========>',res);
+                if (text=='') {
+                    setEmpList(olddata)
+                } else {
+                    setEmpList(res.data.data)
+                }
+        }).catch((error)=>{
+            console.log('error========>',error);
         })
-        setEmpList(data)
+        // setEmpList(data)gg
 
     }
     return (
@@ -92,7 +124,7 @@ const EmployeeListScreen = ({ navigation }) => {
                                 <View key={item2?.ID?.toString()} style={styles.list_container}>
                                     <Image style={styles.profileImg} source={item2.ImgUrl ? { uri: `https://demo38.gowebbi.in${item2.ImgUrl}` } : require('../../../assets/imgs/profile.jpg')} />
                                     <View style={styles.emp_NameView}>
-                                        <Text>{item2.Item}</Text>
+                                        <Text>{item2.UserName}</Text>
                                         <Text  >Email Id :- {item2.EmailId.substr(0, 18)}...</Text>
                                         <View style={styles.btnView}>
                                             {
